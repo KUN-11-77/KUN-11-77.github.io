@@ -1,0 +1,133 @@
+/* source/css/custom.css - 全局自定义样式 */
+/* 基于 roadmap 第 1.2 节色彩系统设计 */
+
+:root {
+  /* ── Core Palette ── */
+  --clr-bg-deep:     #0D0F1A;   /* 极深宇宙黑 */
+  --clr-bg-mid:      #141726;   /* 面板背景 */
+  --clr-bg-card:     #1B2038;   /* 卡片背景 */
+  --clr-accent:      #6C63FF;   /* 主色调：量子紫 */
+  --clr-accent-cyan: #00D4FF;   /* 辅助色：霓虹青 */
+  --clr-accent-gold: #F0C040;   /* 点缀色：负熵金 */
+  --clr-text-main:   #C8CDD8;   /* 正文色 */
+  --clr-text-muted:  #6B7280;   /* 弱化文字 */
+  --clr-border:      #2E3560;   /* 边框线 */
+
+  /* ── Glow Effects ── */
+  --glow-purple: 0 0 20px rgba(108,99,255,0.4);
+  --glow-cyan:   0 0 20px rgba(0,212,255,0.4);
+  --glow-gold:   0 0 15px rgba(240,192,64,0.35);
+
+  /* ── Gradients ── */
+  --grad-hero:   linear-gradient(135deg,#0D0F1A 0%,#141726 50%,#0D0F1A 100%);
+  --grad-card:   linear-gradient(145deg,#1B2038,#141726);
+  --grad-accent: linear-gradient(90deg,#6C63FF,#00D4FF);
+}
+
+/* 全局背景与 Hero 区域 (基于 roadmap 2.1) */
+body {
+  background-color: var(--clr-bg-deep);
+  background-image:
+    radial-gradient(ellipse 80% 60% at 50% -10%,
+      rgba(108,99,255,0.18) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 90% 80%,
+      rgba(0,212,255,0.10) 0%, transparent 60%);
+  min-height: 100vh;
+  color: var(--clr-text-main);
+  font-family: "Space Grotesk", "LXGW WenKai", "Noto Serif SC", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.85;
+}
+
+/* 标题字体 */
+h1, h2, h3, h4 {
+  font-family: "Orbitron", "Space Grotesk", sans-serif;
+}
+
+code, pre {
+  font-family: "JetBrains Mono", monospace;
+}
+
+.site-title {
+  font-family: "Orbitron", sans-serif;
+  letter-spacing: 0.15em;
+}
+
+/* 文章卡片 Glassmorphism 效果 (基于 roadmap 2.2) */
+.post-block, .post-article, article.post {
+  background: rgba(27,32,56,0.55);
+  backdrop-filter: blur(16px) saturate(1.2);
+  border: 1px solid rgba(108,99,255,0.20);
+  border-radius: 16px;
+  padding: 2rem 2.4rem;
+  margin-bottom: 2rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.post-block::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg,
+    rgba(108,99,255,0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.post-block:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: var(--glow-purple), 0 16px 48px rgba(0,0,0,0.5);
+  border-color: rgba(108,99,255,0.5);
+}
+
+/* 响应式排版 */
+@media (max-width: 768px) {
+  .post-block, .post-article, article.post {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* 动画 */
+@keyframes rainbow-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { text-shadow: 0 0 10px rgba(108,99,255,0.6), 0 0 30px rgba(0,212,255,0.3); }
+  33%       { text-shadow: 0 0 15px rgba(0,212,255,0.8), 0 0 35px rgba(240,192,64,0.4); }
+  66%       { text-shadow: 0 0 12px rgba(240,192,64,0.7), 0 0 28px rgba(108,99,255,0.5); }
+}
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 云朵动画 (基于 roadmap 4.2) */
+.cloud-deco {
+  position: absolute;
+  animation: cloud-drift 8s ease-in-out infinite;
+  opacity: 0.18;
+  z-index: -1;
+  pointer-events: none;
+}
+
+@keyframes cloud-drift {
+  0%,100% { transform: translateY(0) translateX(0); }
+  33%      { transform: translateY(-18px) translateX(12px); }
+  66%      { transform: translateY(-8px) translateX(-8px); }
+}
+
+/* 头部样式 */
+.header-inner {
+  background: rgba(13,15,26,0.85);
+  backdrop-filter: blur(20px) saturate(1.4);
+  border-bottom: 1px solid rgba(108,99,255,0.25);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
