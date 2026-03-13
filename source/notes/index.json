@@ -25,10 +25,7 @@
       "icon": "⚛",
       "color": "#00D4FF",
       "description": "电磁学 · 量子力学 · 经典力学",
-      "files": [
-        {
-        }
-      ]
+      "files": []
     },
     {
       "id": "ee",
@@ -37,10 +34,7 @@
       "icon": "📡",
       "color": "#F0C040",
       "description": "信号处理 · 电路理论 · 通信原理",
-      "files": [
-        {
-        }
-      ]
+      "files": []
     },
     {
       "id": "ai",
@@ -49,10 +43,7 @@
       "icon": "🧠",
       "color": "#4CAF50",
       "description": "机器学习 · 深度学习 · 算法",
-      "files": [
-        {
-        }
-      ]
+      "files": []
     }
   ]
 }
