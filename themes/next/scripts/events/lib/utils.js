@@ -21,22 +21,28 @@ function resolve(name, file = '') {
 
 function highlightTheme(name) {
   const file = resolve('highlight.js', `styles/${name}.css`);
-  const content = fs.readFileSync(file, 'utf8');
-
-  let background = '';
-  let foreground = '';
-  css.parse(content).stylesheet.rules
-    .filter(rule => rule.type === 'rule' && rule.selectors.some(selector => selector.endsWith('.hljs')))
-    .flatMap(rule => rule.declarations)
-    .forEach(declaration => {
-      if (declaration.property === 'background' || declaration.property === 'background-color') background = declaration.value;
-      else if (declaration.property === 'color') foreground = declaration.value;
-    });
-  return {
-    file,
-    background,
-    foreground
-  };
+  if (!file) {
+    return { file: '', background: '', foreground: '' };
+  }
+  try {
+    const content = fs.readFileSync(file, 'utf8');
+    let background = '';
+    let foreground = '';
+    css.parse(content).stylesheet.rules
+      .filter(rule => rule.type === 'rule' && rule.selectors.some(selector => selector.endsWith('.hljs')))
+      .flatMap(rule => rule.declarations)
+      .forEach(declaration => {
+        if (declaration.property === 'background' || declaration.property === 'background-color') background = declaration.value;
+        else if (declaration.property === 'color') foreground = declaration.value;
+      });
+    return {
+      file,
+      background,
+      foreground
+    };
+  } catch (err) {
+    return { file: '', background: '', foreground: '' };
+  }
 }
 
 function getVendors({ name, alias, version, file, minified, local, custom }) {

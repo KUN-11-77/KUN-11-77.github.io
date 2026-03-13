@@ -1,5 +1,72 @@
 <!-- Phase 3: 交互特效脚本 -->
 <!-- 科技感背景元素 -->
+<style>
+/* 全局背景：龙珠孙悟空主题 */
+body {
+  background-image: url('/background.jpg') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+  position: relative;
+  min-height: 100vh;
+  /* 添加滤镜效果 */
+  filter: saturate(1.1) brightness(1.05);
+}
+
+/* 动态渐变叠加层 */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    45deg,
+    rgba(108, 99, 255, 0.15) 0%,
+    rgba(0, 212, 255, 0.1) 25%,
+    rgba(10, 15, 30, 0.8) 50%,
+    rgba(108, 99, 255, 0.15) 75%,
+    rgba(0, 212, 255, 0.1) 100%
+  );
+  background-size: 400% 400%;
+  z-index: -1;
+  animation: gradientShift 20s ease infinite;
+  mix-blend-mode: overlay;
+}
+
+/* 深色固定叠加层，确保文字可读性 */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 15, 30, 0.6);
+  z-index: -1;
+}
+
+/* 动态背景动画 */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 保留原有科技感元素，但调整透明度 */
+.tech-grid, .scanlines, .pulse-glow, .field-line {
+  opacity: 0.3;
+}
+
+/* 调整 notes 页面背景，使其透明 */
+.notes-page,
+.notes-nav,
+.notes-footer {
+  background: transparent !important;
+}
+</style>
 <div class="tech-grid"></div>
 <div class="scanlines"></div>
 <div class="pulse-glow" style="top: 20%; left: 10%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(108, 99, 255, 0.3), transparent);"></div>
@@ -11,12 +78,14 @@
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const enableEffects = !isMobile && !prefersReducedMotion;
+  // 强制启用效果（用于调试）
+  window.enableEffects = true;
 </script>
 
 <!-- 加载交互特效脚本 -->
 <script defer src="/js/cursor-effect.js"></script>
 <script defer src="/js/starfield.js"></script>
-<script defer src="/js/scroll-animations.js"></script>
+<!-- <script defer src="/js/scroll-animations.js"></script> -->
 
 <!-- 简单的回退效果（当高级效果禁用时） -->
 <script>
@@ -35,4 +104,123 @@
       });
     });
   }
+</script>
+
+
+<!-- 打字机效果 -->
+<script>
+(function() {
+    if (!window.enableEffects) return;
+
+    // 防止重复执行
+    if (window.typewriterExecuted) return;
+    window.typewriterExecuted = true;
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // 查找网站标题和副标题
+        const siteTitle = document.querySelector('.site-title');
+        const siteSubtitle = document.querySelector('.site-subtitle');
+        const brand = document.querySelector('.brand');
+
+        // 选择要应用打字机效果的元素
+        const targetElement = siteSubtitle || siteTitle || brand;
+
+        if (targetElement && targetElement.textContent.trim() && !targetElement.hasAttribute('data-typed')) {
+            targetElement.setAttribute('data-typed', 'true');
+            const originalText = targetElement.textContent.trim();
+            targetElement.textContent = '';
+            targetElement.style.opacity = '1';
+
+            let i = 0;
+            const speed = 80; // 打字速度（毫秒）
+
+            function typeWriter() {
+                if (i < originalText.length) {
+                    targetElement.textContent += originalText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
+                } else {
+                    // 打字完成后，可以添加光标闪烁效果
+                    const cursor = document.createElement('span');
+                    cursor.className = 'typing-cursor';
+                    cursor.textContent = '|';
+                    cursor.style.animation = 'blink 1s infinite';
+                    targetElement.appendChild(cursor);
+
+                    // 添加CSS动画
+                    if (!document.querySelector('#typing-cursor-style')) {
+                        const style = document.createElement('style');
+                        style.id = 'typing-cursor-style';
+                        style.textContent = `
+                            .typing-cursor {
+                                display: inline-block;
+                                color: var(--clr-accent-cyan);
+                                font-weight: bold;
+                                margin-left: 2px;
+                            }
+                            @keyframes blink {
+                                0%, 100% { opacity: 1; }
+                                50% { opacity: 0; }
+                            }
+                        `;
+                        document.head.appendChild(style);
+                    }
+                }
+            }
+
+            // 延迟开始打字效果
+            setTimeout(typeWriter, 1000);
+        }
+    });
+})();
+</script>
+
+<!-- 简单滚动动画（不依赖GSAP） -->
+<script>
+(function() {
+    if (!window.enableEffects) return;
+
+    // 使用Intersection Observer API实现滚动动画
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animated');
+                // 动画完成后停止观察，防止重复触发
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // 观察需要动画的元素
+    document.addEventListener('DOMContentLoaded', function() {
+        const elementsToAnimate = document.querySelectorAll(
+            '.post-block, article.post, .card, .post, .post-header, .post-body'
+        );
+
+        elementsToAnimate.forEach(el => {
+            // 只添加动画样式如果元素还没有动画类
+            if (!el.classList.contains('animated')) {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(el);
+            }
+        });
+
+        // 添加CSS类
+        const style = document.createElement('style');
+        style.textContent = `
+            .animated {
+                opacity: 1 !important;
+                transform: translateY(0) !important;
+            }
+        `;
+        document.head.appendChild(style);
+    });
+})();
 </script>

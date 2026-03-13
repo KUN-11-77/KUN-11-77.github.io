@@ -23,21 +23,18 @@
     :root {
       --clr-bg-deep: #0D0F1A;
       --clr-bg-mid: #141726;
-      --clr-bg-card: #1B2038;
-      --clr-accent: #6C63FF;
-      --clr-accent-cyan: #00D4FF;
-      --clr-accent-gold: #F0C040;
-      --clr-text-main: #C8CDD8;
-      --clr-text-muted: #6B7280;
-      --clr-border: #2E3560;
+      --clr-bg-card: rgba(30, 20, 40, 0.7); /* 半透明深紫色 */
+      --clr-accent: #FF6B35; /* 橙色 */
+      --clr-accent-cyan: #00D4FF; /* 青色 */
+      --clr-accent-gold: #FFD166; /* 金色 */
+      --clr-text-main: #F0F0F0;
+      --clr-text-muted: #A0A0A0;
+      --clr-border: rgba(255, 107, 53, 0.3);
     }
 
     body {
-      background-color: var(--clr-bg-deep);
-      background-image:
-        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(108,99,255,0.18) 0%, transparent 65%),
-        radial-gradient(ellipse 50% 40% at 90% 80%, rgba(0,212,255,0.10) 0%, transparent 60%);
-      background-attachment: fixed;
+      background-color: transparent;
+      background-image: none;
       color: var(--clr-text-main);
       font-family: "LXGW WenKai", "Space Grotesk", "Noto Serif SC", sans-serif;
       margin: 0;
