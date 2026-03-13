@@ -8,7 +8,9 @@
   Noto+Serif+SC:wght@300;400;500;700&
   display=swap" rel="stylesheet">
 
-<!-- 霞鹜文楷本地字体 (需下载到 source/fonts/) -->
+<!-- 霞鹜文楷字体 (通过CDN) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont/style.css" />
+<!-- 备用本地字体 (如果将来需要本地部署) -->
 <!--
 @font-face {
   font-family: "LXGW WenKai";
@@ -22,7 +24,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
 <!-- Phase 4: SVG 霓虹云朵 -->
-<svg class="cloud-deco cloud-bg cloud-left" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="display:none">
+<svg class="cloud-deco cloud-bg cloud-left" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <filter id="glow-cloud">
       <feGaussianBlur stdDeviation="6" result="blur"/>
@@ -44,7 +46,7 @@
   </g>
 </svg>
 
-<svg class="cloud-deco cloud-fg cloud-right" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="display:none">
+<svg class="cloud-deco cloud-fg cloud-right" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <filter id="glow-cloud2">
       <feGaussianBlur stdDeviation="4" result="blur"/>
