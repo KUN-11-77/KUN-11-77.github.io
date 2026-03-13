@@ -43,6 +43,12 @@ jobs:
           npx hexo clean
           npx hexo generate
 
+      - name: Debug - List generated files
+        run: |
+          find ./public -type f -name "*.html" | sort
+          echo "Total HTML files:"
+          find ./public -type f -name "*.html" | wc -l
+
       - name: Deploy to GitHub Pages
         if: github.event_name != 'pull_request'
         uses: peaceiris/actions-gh-pages@v4
@@ -53,3 +59,5 @@ jobs:
           cname: ${{ vars.CNAME || '' }}
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
+          force_orphan: true
+          keep_files: false
