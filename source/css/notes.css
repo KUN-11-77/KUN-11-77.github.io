@@ -1,0 +1,362 @@
+/* source/css/notes.css */
+/* 四大分类颜色系统 */
+[data-cat="math"]    { --cat-color: #6C63FF; }
+[data-cat="physics"] { --cat-color: #00D4FF; }
+[data-cat="ee"]      { --cat-color: #F0C040; }
+[data-cat="ai"]      { --cat-color: #4CAF50; }
+
+.notes-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* Hero 区域 */
+.notes-hero {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.notes-hero h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  margin-bottom: 0.5rem;
+  background: linear-gradient(270deg, #6C63FF, #00D4FF, #F0C040);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: rainbow-shift 5s ease infinite;
+}
+
+.notes-hero h1 .grad {
+  background: linear-gradient(270deg, #00D4FF, #6C63FF);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.notes-hero p {
+  color: var(--clr-text-muted);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.notes-search {
+  max-width: 500px;
+  margin: 0 auto;
+  position: relative;
+}
+
+#notes-search {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: var(--clr-bg-card);
+  border: 1px solid var(--clr-border);
+  border-radius: 12px;
+  color: var(--clr-text-main);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+#notes-search:focus {
+  outline: none;
+  border-color: var(--clr-accent);
+  box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+}
+
+.search-icon {
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--clr-accent-cyan);
+  font-size: 1.2rem;
+  pointer-events: none;
+}
+
+/* 分类 Tab 导航 */
+.notes-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 3rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.tab {
+  padding: 0.75rem 1.5rem;
+  background: var(--clr-bg-card);
+  border: 1px solid var(--clr-border);
+  border-radius: 10px;
+  color: var(--clr-text-main);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.tab:hover {
+  background: rgba(108, 99, 255, 0.1);
+  border-color: var(--clr-accent);
+}
+
+.tab.active {
+  background: var(--clr-accent);
+  color: white;
+  border-color: var(--clr-accent);
+}
+
+/* 笔记卡片网格 */
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.note-card {
+  background: var(--clr-bg-card);
+  border: 1px solid var(--clr-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.note-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--cat-color, var(--clr-accent));
+}
+
+.note-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 0 25px var(--cat-color, rgba(108, 99, 255, 0.35)),
+              0 20px 50px rgba(0, 0, 0, 0.6);
+  border-color: var(--cat-color, var(--clr-accent));
+}
+
+.note-card-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--cat-color);
+}
+
+.note-card-body {
+  flex: 1;
+}
+
+.note-card-body h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.3rem;
+  color: var(--clr-text-main);
+}
+
+.note-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.note-tags span {
+  background: rgba(108, 99, 255, 0.1);
+  color: var(--clr-accent-cyan);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.note-meta {
+  color: var(--clr-text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.note-card-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.note-card-actions button,
+.note-card-actions a {
+  flex: 1;
+  padding: 0.75rem;
+  text-align: center;
+  border-radius: 8px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.note-card-actions button {
+  background: var(--cat-color, var(--clr-accent));
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.note-card-actions button:hover {
+  background: var(--clr-accent-cyan);
+  transform: translateY(-2px);
+}
+
+.note-card-actions a {
+  background: transparent;
+  color: var(--cat-color, var(--clr-accent));
+  border: 1px solid var(--clr-border);
+}
+
+.note-card-actions a:hover {
+  background: rgba(108, 99, 255, 0.1);
+  border-color: var(--cat-color, var(--clr-accent));
+}
+
+/* 加载状态 */
+.notes-loading {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid var(--clr-border);
+  border-top-color: var(--clr-accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* PDF 查看器弹窗 */
+.pdf-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9990;
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(12px);
+  display: none;
+  place-items: center;
+  padding: 1rem;
+}
+
+.pdf-modal.open {
+  display: grid;
+}
+
+.pdf-modal-inner {
+  background: var(--clr-bg-mid);
+  border: 1px solid var(--clr-accent);
+  border-radius: 20px;
+  max-width: min(900px, 94vw);
+  max-height: 90vh;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(108, 99, 255, 0.5);
+  display: flex;
+  flex-direction: column;
+}
+
+.pdf-modal-header {
+  background: var(--clr-bg-card);
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--clr-border);
+}
+
+#pdf-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  color: var(--clr-text-main);
+  font-size: 1.1rem;
+}
+
+.pdf-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.pdf-controls button,
+.pdf-controls a {
+  background: rgba(108, 99, 255, 0.1);
+  color: var(--clr-text-main);
+  border: 1px solid var(--clr-border);
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-family: 'Space Grotesk', sans-serif;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.pdf-controls button:hover,
+.pdf-controls a:hover {
+  background: var(--clr-accent);
+  color: white;
+  border-color: var(--clr-accent);
+}
+
+#pdf-page {
+  color: var(--clr-text-muted);
+  font-size: 0.9rem;
+  min-width: 60px;
+  text-align: center;
+}
+
+#pdf-canvas {
+  flex: 1;
+  max-height: calc(90vh - 70px);
+  background: white;
+  display: block;
+  margin: 0 auto;
+}
+
+.pdf-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--clr-text-main);
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .notes-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+
+  .notes-tabs {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tab {
+    text-align: center;
+  }
+
+  .pdf-controls {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

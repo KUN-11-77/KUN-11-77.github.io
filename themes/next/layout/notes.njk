@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="{{ config.language }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title }} · {{ config.title }}</title>
+
+  <!-- 主题样式 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for(theme.css) }}/main.css">
+
+  <!-- 自定义样式 -->
+  <link rel="stylesheet" href="/css/notes.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf_viewer.min.css">
+
+  <!-- 字体 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,700;1,400&family=Noto+Serif+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <!-- 主题颜色变量 -->
+  <style>
+    :root {
+      --clr-bg-deep: #0D0F1A;
+      --clr-bg-mid: #141726;
+      --clr-bg-card: #1B2038;
+      --clr-accent: #6C63FF;
+      --clr-accent-cyan: #00D4FF;
+      --clr-accent-gold: #F0C040;
+      --clr-text-main: #C8CDD8;
+      --clr-text-muted: #6B7280;
+      --clr-border: #2E3560;
+    }
+
+    body {
+      background-color: var(--clr-bg-deep);
+      background-image:
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(108,99,255,0.18) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 40% at 90% 80%, rgba(0,212,255,0.10) 0%, transparent 60%);
+      background-attachment: fixed;
+      color: var(--clr-text-main);
+      font-family: "Space Grotesk", "Noto Serif SC", sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* 动态彩色标题动画 */
+    @keyframes rainbow-shift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* 减慢动画速度 */
+    .notes-hero h1 {
+      animation: rainbow-shift 8s ease infinite;
+    }
+
+    .notes-hero h1 .grad {
+      animation: rainbow-shift 10s ease infinite 1s;
+    }
+  </style>
+</head>
+<body>
+  <!-- 导航 -->
+  <nav class="notes-nav">
+    <div class="container">
+      <a href="/" class="nav-home">
+        <i class="fas fa-home"></i> {{ config.title }}
+      </a>
+      <div>
+        <a href="/" class="nav-link">首页</a>
+        <a href="/archives/" class="nav-link">归档</a>
+        <a href="/notes/" class="nav-link active">笔记</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 主内容 -->
+  <main class="notes-page container">
+    <!-- 页面 Hero -->
+    <div class="notes-hero">
+      <h1>Tech Notes <span class="grad">· 技术笔记</span></h1>
+      <p>四大方向 · 系统整理 · 持续更新</p>
+      <div class="notes-search">
+        <input id="notes-search" placeholder="搜索笔记..." />
+        <span class="search-icon">⌕</span>
+      </div>
+    </div>
+
+    <!-- 分类 Tab 导航 -->
+    <nav class="notes-tabs" id="notes-tabs">
+      <button class="tab active" data-cat="all">全部</button>
+      <button class="tab" data-cat="math">∑ 数学基础</button>
+      <button class="tab" data-cat="physics">⚛ 物理基础</button>
+      <button class="tab" data-cat="ee">📡 电子信息</button>
+      <button class="tab" data-cat="ai">🧠 人工智能</button>
+    </nav>
+
+    <!-- 笔记卡片网格 -->
+    <div class="notes-grid" id="notes-grid">
+      <!-- 动态渲染，见 notes.js -->
+      <div class="notes-loading">
+        <div class="loading-spinner"></div>
+        <p>加载笔记中...</p>
+      </div>
+    </div>
+
+    <!-- PDF 查看器弹窗 -->
+    <div class="pdf-modal" id="pdf-modal">
+      <div class="pdf-modal-inner">
+        <div class="pdf-modal-header">
+          <span id="pdf-title">笔记标题</span>
+          <div class="pdf-controls">
+            <button id="pdf-prev">‹</button>
+            <span id="pdf-page">1 / 1</span>
+            <button id="pdf-next">›</button>
+            <a id="pdf-download" download>↓ 下载</a>
+            <button id="pdf-close">✕</button>
+          </div>
+        </div>
+        <canvas id="pdf-canvas"></canvas>
+        <div class="pdf-loading">加载 PDF 中...</div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="notes-footer">
+    <div class="container">
+      <p class="footer-text">
+        ✦ {{ config.title }} · {{ config.subtitle }} ✦<br>
+        <small style="color: var(--clr-text-muted); font-size: 0.8rem;">
+          Powered by Hexo & NexT Theme
+        </small>
+      </p>
+    </div>
+  </footer>
+
+  <!-- PDF.js 库 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.min.js"></script>
+  <script src="/js/notes.js" defer></script>
+
+  <style>
+    /* 导航样式 */
+    .notes-nav {
+      background: rgba(13,15,26,0.85);
+      backdrop-filter: blur(20px) saturate(1.4);
+      border-bottom: 1px solid rgba(108,99,255,0.25);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .notes-nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-home {
+      color: var(--clr-accent-cyan);
+      text-decoration: none;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+    .nav-home:hover {
+      color: var(--clr-accent);
+    }
+    .nav-link {
+      color: var(--clr-text-main);
+      text-decoration: none;
+      margin-left: 1.5rem;
+      padding: 0.5rem 0;
+      position: relative;
+    }
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--clr-accent-cyan);
+    }
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--clr-accent-cyan);
+    }
+    .notes-footer {
+      margin-top: 4rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--clr-border);
+      text-align: center;
+    }
+  </style>
+</body>
+</html>

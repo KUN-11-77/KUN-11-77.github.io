@@ -1,4 +1,71 @@
-<!-- 云动画背景 -->
+<!-- Phase 1: 字体注入 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=
+  Orbitron:wght@400;600;700;900&
+  Space+Grotesk:wght@300;400;500;600;700&
+  JetBrains+Mono:ital,wght@0,300;0,400;0,700;1,400&
+  Noto+Serif+SC:wght@300;400;500;700&
+  display=swap" rel="stylesheet">
+
+<!-- 霞鹜文楷本地字体 (需下载到 source/fonts/) -->
+<!--
+@font-face {
+  font-family: "LXGW WenKai";
+  src: url("/fonts/LXGWWenKai-Regular.woff2") format("woff2");
+  font-display: swap;
+}
+-->
+
+<!-- Phase 3: GSAP 动画库 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<!-- Phase 4: SVG 霓虹云朵 -->
+<svg class="cloud-deco cloud-bg cloud-left" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <defs>
+    <filter id="glow-cloud">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="cloud-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#6C63FF" stop-opacity="0.7"/>
+      <stop offset="50%"  stop-color="#00D4FF" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#6C63FF" stop-opacity="0.3"/>
+    </linearGradient>
+  </defs>
+  <!-- 云体由多个重叠圆组成 -->
+  <g filter="url(#glow-cloud)" fill="url(#cloud-grad)">
+    <circle cx="120" cy="110" r="55"/>
+    <circle cx="180" cy="90"  r="70"/>
+    <circle cx="255" cy="105" r="55"/>
+    <circle cx="305" cy="120" r="40"/>
+    <rect   x="80"  y="120" width="265" height="55" rx="8"/>
+  </g>
+</svg>
+
+<svg class="cloud-deco cloud-fg cloud-right" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <defs>
+    <filter id="glow-cloud2">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="cloud-grad2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#00D4FF" stop-opacity="0.6"/>
+      <stop offset="50%"  stop-color="#F0C040" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#00D4FF" stop-opacity="0.2"/>
+    </linearGradient>
+  </defs>
+  <g filter="url(#glow-cloud2)" fill="url(#cloud-grad2)">
+    <circle cx="100" cy="100" r="45"/>
+    <circle cx="160" cy="80"  r="60"/>
+    <circle cx="235" cy="95"  r="45"/>
+    <circle cx="285" cy="110" r="30"/>
+    <rect   x="60"  y="110" width="245" height="45" rx="6"/>
+  </g>
+</svg>
+
+<!-- 保留原有云动画背景作为回退 -->
 <div class="clouds">
   <div class="cloud"></div>
   <div class="cloud"></div>

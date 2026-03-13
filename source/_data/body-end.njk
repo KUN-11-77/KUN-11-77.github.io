@@ -1,0 +1,37 @@
+<!-- Phase 3: 交互特效脚本 -->
+<script>
+  // 检测是否应启用高级效果（非移动设备且未设置 prefers-reduced-motion）
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const enableEffects = !isMobile && !prefersReducedMotion;
+</script>
+
+<!-- 加载交互特效脚本 -->
+{% if theme.motion.enable and enableEffects %}
+<script defer src="/js/cursor-effect.js"></script>
+<script defer src="/js/starfield.js"></script>
+<script defer src="/js/scroll-animations.js"></script>
+{% else %}
+<script>
+  console.log('Advanced effects disabled (mobile or prefers-reduced-motion)');
+</script>
+{% endif %}
+
+<!-- 简单的回退效果（当高级效果禁用时） -->
+<script>
+  if (!enableEffects) {
+    // 基本的淡入动画
+    document.addEventListener('DOMContentLoaded', () => {
+      const elements = document.querySelectorAll('.post-block, article.post');
+      elements.forEach((el, i) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+          el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+        }, i * 100);
+      });
+    });
+  }
+</script>
