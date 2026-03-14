@@ -1,0 +1,497 @@
+/* source/css/custom.css - 全局自定义样式 */
+/* 基于 roadmap 第 1.2 节色彩系统设计 */
+
+:root {
+  /* ============================================================
+     KUN's Tech Realm — Design Token System
+     Theme: Dragon Ball Sunset × Deep Space
+     ============================================================ */
+
+  /* ── Sunset Palette (晚霞色系) ── */
+  --clr-sunset-hot:    #FF4500;   /* 烈日橙红 */
+  --clr-sunset-warm:   #FF6B35;   /* 晚霞橙 */
+  --clr-sunset-gold:   #FFA500;   /* 悟空金 */
+  --clr-sunset-amber:  #FFD166;   /* 琥珀暖光 */
+
+  /* ── Deep Space Palette (深空色系) ── */
+  --clr-space-void:    #030508;   /* 绝对深空 */
+  --clr-space-deep:    #0A0E1A;   /* 深空蓝黑 */
+  --clr-space-mid:     #0F1629;   /* 中层星空 */
+  --clr-space-near:    #1A2240;   /* 近层星云 */
+  --clr-space-card:    #1E2A4A;   /* 卡片背景 */
+
+  /* ── Energy Colors (气场色系) ── */
+  --clr-ki-green:      #39FF14;   /* 气灵绿 (赛亚人气场) */
+  --clr-ki-cyan:       #00E5FF;   /* 量子青 */
+  --clr-ki-purple:     #7C3AED;   /* 量子紫 */
+  --clr-ki-blue:       #2563EB;   /* 深蓝气能 */
+
+  /* ── Text ── */
+  --clr-text-primary:  #E8EAF0;
+  --clr-text-body:     #B8BDC8;
+  --clr-text-muted:    #5A6478;
+  --clr-text-code:     #FFD166;
+  --clr-border:        #1E2A4A;
+  --clr-border-glow:   rgba(255,107,53,0.3);
+
+  /* ── Legacy Compatibility Variables (保持向后兼容) ── */
+  --clr-bg-deep:       var(--clr-space-deep);   /* 原：极深宇宙黑 */
+  --clr-bg-mid:        var(--clr-space-mid);    /* 原：面板背景 */
+  --clr-bg-card:       var(--clr-space-card);   /* 原：卡片背景 */
+  --clr-accent:        var(--clr-sunset-warm);  /* 主色调：晚霞橙 */
+  --clr-accent-cyan:   var(--clr-ki-cyan);      /* 辅助色：量子青 */
+  --clr-accent-gold:   var(--clr-sunset-gold);  /* 点缀色：悟空金 */
+  --clr-text-main:     var(--clr-text-primary); /* 正文色 */
+  --clr-text-muted:    var(--clr-text-muted);   /* 弱化文字 */
+  /* --clr-border already defined above */
+
+  /* ── Glow Effects ── */
+  --glow-sunset:  0 0 25px rgba(255,107,53,0.55), 0 0 60px rgba(255,69,0,0.25);
+  --glow-ki:      0 0 20px rgba(57,255,20,0.50),  0 0 50px rgba(57,255,20,0.20);
+  --glow-space:   0 0 20px rgba(0,229,255,0.45),  0 0 45px rgba(124,58,237,0.20);
+
+  /* ── Legacy Glow Effects (保持向后兼容) ── */
+  --glow-purple:  var(--glow-sunset);  /* 原：量子紫发光 */
+  --glow-cyan:    var(--glow-ki);      /* 原：霓虹青发光 */
+  --glow-gold:    0 0 15px rgba(255,166,0,0.35); /* 原：负熵金发光 */
+
+  /* ── Gradients ── */
+  --grad-sunset-sky: linear-gradient(
+    180deg,
+    #0A0E1A 0%,
+    #0F1629 20%,
+    #1a0a05 50%,
+    #3d1200 70%,
+    #6b2000 85%,
+    #a03000 100%
+  );
+  --grad-hero-title: linear-gradient(
+    135deg, #FF6B35 0%, #FFD166 35%, #FF4500 70%, #FFA500 100%
+  );
+  --grad-card:       linear-gradient(145deg, #1E2A4A, #141d35);
+  --grad-accent:     linear-gradient(90deg, #FF6B35, #FFD166);
+  --grad-ki:         linear-gradient(90deg, #39FF14, #00E5FF);
+
+  /* ── Legacy Gradients (保持向后兼容) ── */
+  --grad-hero:   var(--grad-sunset-sky);        /* 原：Hero渐变 */
+  --grad-accent: var(--grad-accent);            /* 原：主色调渐变 */
+  /* --grad-card already defined above */
+
+  /* ── Spacing ── */
+  --space-xs:   0.4rem;
+  --space-sm:   0.8rem;
+  --space-md:   1.6rem;
+  --space-lg:   3.2rem;
+  --space-xl:   6.4rem;
+  --radius-sm:  8px;
+  --radius-md:  16px;
+  --radius-lg:  24px;
+}
+
+/* 全局背景与 Hero 区域 (基于 roadmap 2.1) */
+body {
+  background-color: var(--clr-bg-deep);
+  background-image: url('/background.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  min-height: 100vh;
+  color: var(--clr-text-main);
+  font-family: "Raleway", "LXGW WenKai", "Noto Serif SC", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.85;
+  position: relative;
+}
+
+/* 添加深色叠加层以提高可读性 */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(13, 15, 26, 0.85);
+  z-index: -1;
+}
+
+/* 标题字体 */
+h1, h2, h3, h4 {
+  font-family: "Cinzel Decorative", "Cinzel", "Orbitron", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+code, pre {
+  font-family: "JetBrains Mono", monospace;
+}
+
+.site-title {
+  font-family: "Cinzel Decorative", "Cinzel", "Orbitron", sans-serif;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* 文章卡片 Glassmorphism 效果 (基于 roadmap 2.2) */
+.post-block, .post-article, article.post {
+  background: rgba(27,32,56,0.55);
+  backdrop-filter: blur(16px) saturate(1.2);
+  border: 1px solid rgba(108,99,255,0.20);
+  border-radius: 16px;
+  padding: 2rem 2.4rem;
+  margin-bottom: 2rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.post-block::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg,
+    rgba(255,107,53,0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.post-block:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: var(--glow-purple), 0 16px 48px rgba(0,0,0,0.5);
+  border-color: rgba(255,107,53,0.5);
+}
+
+/* 响应式排版 */
+@media (max-width: 768px) {
+  .post-block, .post-article, article.post {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* 动画 */
+@keyframes rainbow-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { text-shadow: 0 0 10px rgba(108,99,255,0.6), 0 0 30px rgba(0,212,255,0.3); }
+  33%       { text-shadow: 0 0 15px rgba(0,212,255,0.8), 0 0 35px rgba(240,192,64,0.4); }
+  66%       { text-shadow: 0 0 12px rgba(240,192,64,0.7), 0 0 28px rgba(108,99,255,0.5); }
+}
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 云朵动画 (基于 roadmap 4.2) - 增强版 */
+.cloud-deco {
+  position: absolute;
+  animation: cloud-drift 8s ease-in-out infinite;
+  opacity: 0.1;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* 左侧云朵 */
+.cloud-left {
+  top: 15%;
+  left: 5%;
+  width: 120px;
+  height: auto;
+  animation-duration: 12s;
+  animation-delay: 0s;
+  filter: drop-shadow(0 0 20px rgba(108, 99, 255, 0.3));
+  opacity: 0.15;
+}
+
+/* 右侧云朵 */
+.cloud-right {
+  top: 25%;
+  right: 5%;
+  width: 100px;
+  height: auto;
+  animation-duration: 10s;
+  animation-delay: 1s;
+  filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.3));
+  opacity: 0.15;
+}
+
+/* 背景云朵 */
+.cloud-bg {
+  opacity: 0.12;
+  filter: blur(4px);
+}
+
+/* 前景云朵 */
+.cloud-fg {
+  opacity: 0.22;
+  filter: blur(2px);
+}
+
+@keyframes cloud-drift {
+  0%, 100% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 0.18;
+  }
+  25% {
+    transform: translateY(-15px) translateX(10px) scale(1.02);
+    opacity: 0.22;
+  }
+  50% {
+    transform: translateY(5px) translateX(-5px) scale(0.98);
+    opacity: 0.15;
+  }
+  75% {
+    transform: translateY(-10px) translateX(-8px) scale(1.01);
+    opacity: 0.20;
+  }
+}
+
+/* 场、熵减主题：流动线条效果 */
+.field-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.field-line::before,
+.field-line::after {
+  content: '';
+  position: absolute;
+  width: 150%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(108, 99, 255, 0.4), transparent);
+  animation: field-flow 20s linear infinite;
+}
+
+.field-line::before {
+  top: 20%;
+  animation-delay: 0s;
+}
+
+.field-line::after {
+  top: 60%;
+  animation-delay: 10s;
+}
+
+@keyframes field-flow {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* 科技感增强：网格背景 */
+.tech-grid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -3;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image:
+    linear-gradient(rgba(108, 99, 255, 0.2) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(108, 99, 255, 0.2) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* 扫描线效果 */
+.scanlines {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  pointer-events: none;
+  opacity: 0.04;
+  background: linear-gradient(
+    to bottom,
+    transparent 50%,
+    rgba(0, 212, 255, 0.1) 50%
+  );
+  background-size: 100% 4px;
+  animation: scanline 10s linear infinite;
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+/* 脉动光环效果 */
+.pulse-glow {
+  position: absolute;
+  border-radius: 50%;
+  z-index: -1;
+  pointer-events: none;
+  filter: blur(40px);
+  opacity: 0.1;
+  animation: pulse 8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.1; }
+  50% { transform: scale(1.2); opacity: 0.15; }
+}
+
+/* 头部样式 */
+.header-inner {
+  background: rgba(13,15,26,0.85);
+  backdrop-filter: blur(20px) saturate(1.4);
+  border-bottom: 1px solid rgba(108,99,255,0.25);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* ====== UI 优化增强 ====== */
+
+/* 增强卡片悬停效果 */
+.post-block:hover, .post-article:hover, article.post:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow:
+    0 0 30px rgba(108, 99, 255, 0.5),
+    0 20px 60px rgba(0, 0, 0, 0.7);
+  border-color: rgba(108, 99, 255, 0.8);
+}
+
+/* 输入框美化 */
+input, textarea, select {
+  background: rgba(27, 32, 56, 0.7);
+  border: 1px solid var(--clr-border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  color: var(--clr-text-main);
+  font-family: 'Space Grotesk', sans-serif;
+  transition: all 0.3s;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--clr-accent);
+  box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+}
+
+/* 导航菜单增强 */
+.menu .menu-item a {
+  position: relative;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+
+.menu .menu-item a:hover {
+  background: rgba(255, 107, 53, 0.1);
+  color: var(--clr-accent-cyan);
+}
+
+.menu .menu-item.active a {
+  background: linear-gradient(135deg, rgba(255, 107, 53, 0.2), rgba(255, 166, 0, 0.1));
+  color: var(--clr-accent-cyan);
+}
+
+/* 页脚增强 */
+.footer {
+  position: relative;
+  overflow: hidden;
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--clr-border);
+  text-align: center;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--clr-accent), var(--clr-accent-cyan), transparent);
+}
+
+/* 代码块增强 */
+pre {
+  position: relative;
+  border: 1px solid var(--clr-border);
+  border-left: 4px solid var(--clr-accent);
+  border-radius: 12px;
+  padding: 1.5rem;
+  overflow-x: auto;
+  background: rgba(27, 32, 56, 0.7);
+}
+
+pre::before {
+  content: 'CODE';
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--clr-accent);
+  color: white;
+  font-size: 0.7rem;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 4px 10px;
+  border-radius: 0 12px 0 8px;
+  letter-spacing: 0.1em;
+}
+
+/* 表格增强 */
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+th {
+  background: linear-gradient(135deg, rgba(108, 99, 255, 0.3), rgba(0, 212, 255, 0.2));
+  color: var(--clr-accent-cyan);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+tr:hover td {
+  background: rgba(108, 99, 255, 0.08);
+}
+
+/* 分隔线增强 */
+hr {
+  border: none;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--clr-accent), var(--clr-accent-cyan), transparent);
+  margin: 3rem 0;
+  opacity: 0.7;
+}
+
+/* 悟空剪影样式 */
+.goku-silhouette {
+  position: fixed;
+  top: 15%;
+  right: 5%;
+  width: 180px;
+  height: auto;
+  opacity: 0.12;
+  z-index: -1;
+  pointer-events: none;
+  filter: drop-shadow(0 0 20px rgba(255,107,53,0.3));
+  animation: goku-float 20s ease-in-out infinite;
+}
+
+@keyframes goku-float {
+  0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
+  25% { transform: translateY(-20px) translateX(10px) rotate(2deg); }
+  50% { transform: translateY(10px) translateX(-5px) rotate(-1deg); }
+  75% { transform: translateY(-15px) translateX(-8px) rotate(1deg); }
+}

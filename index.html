@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kun-11-77.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":{"default":"dark"},"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Attempting to reinterpret the world in the language of neurons.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="KUN&#39;s Tech Realm">
+<meta property="og:url" content="https://kun-11-77.github.io/index.html">
+<meta property="og:site_name" content="KUN&#39;s Tech Realm">
+<meta property="og:description" content="Attempting to reinterpret the world in the language of neurons.">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="KUN">
+<meta property="article:tag" content="AI">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://kun-11-77.github.io/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>KUN's Tech Realm</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+<!-- Phase 1: 字体注入 - 龙珠晚霞主题 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=
+  Cinzel+Decorative:wght@400;700;900&
+  Cinzel:wght@400;500;600;700&
+  Raleway:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&
+  JetBrains+Mono:ital,wght@0,300;0,400;0,700;1,400&
+  Noto+Serif+SC:wght@300;400;500;700&
+  display=swap" rel="stylesheet">
+
+<!-- 霞鹜文楷字体 (通过CDN) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont/style.css" />
+<!-- 备用本地字体 (如果将来需要本地部署) -->
+<!--
+@font-face {
+  font-family: "LXGW WenKai";
+  src: url("/fonts/LXGWWenKai-Regular.woff2") format("woff2");
+  font-display: swap;
+}
+-->
+
+<!-- Phase 3: GSAP 动画库 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<!-- Phase 4: SVG 霓虹云朵 -->
+<svg class="cloud-deco cloud-bg cloud-left" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="glow-cloud">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="cloud-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#FF6B35" stop-opacity="0.6"/>
+      <stop offset="50%"  stop-color="#FFD166" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#FF4500" stop-opacity="0.4"/>
+    </linearGradient>
+  </defs>
+  <!-- 云体由多个重叠圆组成 -->
+  <g filter="url(#glow-cloud)" fill="url(#cloud-grad)">
+    <circle cx="120" cy="110" r="55"/>
+    <circle cx="180" cy="90"  r="70"/>
+    <circle cx="255" cy="105" r="55"/>
+    <circle cx="305" cy="120" r="40"/>
+    <rect   x="80"  y="120" width="265" height="55" rx="8"/>
+  </g>
+</svg>
+
+<svg class="cloud-deco cloud-fg cloud-right" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="glow-cloud2">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="cloud-grad2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#FFD166" stop-opacity="0.6"/>
+      <stop offset="50%"  stop-color="#FFA500" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#FF6B35" stop-opacity="0.3"/>
+    </linearGradient>
+  </defs>
+  <g filter="url(#glow-cloud2)" fill="url(#cloud-grad2)">
+    <circle cx="100" cy="100" r="45"/>
+    <circle cx="160" cy="80"  r="60"/>
+    <circle cx="235" cy="95"  r="45"/>
+    <circle cx="285" cy="110" r="30"/>
+    <rect   x="60"  y="110" width="245" height="45" rx="6"/>
+  </g>
+</svg>
+
+<!-- 保留原有云动画背景作为回退 -->
+<div class="clouds">
+  <div class="cloud"></div>
+  <div class="cloud"></div>
+  <div class="cloud"></div>
+</div>
+
+<!-- 悟空剪影 SVG -->
+<svg class="goku-silhouette" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="goku-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FF4500" stop-opacity="0.4"/>
+      <stop offset="50%" stop-color="#FF6B35" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#FFA500" stop-opacity="0.2"/>
+    </linearGradient>
+    <filter id="goku-glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- 简单悟空剪影：赛亚人发型 + 尾巴轮廓 -->
+  <g filter="url(#goku-glow)" fill="url(#goku-grad)">
+    <!-- 身体轮廓 -->
+    <ellipse cx="100" cy="180" rx="30" ry="50"/>
+    <!-- 头部 -->
+    <circle cx="100" cy="120" r="25"/>
+    <!-- 赛亚人发型（左侧） -->
+    <path d="M 75,100 Q 60,70 70,40 Q 85,20 110,30 Q 130,40 125,70 L 100,85 Z"/>
+    <!-- 赛亚人发型（右侧） -->
+    <path d="M 125,100 Q 140,70 130,40 Q 115,20 90,30 Q 70,40 75,70 L 100,85 Z"/>
+    <!-- 尾巴轮廓 -->
+    <path d="M 130,180 Q 160,200 180,220 Q 170,240 150,230 Q 140,210 130,200 Z"/>
+  </g>
+</svg>
+
+<!-- 科技感粒子背景脚本（可选） -->
+<script>
+// 粒子背景效果
+if (window.innerWidth > 768) {
+  document.addEventListener('DOMContentLoaded', function() {
+    const canvas = document.createElement('canvas');
+    canvas.id = 'particle-canvas';
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.zIndex = '-2';
+    canvas.style.pointerEvents = 'none';
+    document.body.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles = [];
+    const particleCount = 50;
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = Math.random() * 1 - 0.5;
+        this.speedY = Math.random() * 1 - 0.5;
+        this.color = `rgba(100, 150, 255, ${Math.random() * 0.3 + 0.1})`;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x > canvas.width) this.x = 0;
+        if (this.x < 0) this.x = canvas.width;
+        if (this.y > canvas.height) this.y = 0;
+        if (this.y < 0) this.y = canvas.height;
+      }
+      draw() {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(particle => {
+        particle.update();
+        particle.draw();
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    window.addEventListener('resize', function() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  });
+}
+</script>
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">KUN's Tech Realm</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Realm of Negentropy</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-notes"><a href="/notes/" rel="section"><i class="fa fa-book fa-fw"></i>notes</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">KUN</p>
+  <div class="site-description" itemprop="description">Attempting to reinterpret the world in the language of neurons.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://kun-11-77.github.io/2026/03/13/Test-Post/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="KUN">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="KUN's Tech Realm">
+      <meta itemprop="description" content="Attempting to reinterpret the world in the language of neurons.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | KUN's Tech Realm">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/03/13/Test-Post/" class="post-title-link" itemprop="url">Introduction to KUN's Tech Realm</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-03-13 20:17:14" itemprop="dateCreated datePublished" datetime="2026-03-13T20:17:14+08:00">2026-03-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-14 19:54:50" itemprop="dateModified" datetime="2026-03-14T19:54:50+08:00">2026-03-14</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Welcome-to-KUN’s-Tech-Realm"><a href="#Welcome-to-KUN’s-Tech-Realm" class="headerlink" title="Welcome to KUN’s Tech Realm"></a>Welcome to KUN’s Tech Realm</h2><p>Hello! I’m KUN, a student at Zhejiang University, College of Information Science and Electronic Engineering. This website serves as my personal tech realm where I explore the unknown.</p>
+<h2 id="About-This-Realm"><a href="#About-This-Realm" class="headerlink" title="About This Realm"></a>About This Realm</h2><p><strong>KUN’s Tech Realm</strong> is a digital space dedicated to exploring the concept of <strong>“Realm of Negentropy”</strong> - the idea of creating order, structure, and information in a universe that tends toward chaos.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KUN</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<!-- Phase 3: 交互特效脚本 -->
+<!-- 科技感背景元素 -->
+<style>
+/* 全局背景：龙珠孙悟空主题 */
+body {
+  background-image: url('/background.jpg') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+  position: relative;
+  min-height: 100vh;
+  /* 添加滤镜效果 */
+  filter: saturate(1.1) brightness(1.05);
+}
+
+/* 动态渐变叠加层 */
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    45deg,
+    rgba(108, 99, 255, 0.15) 0%,
+    rgba(0, 212, 255, 0.1) 25%,
+    rgba(10, 15, 30, 0.8) 50%,
+    rgba(108, 99, 255, 0.15) 75%,
+    rgba(0, 212, 255, 0.1) 100%
+  );
+  background-size: 400% 400%;
+  z-index: -1;
+  animation: gradientShift 20s ease infinite;
+  mix-blend-mode: overlay;
+}
+
+/* 深色固定叠加层，确保文字可读性 */
+body::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(40, 45, 60, 0.6);
+  z-index: -1;
+}
+
+/* 动态背景动画 */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 保留原有科技感元素，但调整透明度 */
+.tech-grid, .scanlines, .pulse-glow, .field-line {
+  opacity: 0.3;
+}
+
+/* 调整 notes 页面背景，使其透明 */
+.notes-page,
+.notes-nav,
+.notes-footer {
+  background: transparent !important;
+}
+</style>
+<div class="tech-grid"></div>
+<div class="scanlines"></div>
+<div class="pulse-glow" style="top: 20%; left: 10%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(108, 99, 255, 0.3), transparent);"></div>
+<div class="pulse-glow" style="bottom: 15%; right: 5%; width: 200px; height: 200px; background: radial-gradient(circle, rgba(0, 212, 255, 0.3), transparent); animation-delay: 2s;"></div>
+<div class="field-line"></div>
+
+<script>
+  // 检测是否应启用高级效果（非移动设备且未设置 prefers-reduced-motion）
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const enableEffects = !isMobile && !prefersReducedMotion;
+  // 强制启用效果（用于调试）
+  window.enableEffects = true;
+</script>
+
+<!-- 加载交互特效脚本 -->
+<script defer src="/js/cursor-effect.js"></script>
+<script defer src="/js/starfield.js"></script>
+<!-- <script defer src="/js/scroll-animations.js"></script> -->
+
+<!-- 简单的回退效果（当高级效果禁用时） -->
+<script>
+  if (!enableEffects) {
+    // 基本的淡入动画
+    document.addEventListener('DOMContentLoaded', () => {
+      const elements = document.querySelectorAll('.post-block, article.post');
+      elements.forEach((el, i) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+          el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+        }, i * 100);
+      });
+    });
+  }
+</script>
+
+
+<!-- 打字机效果 -->
+<script>
+(function() {
+    if (!window.enableEffects) return;
+
+    // 防止重复执行
+    if (window.typewriterExecuted) return;
+    window.typewriterExecuted = true;
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // 查找网站标题和副标题
+        const siteTitle = document.querySelector('.site-title');
+        const siteSubtitle = document.querySelector('.site-subtitle');
+        const brand = document.querySelector('.brand');
+
+        // 选择要应用打字机效果的元素
+        const targetElement = siteSubtitle || siteTitle || brand;
+
+        if (targetElement && targetElement.textContent.trim() && !targetElement.hasAttribute('data-typed')) {
+            targetElement.setAttribute('data-typed', 'true');
+            const originalText = targetElement.textContent.trim();
+            targetElement.textContent = '';
+            targetElement.style.opacity = '1';
+
+            let i = 0;
+            const speed = 80; // 打字速度（毫秒）
+
+            function typeWriter() {
+                if (i < originalText.length) {
+                    targetElement.textContent += originalText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
+                } else {
+                    // 打字完成后，可以添加光标闪烁效果
+                    const cursor = document.createElement('span');
+                    cursor.className = 'typing-cursor';
+                    cursor.textContent = '|';
+                    cursor.style.animation = 'blink 1s infinite';
+                    targetElement.appendChild(cursor);
+
+                    // 添加CSS动画
+                    if (!document.querySelector('#typing-cursor-style')) {
+                        const style = document.createElement('style');
+                        style.id = 'typing-cursor-style';
+                        style.textContent = `
+                            .typing-cursor {
+                                display: inline-block;
+                                color: var(--clr-accent-cyan);
+                                font-weight: bold;
+                                margin-left: 2px;
+                            }
+                            @keyframes blink {
+                                0%, 100% { opacity: 1; }
+                                50% { opacity: 0; }
+                            }
+                        `;
+                        document.head.appendChild(style);
+                    }
+                }
+            }
+
+            // 延迟开始打字效果
+            setTimeout(typeWriter, 1000);
+        }
+    });
+})();
+</script>
+
+<!-- 简单滚动动画（不依赖GSAP） -->
+<script>
+(function() {
+    if (!window.enableEffects) return;
+
+    // 使用Intersection Observer API实现滚动动画
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animated');
+                // 动画完成后停止观察，防止重复触发
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // 观察需要动画的元素
+    document.addEventListener('DOMContentLoaded', function() {
+        const elementsToAnimate = document.querySelectorAll(
+            '.post-block, article.post, .card, .post, .post-header, .post-body'
+        );
+
+        elementsToAnimate.forEach(el => {
+            // 只添加动画样式如果元素还没有动画类
+            if (!el.classList.contains('animated')) {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(el);
+            }
+        });
+
+        // 添加CSS类
+        const style = document.createElement('style');
+        style.textContent = `
+            .animated {
+                opacity: 1 !important;
+                transform: translateY(0) !important;
+            }
+        `;
+        document.head.appendChild(style);
+    });
+})();
+</script>
+</body>
+</html>
