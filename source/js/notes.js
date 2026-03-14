@@ -9,7 +9,9 @@ let currentPage = 1;
 let totalPages = 1;
 
 // 1. 加载 PDFJS worker (通过 CDN)
-const PDFJS_CDN = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/";
+const PDFJS_VERSION = "3.11.174";
+const PDFJS_CDN = `https://cdn.jsdelivr.net/npm/pdfjs-dist@${PDFJS_VERSION}/build/`;
+const PDFJS_CDN_FALLBACK = `https://unpkg.com/pdfjs-dist@${PDFJS_VERSION}/build/`;
 
 // 检查并加载 PDF.js
 function checkPDFJS() {
@@ -24,15 +26,23 @@ function checkPDFJS() {
       initNotes();
     };
     script.onerror = (err) => {
-      console.error('Failed to load PDF.js:', err);
-      // 显示错误
-      const loadingEl = document.querySelector('.notes-loading');
-      if (loadingEl) {
-        loadingEl.innerHTML = `
+      console.warn('jsdelivr 失败，尝试 unpkg...', err);
+      const fallback = document.createElement('script');
+      fallback.src = PDFJS_CDN_FALLBACK + 'pdf.min.js';
+      fallback.crossOrigin = 'anonymous';
+      fallback.onload = () => {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_CDN_FALLBACK + 'pdf.worker.min.js';
+        initNotes();
+      };
+      fallback.onerror = () => {
+        console.error('两个 CDN 均加载失败');
+        document.querySelector('.notes-loading').innerHTML = `
           <p style="color: #ff6b6b">PDF.js 加载失败，请检查网络</p>
           <button onclick="location.reload()">重试</button>
         `;
-      }
+        initNotes(); // 降级：没有PDF预览，但标签/搜索仍可用
+      };
+      document.head.appendChild(fallback);
     };
     document.head.appendChild(script);
     return;
@@ -202,6 +212,18 @@ async function openPDF(path, title) {
   if (loadingEl) {
     loadingEl.style.display = 'block';
     loadingEl.innerHTML = '加载 PDF 中...';
+  }
+
+  // 检查 PDF.js 是否可用
+  if (typeof pdfjsLib === 'undefined') {
+    console.error('PDF.js library not loaded');
+    if (loadingEl) {
+      loadingEl.innerHTML = `
+        <p style="color: #ff6b6b">PDF 查看器不可用：PDF.js 库加载失败</p>
+        <a href="${path}" download class="pdf-controls">直接下载</a>
+      `;
+    }
+    return;
   }
 
   try {
