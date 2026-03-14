@@ -9,7 +9,7 @@ let currentPage = 1;
 let totalPages = 1;
 
 // 1. 加载 PDFJS worker (通过 CDN)
-const PDFJS_CDN = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.3.136/";
+const PDFJS_CDN = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/";
 
 // 检查并加载 PDF.js
 function checkPDFJS() {
@@ -164,7 +164,6 @@ function initPDFViewer() {
   const closeBtn = document.getElementById('pdf-close');
   const prevBtn = document.getElementById('pdf-prev');
   const nextBtn = document.getElementById('pdf-next');
-  const downloadBtn = document.getElementById('pdf-download');
 
   if (!modal) return;
 
