@@ -1,9 +1,10 @@
-<!-- Phase 1: 字体注入 -->
+<!-- Phase 1: 字体注入 - 龙珠晚霞主题 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=
-  Orbitron:wght@400;600;700;900&
-  Space+Grotesk:wght@300;400;500;600;700&
+  Cinzel+Decorative:wght@400;700;900&
+  Cinzel:wght@400;500;600;700&
+  Raleway:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&
   JetBrains+Mono:ital,wght@0,300;0,400;0,700;1,400&
   Noto+Serif+SC:wght@300;400;500;700&
   display=swap" rel="stylesheet">
@@ -31,9 +32,9 @@
       <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
     <linearGradient id="cloud-grad" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%"   stop-color="#6C63FF" stop-opacity="0.7"/>
-      <stop offset="50%"  stop-color="#00D4FF" stop-opacity="0.5"/>
-      <stop offset="100%" stop-color="#6C63FF" stop-opacity="0.3"/>
+      <stop offset="0%"   stop-color="#FF6B35" stop-opacity="0.6"/>
+      <stop offset="50%"  stop-color="#FFD166" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#FF4500" stop-opacity="0.4"/>
     </linearGradient>
   </defs>
   <!-- 云体由多个重叠圆组成 -->
@@ -53,9 +54,9 @@
       <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
     <linearGradient id="cloud-grad2" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%"   stop-color="#00D4FF" stop-opacity="0.6"/>
-      <stop offset="50%"  stop-color="#F0C040" stop-opacity="0.4"/>
-      <stop offset="100%" stop-color="#00D4FF" stop-opacity="0.2"/>
+      <stop offset="0%"   stop-color="#FFD166" stop-opacity="0.6"/>
+      <stop offset="50%"  stop-color="#FFA500" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#FF6B35" stop-opacity="0.3"/>
     </linearGradient>
   </defs>
   <g filter="url(#glow-cloud2)" fill="url(#cloud-grad2)">
@@ -73,6 +74,34 @@
   <div class="cloud"></div>
   <div class="cloud"></div>
 </div>
+
+<!-- 悟空剪影 SVG -->
+<svg class="goku-silhouette" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="goku-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FF4500" stop-opacity="0.4"/>
+      <stop offset="50%" stop-color="#FF6B35" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#FFA500" stop-opacity="0.2"/>
+    </linearGradient>
+    <filter id="goku-glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- 简单悟空剪影：赛亚人发型 + 尾巴轮廓 -->
+  <g filter="url(#goku-glow)" fill="url(#goku-grad)">
+    <!-- 身体轮廓 -->
+    <ellipse cx="100" cy="180" rx="30" ry="50"/>
+    <!-- 头部 -->
+    <circle cx="100" cy="120" r="25"/>
+    <!-- 赛亚人发型（左侧） -->
+    <path d="M 75,100 Q 60,70 70,40 Q 85,20 110,30 Q 130,40 125,70 L 100,85 Z"/>
+    <!-- 赛亚人发型（右侧） -->
+    <path d="M 125,100 Q 140,70 130,40 Q 115,20 90,30 Q 70,40 75,70 L 100,85 Z"/>
+    <!-- 尾巴轮廓 -->
+    <path d="M 130,180 Q 160,200 180,220 Q 170,240 150,230 Q 140,210 130,200 Z"/>
+  </g>
+</svg>
 
 <!-- 科技感粒子背景脚本（可选） -->
 <script>

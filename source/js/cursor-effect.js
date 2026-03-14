@@ -27,7 +27,7 @@ Object.assign(canvas.style, {
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const COLORS = ["#6C63FF", "#00D4FF", "#F0C040", "#FF6B9D", "#4ECDC4"];
+const COLORS = ["#FF6B35", "#FFD166", "#39FF14", "#00E5FF", "#7C3AED"];
 const particles = [];
 let mx = 0, my = 0;
 
@@ -59,7 +59,7 @@ function animate() {
 
   // 主光圈渐变
   const grad = ctx.createRadialGradient(haloX, haloY, 0, haloX, haloY, 60);
-  grad.addColorStop(0, "rgba(108,99,255,0.18)");
+  grad.addColorStop(0, "rgba(255,107,53,0.25)");
   grad.addColorStop(1, "transparent");
   ctx.beginPath();
   ctx.arc(haloX, haloY, 60, 0, Math.PI * 2);
