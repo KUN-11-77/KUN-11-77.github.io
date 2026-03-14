@@ -6,40 +6,55 @@
   <title>{{ page.title }} · {{ config.title }}</title>
 
   <!-- 主题样式 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ url_for(theme.css) }}/main.css">
 
   <!-- 自定义样式 -->
   <link rel="stylesheet" href="/css/notes.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf_viewer.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.3.136/pdf_viewer.min.css" crossorigin="anonymous">
 
   <!-- 字体 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,700;1,400&family=Noto+Serif+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,700;1,400&family=Noto+Serif+SC:wght@300;400;500;700&display=swap" rel="stylesheet" crossorigin="anonymous">
 
-  <!-- 主题颜色变量 -->
+  <!-- 主题颜色变量 - 与主站保持一致 -->
   <style>
     :root {
       --clr-bg-deep: #0D0F1A;
       --clr-bg-mid: #141726;
-      --clr-bg-card: rgba(30, 20, 40, 0.7); /* 半透明深紫色 */
-      --clr-accent: #FF6B35; /* 橙色 */
-      --clr-accent-cyan: #00D4FF; /* 青色 */
-      --clr-accent-gold: #FFD166; /* 金色 */
-      --clr-text-main: #F0F0F0;
-      --clr-text-muted: #A0A0A0;
-      --clr-border: rgba(255, 107, 53, 0.3);
+      --clr-bg-card: #1B2038;
+      --clr-accent: #6C63FF;
+      --clr-accent-cyan: #00D4FF;
+      --clr-accent-gold: #F0C040;
+      --clr-text-main: #C8CDD8;
+      --clr-text-muted: #6B7280;
+      --clr-border: #2E3560;
     }
 
     body {
-      background-color: transparent;
-      background-image: none;
+      background-color: var(--clr-bg-deep);
+      background-image: url('/background.jpg');
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
       color: var(--clr-text-main);
       font-family: "LXGW WenKai", "Space Grotesk", "Noto Serif SC", sans-serif;
       margin: 0;
       padding: 0;
       min-height: 100vh;
+    }
+
+    /* 添加深色叠加层以提高文字可读性 */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(13, 15, 26, 0.85);
+      z-index: -1;
     }
 
     .container {
@@ -53,15 +68,6 @@
       0%   { background-position: 0% 50%; }
       50%  { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
-    }
-
-    /* 减慢动画速度 */
-    .notes-hero h1 {
-      animation: rainbow-shift 8s ease infinite;
-    }
-
-    .notes-hero h1 .grad {
-      animation: rainbow-shift 10s ease infinite 1s;
     }
   </style>
 </head>
@@ -141,12 +147,11 @@
     </div>
   </footer>
 
-  <!-- PDF.js 库 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.min.js"></script>
+  <!-- PDF.js 库由 notes.js 动态加载 -->
   <script src="/js/notes.js" defer></script>
 
   <style>
-    /* 导航样式 */
+    /* 导航样式 - 与主站头部一致 */
     .notes-nav {
       background: rgba(13,15,26,0.85);
       backdrop-filter: blur(20px) saturate(1.4);
@@ -167,6 +172,7 @@
       font-family: 'Orbitron', sans-serif;
       font-weight: 700;
       font-size: 1.2rem;
+      letter-spacing: 0.05em;
     }
     .nav-home:hover {
       color: var(--clr-accent);
@@ -177,6 +183,9 @@
       margin-left: 1.5rem;
       padding: 0.5rem 0;
       position: relative;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
+      transition: color 0.3s;
     }
     .nav-link:hover,
     .nav-link.active {
@@ -189,13 +198,24 @@
       left: 0;
       width: 100%;
       height: 2px;
-      background: var(--clr-accent-cyan);
+      background: linear-gradient(90deg, var(--clr-accent), var(--clr-accent-cyan));
     }
     .notes-footer {
       margin-top: 4rem;
       padding: 2rem 0;
       border-top: 1px solid var(--clr-border);
       text-align: center;
+    }
+    .footer-text {
+      background: linear-gradient(270deg, #6C63FF, #00D4FF, #F0C040, #FF6B9D, #6C63FF);
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: rainbow-shift 4s ease infinite;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
     }
   </style>
 </body>

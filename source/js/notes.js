@@ -9,16 +9,36 @@ let currentPage = 1;
 let totalPages = 1;
 
 // 1. 加载 PDFJS worker (通过 CDN)
-const PDFJS_CDN = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/";
+const PDFJS_CDN = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.3.136/";
 
-// 检查 PDF.js 是否已加载
+// 检查并加载 PDF.js
 function checkPDFJS() {
   if (typeof pdfjsLib === 'undefined') {
-    console.warn('PDF.js not loaded yet, retrying...');
-    setTimeout(checkPDFJS, 100);
+    console.log('Loading PDF.js library...');
+    const script = document.createElement('script');
+    script.src = PDFJS_CDN + 'pdf.min.js';
+    script.crossOrigin = 'anonymous';
+    script.onload = () => {
+      console.log('PDF.js loaded, setting worker src...');
+      pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_CDN + "pdf.worker.min.js";
+      initNotes();
+    };
+    script.onerror = (err) => {
+      console.error('Failed to load PDF.js:', err);
+      // 显示错误
+      const loadingEl = document.querySelector('.notes-loading');
+      if (loadingEl) {
+        loadingEl.innerHTML = `
+          <p style="color: #ff6b6b">PDF.js 加载失败，请检查网络</p>
+          <button onclick="location.reload()">重试</button>
+        `;
+      }
+    };
+    document.head.appendChild(script);
     return;
   }
-  pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_CDN + "pdf.worker.min.mjs";
+  // 已经加载
+  pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_CDN + "pdf.worker.min.js";
   initNotes();
 }
 
@@ -169,6 +189,7 @@ async function openPDF(path, title) {
   const titleEl = document.getElementById('pdf-title');
   const downloadEl = document.getElementById('pdf-download');
   const canvas = document.getElementById('pdf-canvas');
+  const loadingEl = document.querySelector('.pdf-loading');
 
   if (!modal || !titleEl || !downloadEl || !canvas) return;
 
@@ -179,7 +200,10 @@ async function openPDF(path, title) {
 
   // 显示加载状态
   canvas.style.display = 'none';
-  document.querySelector('.pdf-loading').style.display = 'block';
+  if (loadingEl) {
+    loadingEl.style.display = 'block';
+    loadingEl.innerHTML = '加载 PDF 中...';
+  }
 
   try {
     // 加载 PDF 文档
@@ -192,16 +216,18 @@ async function openPDF(path, title) {
 
     // 显示画布
     canvas.style.display = 'block';
-    document.querySelector('.pdf-loading').style.display = 'none';
+    if (loadingEl) loadingEl.style.display = 'none';
 
     // 更新页面指示器
     updatePageIndicator();
   } catch (error) {
     console.error('Failed to load PDF:', error);
-    document.querySelector('.pdf-loading').innerHTML = `
-      <p style="color: #ff6b6b">加载失败: ${error.message}</p>
-      <a href="${path}" download class="pdf-controls">直接下载</a>
-    `;
+    if (loadingEl) {
+      loadingEl.innerHTML = `
+        <p style="color: #ff6b6b">加载失败: ${error.message}</p>
+        <a href="${path}" download class="pdf-controls">直接下载</a>
+      `;
+    }
   }
 }
 
