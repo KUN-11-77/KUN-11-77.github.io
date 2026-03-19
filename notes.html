@@ -31,7 +31,7 @@
   <link rel="icon" type="image/png" href="icon.png">
 
   <!-- PDF.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.10.111/pdf.min.js"></script>
 </head>
 <body class="notes-page">
   <!-- Background Canvas Layers -->
@@ -118,6 +118,11 @@
   <script src="assets/js/particles.js"></script>
   <script src="assets/js/cursor.js"></script>
   <script src="assets/js/pdf-viewer.js"></script>
+  <!-- PDF.js Worker Setup -->
+  <script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.10.111/pdf.worker.min.js';
+  </script>
   <script src="assets/js/progress-bar.js"></script>
   <script src="assets/js/animations.js"></script>
 

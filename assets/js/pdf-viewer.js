@@ -410,7 +410,7 @@ function initPDFViewer() {
   loadingElement = document.querySelector('.pdf-loading');
 
   if (!pdfContainer) {
-    console.warn('[PDF Viewer] PDF container not found');
+    console.debug('[PDF Viewer] PDF container not found (expected on index page)');
     return;
   }
 

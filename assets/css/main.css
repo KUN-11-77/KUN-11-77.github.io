@@ -372,8 +372,10 @@ nav {
 
 .hero-line {
   display: block;
-  opacity: 1; /* Changed from 0 to ensure visible by default */
+  opacity: 0; /* Will be animated to 1 */
   transform: translateY(20px);
+  color: transparent;
+  -webkit-text-fill-color: transparent;
 }
 
 .hero-subtitle {
