@@ -91,6 +91,34 @@ function debounce(func, wait) {
   };
 }
 
+// Utility: Easing function for smooth scroll (ease-in-out-cubic)
+function easeInOutCubic(t) {
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+
+// Smooth scroll with inertia effect
+function smoothScrollTo(element, targetY, duration = 800) {
+  if (!element) return;
+
+  const startY = element.scrollTop;
+  const diff = targetY - startY;
+  const startTime = performance.now();
+
+  function animate(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const easedProgress = easeInOutCubic(progress);
+
+    element.scrollTop = startY + diff * easedProgress;
+
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
+
 // --------------------------------------------------------------------------
 // High-DPI Canvas Setup
 // --------------------------------------------------------------------------
@@ -188,6 +216,12 @@ function renderPDFList(category = PDFState.currentCategory) {
 
       // Add active class to clicked item
       listItem.classList.add('active');
+
+      // Smooth scroll PDF container to top with inertia effect
+      const pdfContainer = document.getElementById('pdf-container');
+      if (pdfContainer) {
+        smoothScrollTo(pdfContainer, 0, 600);
+      }
 
       // Load the selected PDF
       loadPDFFile(pdfFile, index);
