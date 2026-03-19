@@ -298,7 +298,20 @@ nav {
   font-family: var(--font-heading);
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--glow-cyan);
+  color: var(--glow-cyan); /* Fallback for older browsers */
+  background: linear-gradient(
+    90deg,
+    var(--glow-cyan),
+    var(--glow-blue),
+    var(--glow-purple),
+    var(--glow-cyan)
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: flowGradient 8s ease-in-out infinite;
+  transform: translateZ(0); /* Hardware acceleration */
 }
 
 .nav-links {
@@ -339,6 +352,20 @@ nav {
 
 .hero-title {
   margin-bottom: var(--space-lg);
+  color: var(--glow-cyan); /* Fallback */
+  background: linear-gradient(
+    90deg,
+    var(--glow-cyan),
+    var(--glow-blue),
+    var(--glow-purple),
+    var(--glow-cyan)
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: flowGradient 8s ease-in-out infinite;
+  transform: translateZ(0); /* Hardware acceleration */
 }
 
 .hero-line {
@@ -370,6 +397,11 @@ nav {
   0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
   40% { transform: translateY(-10px); }
   60% { transform: translateY(-5px); }
+}
+
+@keyframes flowGradient {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 /* --------------------------------------------------------------------------
