@@ -926,6 +926,114 @@ footer {
 }
 
 /* --------------------------------------------------------------------------
+   Neural Bolt Effect (Lightning Current)
+   -------------------------------------------------------------------------- */
+.neural-bolt {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 50px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.bolt-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.bolt-path {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: boltFlow 2s ease-in-out infinite;
+}
+
+.pulse-node {
+  opacity: 0.3;
+  animation: nodePulse 2s ease-in-out infinite;
+}
+
+.pulse-node:nth-child(3) {
+  animation-delay: 0.5s;
+}
+
+@keyframes boltFlow {
+  0% {
+    stroke-dashoffset: 100;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: -100;
+    opacity: 0;
+  }
+}
+
+@keyframes nodePulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+    fill: #00e5ff;
+    filter: drop-shadow(0 0 8px #00e5ff);
+  }
+}
+
+/* Add electric sparks */
+.neural-bolt::before,
+.neural-bolt::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #00e5ff;
+  border-radius: 50%;
+  opacity: 0;
+  animation: spark 1.5s ease-out infinite;
+}
+
+.neural-bolt::before {
+  left: 20%;
+  top: 30%;
+  animation-delay: 0.3s;
+}
+
+.neural-bolt::after {
+  right: 20%;
+  bottom: 30%;
+  animation-delay: 0.8s;
+}
+
+@keyframes spark {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 10px #00e5ff, 0 0 20px #b388ff;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+/* --------------------------------------------------------------------------
    Print Styles
    -------------------------------------------------------------------------- */
 @media print {

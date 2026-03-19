@@ -51,6 +51,29 @@
   <nav>
     <div class="nav-container">
       <a href="index.html" class="logo">Neuraverse</a>
+      <div class="neural-bolt" aria-hidden="true">
+        <svg viewBox="0 0 60 40" class="bolt-svg">
+          <defs>
+            <linearGradient id="boltGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#00e5ff;stop-opacity:0" />
+              <stop offset="30%" style="stop-color:#00e5ff;stop-opacity:1" />
+              <stop offset="50%" style="stop-color:#b388ff;stop-opacity:1" />
+              <stop offset="70%" style="stop-color:#00e5ff;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#00e5ff;stop-opacity:0" />
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <path class="bolt-path" d="M5,20 Q15,5 25,20 T45,20 T55,20" fill="none" stroke="url(#boltGradient)" stroke-width="2" filter="url(#glow)"/>
+          <circle class="pulse-node" cx="25" cy="20" r="3" fill="#00e5ff" filter="url(#glow)"/>
+          <circle class="pulse-node" cx="45" cy="20" r="3" fill="#b388ff" filter="url(#glow)"/>
+        </svg>
+      </div>
       <div class="nav-links">
         <a href="index.html#about">About</a>
         <a href="index.html#projects">Projects</a>
