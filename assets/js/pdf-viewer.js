@@ -5,11 +5,22 @@ console.log('[PDF Viewer] Loaded - Phase 3 implementation');
 
 // Configuration
 const PDF_CONFIG = {
-  url: 'assets/pdf/resume.pdf', // Path to PDF file
   maxWidth: 860,
   lazyLoadMargin: '200px', // Start loading 200px before page enters viewport
   pageSpacing: 16, // px between pages
-  backgroundColor: 'rgba(26, 31, 53, 0.85)' // Glassmorph background for canvas
+  backgroundColor: 'rgba(26, 31, 53, 0.85)', // Glassmorph background for canvas
+
+  // PDF files for each category (placeholder paths - update with actual files)
+  pdfFiles: {
+    ai: 'assets/pdf/ai.pdf',
+    cs: 'assets/pdf/cs.pdf',
+    physics: 'assets/pdf/physics.pdf',
+    math: 'assets/pdf/math.pdf',
+    ece: 'assets/pdf/ece.pdf'
+  },
+
+  // Default category
+  defaultCategory: 'ai'
 };
 
 // State
@@ -20,7 +31,8 @@ const PDFState = {
   pagePlaceholders: [], // Array of placeholder elements
   pageObserver: null,
   currentPage: 1,
-  isLoading: false
+  isLoading: false,
+  currentCategory: PDF_CONFIG.defaultCategory
 };
 
 // DOM Elements
@@ -68,11 +80,40 @@ function setupHighDPICanvas(canvas, width, height) {
 // --------------------------------------------------------------------------
 // PDF Loading & Initialization
 // --------------------------------------------------------------------------
-async function loadPDF() {
+// Cleanup current PDF state
+function cleanupPDF() {
+  if (PDFState.pageObserver) {
+    PDFState.pageObserver.disconnect();
+  }
+
+  if (pdfContainer) {
+    pdfContainer.innerHTML = '';
+    if (loadingElement) {
+      pdfContainer.appendChild(loadingElement);
+    }
+  }
+
+  PDFState.pdfDoc = null;
+  PDFState.totalPages = 0;
+  PDFState.renderedPages.clear();
+  PDFState.pagePlaceholders = [];
+  PDFState.currentPage = 1;
+}
+
+// Load PDF for a specific category
+async function loadPDF(category = PDFState.currentCategory) {
   if (PDFState.isLoading) return;
 
+  // Cleanup previous PDF if switching categories
+  if (PDFState.pdfDoc && category !== PDFState.currentCategory) {
+    cleanupPDF();
+  }
+
+  PDFState.currentCategory = category;
+  const pdfUrl = PDF_CONFIG.pdfFiles[category] || PDF_CONFIG.pdfFiles[PDF_CONFIG.defaultCategory];
+
   PDFState.isLoading = true;
-  console.log('[PDF] Loading PDF from:', PDF_CONFIG.url);
+  console.log(`[PDF] Loading ${category.toUpperCase()} PDF from:`, pdfUrl);
 
   try {
     // Show loading state
@@ -81,10 +122,10 @@ async function loadPDF() {
     }
 
     // Load PDF document
-    PDFState.pdfDoc = await pdfjsLib.getDocument(PDF_CONFIG.url).promise;
+    PDFState.pdfDoc = await pdfjsLib.getDocument(pdfUrl).promise;
     PDFState.totalPages = PDFState.pdfDoc.numPages;
 
-    console.log(`[PDF] Loaded successfully. Total pages: ${PDFState.totalPages}`);
+    console.log(`[PDF] ${category.toUpperCase()} loaded successfully. Total pages: ${PDFState.totalPages}`);
 
     // Initialize page placeholders for lazy loading
     initPagePlaceholders();
@@ -105,8 +146,8 @@ async function loadPDF() {
     }
 
   } catch (error) {
-    console.error('[PDF] Failed to load PDF:', error);
-    showPDFError('Failed to load PDF document. Please check the file path.');
+    console.error(`[PDF] Failed to load ${category.toUpperCase()} PDF:`, error);
+    showPDFError(`Failed to load ${category.toUpperCase()} notes. Please check the file path.`);
   } finally {
     PDFState.isLoading = false;
     if (loadingElement) {
@@ -373,6 +414,23 @@ function initPDFViewer() {
     return;
   }
 
+  // Initialize category selector buttons
+  const categoryButtons = document.querySelectorAll('.pdf-category-btn');
+  if (categoryButtons.length > 0) {
+    categoryButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const category = btn.dataset.category;
+
+        // Update active state
+        categoryButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Load PDF for selected category
+        loadPDF(category);
+      });
+    });
+  }
+
   // Initialize intersection observer for lazy loading
   initIntersectionObserver();
 
@@ -384,8 +442,8 @@ function initPDFViewer() {
     updateCurrentPageFromScroll();
   }, { passive: true });
 
-  // Load PDF
-  loadPDF();
+  // Load default category PDF
+  loadPDF(PDF_CONFIG.defaultCategory);
 }
 
 

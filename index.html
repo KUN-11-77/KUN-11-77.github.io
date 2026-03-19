@@ -82,7 +82,7 @@
         <h2 class="section-title">About</h2>
         <div class="about-grid">
           <div class="about-avatar">
-            <img src="assets/avatar-placeholder.jpg" alt="Profile avatar" class="avatar">
+            <img src="assets/images/avatar.jpg" alt="Profile avatar" class="avatar">
           </div>
           <div class="about-text">
             <p>Welcome to Neuraverse—a digital space where cosmic aesthetics meet neural network inspiration. This portfolio showcases advanced web techniques with pure HTML/CSS/JS.</p>
@@ -131,7 +131,18 @@
     <!-- PDF Viewer Section -->
     <section id="pdf-viewer" class="section">
       <div class="section-container">
-        <h2 class="section-title">Resume</h2>
+        <h2 class="section-title">Course Notes</h2>
+        <p class="section-subtitle">Summarized notes organized by discipline</p>
+
+        <!-- PDF Category Selector -->
+        <div class="pdf-category-selector">
+          <button class="pdf-category-btn active" data-category="ai">AI</button>
+          <button class="pdf-category-btn" data-category="cs">CS</button>
+          <button class="pdf-category-btn" data-category="physics">Physics</button>
+          <button class="pdf-category-btn" data-category="math">Mathematics</button>
+          <button class="pdf-category-btn" data-category="ece">ECE</button>
+        </div>
+
         <div id="pdf-container">
           <!-- PDF pages will be inserted here by JS -->
           <div class="pdf-loading">
