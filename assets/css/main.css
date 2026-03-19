@@ -1,0 +1,603 @@
+/* ==========================================================================
+   Neuraverse — Main Stylesheet
+   CSS Variable System + Global Base Styles
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   CSS Custom Properties (Design Tokens)
+   -------------------------------------------------------------------------- */
+:root {
+  /* Color Palette — Cosmic Neural Theme */
+  --cosmos-bg:     #0a0e1a;   /* Deep space background */
+  --cosmos-bg-rgb: 10, 14, 26;/* RGB version for rgba() */
+  --nebula-layer:  #1a1f35;   /* Nebula secondary layer */
+  --nebula-layer-rgb: 26, 31, 53;
+  --glow-cyan:     #00e5ff;   /* Fluorescent cyan (primary accent) */
+  --glow-cyan-rgb: 0, 229, 255;
+  --glow-blue:     #4fc3f7;   /* Electric blue (particles/connections) */
+  --glow-blue-rgb: 79, 195, 247;
+  --glow-purple:   #b388ff;   /* Light purple (cursor/hover) */
+  --glow-purple-rgb: 179, 136, 255;
+  --neural-pink:   #f48fb1;   /* Neural pink (accent) */
+  --neural-pink-rgb: 244, 143, 177;
+
+  /* Typography */
+  --text-primary:  #e8eaf6;   /* Primary text */
+  --text-muted:    #7986cb;   /* Secondary/muted text */
+  --text-inverse:  #0a0e1a;   /* Text on light background */
+
+  /* Font Families */
+  --font-heading:  'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body:     'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:     'DM Mono', 'SF Mono', 'Roboto Mono', monospace;
+
+  /* Spacing Scale (8px base) */
+  --space-xxs: 0.25rem;  /* 4px */
+  --space-xs:  0.5rem;   /* 8px */
+  --space-sm:  0.75rem;  /* 12px */
+  --space-md:  1rem;     /* 16px */
+  --space-lg:  1.5rem;   /* 24px */
+  --space-xl:  2rem;     /* 32px */
+  --space-2xl: 3rem;     /* 48px */
+  --space-3xl: 4rem;     /* 64px */
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  /* Shadows & Glows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --glow-cyan-sm: 0 0 8px rgba(0, 229, 255, 0.5);
+  --glow-cyan-md: 0 0 24px rgba(0, 229, 255, 0.4);
+  --glow-cyan-lg: 0 0 48px rgba(0, 229, 255, 0.3);
+
+  /* Transitions */
+  --transition-fast: 0.1s ease;
+  --transition-base: 0.2s ease;
+  --transition-slow: 0.3s ease;
+  --transition-very-slow: 0.5s ease;
+
+  /* Z‑Index Layers */
+  --z-bg-image: -2;
+  --z-bg-canvas: -1;
+  --z-content: 0;
+  --z-click-canvas: 100;
+  --z-cursor: 9999;
+  --z-progress: 10000;
+}
+
+/* --------------------------------------------------------------------------
+   CSS Reset & Base Styles
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Background Image Layer */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: var(--z-bg-image);
+  background-image: url('../images/Neuraverse.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.4;
+  filter: brightness(0.6) saturate(1.2);
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  background-color: var(--cosmos-bg);
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Alternate background for PDF section */
+#pdf-viewer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../images/Neuraverse2.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.3;
+  filter: brightness(0.5) saturate(1.1);
+  z-index: -1;
+  border-radius: var(--radius-lg);
+}
+
+/* Accessibility: Reduce motion preference */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Selection styling */
+::selection {
+  background-color: rgba(var(--glow-cyan-rgb), 0.3);
+  color: var(--text-primary);
+}
+
+/* --------------------------------------------------------------------------
+   Typography
+   -------------------------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 8vw, 4rem);
+}
+
+h2 {
+  font-size: clamp(2rem, 6vw, 3rem);
+}
+
+h3 {
+  font-size: clamp(1.5rem, 5vw, 2rem);
+}
+
+p {
+  margin-bottom: var(--space-md);
+}
+
+a {
+  color: var(--glow-cyan);
+  text-decoration: none;
+  transition: color var(--transition-base);
+}
+
+a:hover,
+a:focus {
+  color: var(--glow-purple);
+}
+
+code, pre {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+/* --------------------------------------------------------------------------
+   Layout Utilities
+   -------------------------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+.section {
+  padding: var(--space-3xl) 0;
+}
+
+.section-container {
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+/* --------------------------------------------------------------------------
+   Canvas Layers
+   -------------------------------------------------------------------------- */
+#bg-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: var(--z-bg-canvas);
+  pointer-events: none;
+}
+
+#click-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: var(--z-click-canvas);
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   Progress Bar
+   -------------------------------------------------------------------------- */
+#progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--glow-cyan), var(--glow-purple));
+  z-index: var(--z-progress);
+  transition: width 0.1s linear;
+}
+
+/* --------------------------------------------------------------------------
+   Navigation
+   -------------------------------------------------------------------------- */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: var(--space-md) 0;
+  z-index: 1000;
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  background: rgba(var(--cosmos-bg-rgb), 0.7);
+  border-bottom: 0.5px solid rgba(var(--glow-cyan-rgb), 0.15);
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+.logo {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--glow-cyan);
+}
+
+.nav-links {
+  display: flex;
+  gap: var(--space-lg);
+}
+
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+}
+
+.nav-links a:hover {
+  color: var(--glow-cyan);
+  background: rgba(var(--glow-cyan-rgb), 0.05);
+}
+
+/* --------------------------------------------------------------------------
+   Hero Section
+   -------------------------------------------------------------------------- */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding-top: 80px; /* Offset for fixed nav */
+}
+
+.hero-content {
+  text-align: center;
+  max-width: 800px;
+  padding: 0 var(--space-lg);
+}
+
+.hero-title {
+  margin-bottom: var(--space-lg);
+}
+
+.hero-line {
+  display: block;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-2xl);
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.hero-scroll {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.hero-scroll i {
+  font-size: 1.5rem;
+  color: var(--glow-cyan);
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+  60% { transform: translateY(-5px); }
+}
+
+/* --------------------------------------------------------------------------
+   About Section
+   -------------------------------------------------------------------------- */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2xl);
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .about-grid {
+    grid-template-columns: 1fr 2fr;
+  }
+}
+
+.avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 2px solid var(--glow-cyan);
+  margin: 0 auto;
+  display: block;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+/* --------------------------------------------------------------------------
+   Projects Section
+   -------------------------------------------------------------------------- */
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+  margin-top: var(--space-xl);
+}
+
+@media (min-width: 768px) {
+  .projects-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.project-card {
+  background: rgba(var(--nebula-layer-rgb), 0.85);
+  border: 0.5px solid rgba(var(--glow-cyan-rgb), 0.2);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all var(--transition-base);
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.project-card:hover {
+  border-color: rgba(var(--glow-cyan-rgb), 0.6);
+  box-shadow: var(--glow-cyan-md);
+  transform: translateY(-4px);
+}
+
+.project-card h3 {
+  color: var(--glow-cyan);
+  margin-bottom: var(--space-sm);
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-lg);
+}
+
+.project-tags span {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--glow-purple);
+  padding: var(--space-xxs) var(--space-xs);
+  background: rgba(var(--glow-purple-rgb), 0.1);
+  border-radius: var(--radius-sm);
+  border: 0.5px solid rgba(var(--glow-purple-rgb), 0.2);
+}
+
+/* --------------------------------------------------------------------------
+   PDF Viewer Section
+   -------------------------------------------------------------------------- */
+#pdf-viewer {
+  position: relative;
+  overflow: hidden;
+}
+
+#pdf-container {
+  margin-top: var(--space-xl);
+  position: relative;
+}
+
+.pdf-loading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.skeleton {
+  background: rgba(var(--nebula-layer-rgb), 0.5);
+  border-radius: var(--radius-md);
+  width: 100%;
+  height: 300px;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.8; }
+}
+
+#page-indicator {
+  position: fixed;
+  bottom: var(--space-xl);
+  right: var(--space-xl);
+  background: rgba(var(--cosmos-bg-rgb), 0.9);
+  border: 0.5px solid rgba(var(--glow-cyan-rgb), 0.3);
+  border-radius: var(--radius-full);
+  padding: var(--space-sm) var(--space-lg);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--glow-cyan);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 100;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+/* --------------------------------------------------------------------------
+   Contact Section
+   -------------------------------------------------------------------------- */
+.contact-links {
+  display: flex;
+  gap: var(--space-xl);
+  margin-top: var(--space-xl);
+  justify-content: center;
+}
+
+.contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-xl);
+  border: 0.5px solid rgba(var(--glow-cyan-rgb), 0.3);
+  border-radius: var(--radius-md);
+  background: rgba(var(--glow-cyan-rgb), 0.05);
+  transition: all var(--transition-base);
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.contact-link:hover {
+  border-color: rgba(var(--glow-cyan-rgb), 0.6);
+  background: rgba(var(--glow-cyan-rgb), 0.1);
+  transform: translateY(-2px);
+}
+
+.contact-link i {
+  font-size: 1.25rem;
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+footer {
+  padding: var(--space-2xl) 0;
+  border-top: 0.5px solid rgba(var(--glow-cyan-rgb), 0.15);
+  margin-top: var(--space-3xl);
+}
+
+.footer-container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+  text-align: center;
+}
+
+.footer-container p {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.footer-note {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  margin-top: var(--space-md);
+  opacity: 0.7;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Adjustments
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none; /* For simplicity, we'll hide on mobile initially */
+  }
+
+  .hero {
+    padding-top: 100px;
+  }
+
+  .section {
+    padding: var(--space-2xl) 0;
+  }
+
+  .contact-links {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #page-indicator {
+    bottom: var(--space-md);
+    right: var(--space-md);
+    padding: var(--space-xs) var(--space-md);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Print Styles
+   -------------------------------------------------------------------------- */
+@media print {
+  #bg-canvas,
+  #click-canvas,
+  #cursor,
+  #progress-bar,
+  nav,
+  #page-indicator {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  a {
+    color: #0066cc !important;
+    text-decoration: underline !important;
+  }
+}
