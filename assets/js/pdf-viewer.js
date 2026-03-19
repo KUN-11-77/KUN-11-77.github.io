@@ -381,28 +381,16 @@ async function createPagePlaceholder(pageNum) {
     const page = await PDFState.pdfDoc.getPage(pageNum);
     const viewport = page.getViewport({ scale: 1 });
 
-    // Calculate dimensions to fit container, maintaining A4 aspect ratio (1.414:1)
+    // Calculate dimensions to fit container, maintaining PDF's actual aspect ratio
     // Ensure container has width, fallback to body width if needed
     let containerWidth = pdfContainer.clientWidth || document.body.clientWidth;
     containerWidth = Math.max(containerWidth - 48, 400); // Min 400px width
     containerWidth = Math.min(containerWidth, PDF_CONFIG.maxWidth);
 
-    // For A4 documents (aspect ratio ~1.414), calculate height based on width
-    // Use the actual PDF aspect ratio if available
-    const pdfAspectRatio = viewport.width / viewport.height;
-    const targetAspectRatio = 1.414; // A4 ratio
-
-    let scaledWidth = containerWidth;
-    let scaledHeight;
-
-    if (Math.abs(pdfAspectRatio - targetAspectRatio) < 0.1) {
-      // PDF is close to A4 ratio, use standard calculation
-      scaledHeight = containerWidth / targetAspectRatio;
-    } else {
-      // PDF has different aspect ratio, use actual ratio
-      const scale = containerWidth / viewport.width;
-      scaledHeight = viewport.height * scale;
-    }
+    // Always use the PDF's actual aspect ratio
+    const scale = containerWidth / viewport.width;
+    const scaledWidth = containerWidth;
+    const scaledHeight = viewport.height * scale;
 
     // Create placeholder div
     const placeholder = document.createElement('div');
