@@ -245,7 +245,7 @@ particles.forEach(p => {
 - **AI** — 人工智能相关课程笔记
 - **CS** — 计算机科学核心课程
 - **Physics** — 物理学课程笔记
-- **Mathematics** — 数学课程笔记
+- **MATH** — 数学课程笔记
 - **ECE** — 电子与计算机工程课程笔记
 
 每个分类对应独立的 PDF 文件。课程笔记将部署在独立页面（notes.html），通过主页导航访问，提供更好的专注阅读体验。页面内采用选项卡式切换界面，支持按学科分类查看。
@@ -489,6 +489,48 @@ jobs:
       - uses: actions/deploy-pages@v4
         id: deployment
 ```
+
+### 任务 4-E：标题流动色彩效果
+
+为页面标题添加动态流动色彩，增强视觉吸引力：
+
+**目标元素**：
+- 导航栏 Logo "Neuraverse"（`.logo` 类）
+- Hero 主标题 "Realm of Negentropy"（`.hero-title` 类）
+
+**实现方案**：
+1. **CSS 渐变动画**：使用 `background-clip: text` 配合 `linear-gradient` 动画
+2. **色彩过渡**：在主题色（荧光青 `#00e5ff`、电蓝 `#4fc3f7`、淡紫 `#b388ff`）之间循环流动
+3. **性能优化**：使用硬件加速（`transform: translateZ(0)`）确保流畅动画
+
+**示例代码结构**：
+```css
+/* 流动渐变背景 */
+@keyframes flowGradient {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.logo, .hero-title {
+  background: linear-gradient(
+    90deg,
+    var(--glow-cyan),
+    var(--glow-blue),
+    var(--glow-purple),
+    var(--glow-cyan)
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: flowGradient 8s ease-in-out infinite;
+}
+```
+
+**注意事项**：
+- 确保 `background-clip: text` 浏览器兼容性（添加 `-webkit-` 前缀）
+- 动画速度适中（8-10秒循环），避免视觉疲劳
+- 支持 `prefers-reduced-motion` 无障碍降级
 
 ---
 

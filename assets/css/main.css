@@ -795,8 +795,16 @@ footer {
   background-blend-mode: overlay;
 }
 
+.notes-page::before {
+  background-image: none;
+}
+
 .notes-page #bg-canvas {
   opacity: 0.3; /* Reduce particle opacity to emphasize background image */
+}
+
+.notes-page .hero {
+  min-height: 70vh; /* Reduce height so PDF viewer is visible on first screen */
 }
 
 /* --------------------------------------------------------------------------
