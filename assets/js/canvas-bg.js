@@ -1,15 +1,15 @@
 // Canvas Background Particle System - Phase 1 + Phase 2
 // Deep space particle background with neural connections and mouse interaction
 
-// Configuration
+// Configuration - Reduced for subtle effect like notes page
 const CONFIG = {
-  desktop: { count: 150, connectionThreshold: 120 },
-  mobile: { count: 50, connectionThreshold: 80 },
+  desktop: { count: 60, connectionThreshold: 80 },
+  mobile: { count: 30, connectionThreshold: 60 },
   colors: ['#00e5ff', '#4fc3f7', '#b388ff'], // cyan, blue, purple
-  mouseRadius: 150, // Gravitational radius
-  mouseForce: 0.3, // Gravitational strength
-  particleBaseSpeed: 0.5,
-  particleMaxSpeed: 1.5
+  mouseRadius: 100, // Reduced gravitational radius
+  mouseForce: 0.15, // Reduced gravitational strength
+  particleBaseSpeed: 0.2,
+  particleMaxSpeed: 0.6
 };
 
 // State

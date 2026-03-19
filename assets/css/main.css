@@ -98,8 +98,13 @@ body::before {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  opacity: 0.4;
-  filter: brightness(0.6) saturate(1.2);
+  opacity: 0.65;
+  filter: brightness(0.75) saturate(1.1);
+}
+
+/* Subtle particle effect on homepage - like notes page */
+#bg-canvas {
+  opacity: 0.25;
 }
 
 body {
