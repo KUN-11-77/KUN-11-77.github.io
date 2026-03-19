@@ -5,7 +5,7 @@
 
 // Configuration
 const PDF_CONFIG = {
-  maxWidth: 1000, // Slightly smaller to fit within container with proper aspect ratio
+  maxWidth: 900, // A4比例下的最大宽度
   lazyLoadMargin: '200px', // Start loading 200px before page enters viewport
   pageSpacing: 16, // px between pages
   backgroundColor: 'rgba(26, 31, 53, 0.85)', // Glassmorph background for canvas
@@ -381,15 +381,28 @@ async function createPagePlaceholder(pageNum) {
     const page = await PDFState.pdfDoc.getPage(pageNum);
     const viewport = page.getViewport({ scale: 1 });
 
-    // Calculate dimensions to fit container
+    // Calculate dimensions to fit container, maintaining A4 aspect ratio (1.414:1)
     // Ensure container has width, fallback to body width if needed
     let containerWidth = pdfContainer.clientWidth || document.body.clientWidth;
     containerWidth = Math.max(containerWidth - 48, 400); // Min 400px width
     containerWidth = Math.min(containerWidth, PDF_CONFIG.maxWidth);
 
-    const scale = containerWidth / viewport.width;
-    const scaledWidth = viewport.width * scale;
-    const scaledHeight = viewport.height * scale;
+    // For A4 documents (aspect ratio ~1.414), calculate height based on width
+    // Use the actual PDF aspect ratio if available
+    const pdfAspectRatio = viewport.width / viewport.height;
+    const targetAspectRatio = 1.414; // A4 ratio
+
+    let scaledWidth = containerWidth;
+    let scaledHeight;
+
+    if (Math.abs(pdfAspectRatio - targetAspectRatio) < 0.1) {
+      // PDF is close to A4 ratio, use standard calculation
+      scaledHeight = containerWidth / targetAspectRatio;
+    } else {
+      // PDF has different aspect ratio, use actual ratio
+      const scale = containerWidth / viewport.width;
+      scaledHeight = viewport.height * scale;
+    }
 
     // Create placeholder div
     const placeholder = document.createElement('div');
@@ -398,23 +411,10 @@ async function createPagePlaceholder(pageNum) {
     placeholder.dataset.height = scaledHeight;
     placeholder.className = 'pdf-page-placeholder';
 
-    // Styling
-    placeholder.style.width = `${scaledWidth}px`;
-    placeholder.style.height = `${scaledHeight}px`;
+    // CSS handles aspect-ratio, but we set explicit dimensions for rendering
     placeholder.style.marginBottom = `${PDF_CONFIG.pageSpacing}px`;
-    placeholder.style.borderRadius = '8px';
-    placeholder.style.background = 'rgba(26, 31, 53, 0.5)';
-    placeholder.style.backdropFilter = 'blur(4px)';
-    placeholder.style.border = '1px solid rgba(0, 229, 255, 0.1)';
-    placeholder.style.boxShadow = `
-      0 0 20px rgba(0, 229, 255, 0.05),
-      inset 0 1px 0 rgba(255, 255, 255, 0.03)
-    `;
 
     // Add subtle loading animation
-    placeholder.style.position = 'relative';
-    placeholder.style.overflow = 'hidden';
-
     const shimmer = document.createElement('div');
     shimmer.style.position = 'absolute';
     shimmer.style.top = '0';

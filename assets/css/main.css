@@ -1116,16 +1116,16 @@ footer {
   max-width: 1600px;
   margin: 0 auto;
   padding: 0 var(--space-xl);
-  gap: var(--space-2xl);
+  gap: var(--space-lg); /* 中间不留大空隙 */
   align-items: flex-start;
   flex: 1;
   min-height: 0;
   overflow: hidden;
 }
 
-/* PDF Sidebar (left panel) */
+/* PDF Sidebar (left panel) - 左侧窄 */
 .pdf-sidebar {
-  width: 320px;
+  width: 240px;
   flex-shrink: 0;
   background: rgba(var(--nebula-layer-rgb), 0.6);
   backdrop-filter: blur(12px) saturate(180%);
@@ -1135,7 +1135,7 @@ footer {
   box-shadow:
     0 0 30px rgba(0, 229, 255, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  padding: var(--space-lg);
+  padding: var(--space-md);
   max-height: calc(100vh - 120px);
   min-height: 600px;
   overflow-y: auto;
@@ -1248,7 +1248,7 @@ footer {
   min-width: 0; /* Prevent flex item overflow */
 }
 
-/* PDF container within viewer - narrower and taller */
+/* PDF container within viewer - 遵循1.414:1比例 */
 .pdf-viewer-container #pdf-container {
   margin-top: 0;
   background: rgba(var(--nebula-layer-rgb), 0.85);
@@ -1257,9 +1257,10 @@ footer {
   border-radius: var(--radius-lg);
   border: 1px solid rgba(var(--glow-cyan-rgb), 0.3);
   padding: var(--space-lg);
-  max-height: calc(100vh - 200px);
+  max-height: calc(100vh - 180px);
   min-height: 500px;
-  max-width: 720px;
+  width: 100%;
+  max-width: 1000px; /* 增大最大宽度 */
   margin-left: auto;
   margin-right: auto;
   overflow-y: auto;
@@ -1270,13 +1271,22 @@ footer {
   align-items: center;
 }
 
+/* PDF页面保持1.414:1比例 (A4纸比例) */
+.pdf-viewer-container .pdf-page-canvas,
+.pdf-viewer-container .pdf-page-placeholder {
+  aspect-ratio: 1.414 / 1;
+  width: 100% !important;
+  max-width: 900px;
+  height: auto !important;
+}
+
 /* Responsive adjustments */
 @media (max-width: 1200px) {
   .pdf-main-layout {
     flex-direction: column;
     max-width: none;
     padding: 0 var(--space-lg);
-    gap: var(--space-xl);
+    gap: var(--space-lg);
   }
 
   .pdf-sidebar {
@@ -1290,6 +1300,11 @@ footer {
   .pdf-viewer-container #pdf-container {
     max-height: calc(100vh - 350px);
     min-height: 350px;
+  }
+
+  .pdf-viewer-container .pdf-page-canvas,
+  .pdf-viewer-container .pdf-page-placeholder {
+    max-width: 100%;
   }
 }
 
@@ -1310,5 +1325,107 @@ footer {
   .pdf-viewer-container #pdf-container {
     padding: var(--space-lg);
     min-height: 400px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Custom Cursor Styles - Phase 2
+   -------------------------------------------------------------------------- */
+#cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: var(--z-cursor);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Inner cursor - solid dot */
+.cursor-inner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background: var(--glow-cyan);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: var(--z-cursor);
+  box-shadow:
+    0 0 10px var(--glow-cyan),
+    0 0 20px var(--glow-cyan),
+    0 0 30px var(--glow-cyan);
+  transition: transform 0.15s ease, background 0.2s ease;
+  will-change: transform;
+}
+
+/* Outer cursor - hollow ring with lerp delay */
+.cursor-outer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--glow-cyan);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: var(--z-cursor);
+  box-shadow:
+    0 0 10px rgba(0, 229, 255, 0.3),
+    inset 0 0 10px rgba(0, 229, 255, 0.1);
+  transition: transform 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  will-change: transform;
+}
+
+/* Hover state - when over interactive elements */
+.cursor-inner.hover {
+  background: var(--glow-purple);
+  box-shadow:
+    0 0 10px var(--glow-purple),
+    0 0 20px var(--glow-purple),
+    0 0 30px var(--glow-purple);
+  transform: scale(1.2);
+}
+
+.cursor-outer.hover {
+  border-color: var(--glow-purple);
+  box-shadow:
+    0 0 15px rgba(179, 136, 255, 0.5),
+    inset 0 0 15px rgba(179, 136, 255, 0.2);
+}
+
+/* Click state */
+.cursor-inner.click {
+  transform: scale(0.8);
+}
+
+.cursor-outer.click {
+  transform: scale(0.9);
+  border-color: var(--neural-pink);
+}
+
+/* Reduce motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .cursor-inner,
+  .cursor-outer {
+    transition: none;
+  }
+}
+
+/* Hide custom cursor on touch devices */
+@media (pointer: coarse) {
+  #cursor {
+    display: none !important;
+  }
+
+  body {
+    cursor: auto !important;
+  }
+
+  a, button, .pdf-category-btn, .pdf-list-item, .project-card, input, textarea, [role="button"] {
+    cursor: pointer !important;
   }
 }
