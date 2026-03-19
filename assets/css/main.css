@@ -386,10 +386,11 @@ nav {
   line-height: 1.1;
 }
 
-/* Enhanced state after animation class added */
+/* Enhanced state after animation class added - combine entrance + gradient flow */
 .hero-line.animate-fade-up {
   opacity: 1;
   transform: translateY(0);
+  animation: fadeSlideUp 0.8s ease forwards, flowGradient 5s linear infinite;
 }
 
 .hero-subtitle {
@@ -935,8 +936,8 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 80px;
-  height: 50px;
+  width: 160px;
+  height: 40px;
   pointer-events: none;
   z-index: 10;
 }
@@ -948,9 +949,16 @@ footer {
 }
 
 .bolt-path {
-  stroke-dasharray: 100;
-  stroke-dashoffset: 100;
-  animation: boltFlow 2s ease-in-out infinite;
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: boltFlow 2.5s ease-in-out infinite;
+}
+
+.bolt-path-secondary {
+  stroke-dasharray: 150;
+  stroke-dashoffset: 150;
+  animation: boltFlow 2.5s ease-in-out infinite;
+  animation-delay: 0.3s;
 }
 
 .pulse-node {
@@ -958,23 +966,24 @@ footer {
   animation: nodePulse 2s ease-in-out infinite;
 }
 
-.pulse-node:nth-child(3) {
-  animation-delay: 0.5s;
-}
+.pulse-node:nth-child(4) { animation-delay: 0.2s; }
+.pulse-node:nth-child(5) { animation-delay: 0.6s; }
+.pulse-node:nth-child(6) { animation-delay: 1s; }
+.pulse-node:nth-child(7) { animation-delay: 1.4s; }
 
 @keyframes boltFlow {
   0% {
-    stroke-dashoffset: 100;
+    stroke-dashoffset: 200;
     opacity: 0;
   }
-  20% {
+  15% {
     opacity: 1;
   }
-  80% {
+  85% {
     opacity: 1;
   }
   100% {
-    stroke-dashoffset: -100;
+    stroke-dashoffset: -200;
     opacity: 0;
   }
 }

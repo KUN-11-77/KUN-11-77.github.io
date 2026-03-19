@@ -52,26 +52,37 @@
     <div class="nav-container">
       <a href="/" class="logo">Neuraverse</a>
       <div class="neural-bolt" aria-hidden="true">
-        <svg viewBox="0 0 60 40" class="bolt-svg">
+        <svg viewBox="0 0 120 30" class="bolt-svg">
           <defs>
             <linearGradient id="boltGradient" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" style="stop-color:#00e5ff;stop-opacity:0" />
-              <stop offset="30%" style="stop-color:#00e5ff;stop-opacity:1" />
+              <stop offset="15%" style="stop-color:#00e5ff;stop-opacity:0.8" />
+              <stop offset="35%" style="stop-color:#4fc3f7;stop-opacity:1" />
               <stop offset="50%" style="stop-color:#b388ff;stop-opacity:1" />
-              <stop offset="70%" style="stop-color:#00e5ff;stop-opacity:1" />
+              <stop offset="65%" style="stop-color:#4fc3f7;stop-opacity:1" />
+              <stop offset="85%" style="stop-color:#00e5ff;stop-opacity:0.8" />
               <stop offset="100%" style="stop-color:#00e5ff;stop-opacity:0" />
             </linearGradient>
-            <filter id="glow">
-              <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
               <feMerge>
+                <feMergeNode in="coloredBlur"/>
                 <feMergeNode in="coloredBlur"/>
                 <feMergeNode in="SourceGraphic"/>
               </feMerge>
             </filter>
           </defs>
-          <path class="bolt-path" d="M5,20 Q15,5 25,20 T45,20 T55,20" fill="none" stroke="url(#boltGradient)" stroke-width="2" filter="url(#glow)"/>
-          <circle class="pulse-node" cx="25" cy="20" r="3" fill="#00e5ff" filter="url(#glow)"/>
-          <circle class="pulse-node" cx="45" cy="20" r="3" fill="#b388ff" filter="url(#glow)"/>
+          <!-- Main lightning path with jagged edges -->
+          <path class="bolt-path" d="M5,15 L20,12 L35,18 L50,8 L65,20 L80,10 L95,16 L110,12 L115,14"
+                fill="none" stroke="url(#boltGradient)" stroke-width="2.5" filter="url(#glow)" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Secondary thinner path -->
+          <path class="bolt-path-secondary" d="M8,18 L22,14 L38,20 L52,11 L68,22 L82,13 L98,19 L112,15"
+                fill="none" stroke="url(#boltGradient)" stroke-width="1" filter="url(#glow)" opacity="0.6"/>
+          <!-- Pulse nodes along the path -->
+          <circle class="pulse-node" cx="20" cy="12" r="2.5" fill="#00e5ff" filter="url(#glow)"/>
+          <circle class="pulse-node" cx="50" cy="8" r="2.5" fill="#4fc3f7" filter="url(#glow)"/>
+          <circle class="pulse-node" cx="80" cy="10" r="2.5" fill="#b388ff" filter="url(#glow)"/>
+          <circle class="pulse-node" cx="110" cy="12" r="2.5" fill="#00e5ff" filter="url(#glow)"/>
         </svg>
       </div>
       <div class="nav-links">

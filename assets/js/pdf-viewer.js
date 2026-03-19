@@ -678,8 +678,27 @@ async function handleResize() {
 
   console.log('[PDF] Handling resize, re-rendering all pages');
 
-  // Save current scroll position
-  const scrollTop = pdfContainer.scrollTop;
+  // Find the current visible page before clearing
+  let targetPageNum = 1;
+  let minDistance = Infinity;
+  const containerRect = pdfContainer.getBoundingClientRect();
+  const containerCenter = containerRect.top + containerRect.height / 2;
+
+  // Find the page closest to the center of the viewport
+  const canvases = pdfContainer.querySelectorAll('.pdf-page-canvas');
+  canvases.forEach((canvas) => {
+    const pageNum = parseInt(canvas.dataset.pageNum);
+    const canvasRect = canvas.getBoundingClientRect();
+    const canvasCenter = canvasRect.top + canvasRect.height / 2;
+    const distance = Math.abs(canvasCenter - containerCenter);
+
+    if (distance < minDistance) {
+      minDistance = distance;
+      targetPageNum = pageNum;
+    }
+  });
+
+  console.log(`[PDF] Current visible page before resize: ${targetPageNum}`);
 
   // Get all currently rendered pages
   const renderedPageNums = Array.from(PDFState.renderedPages).sort((a, b) => a - b);
@@ -704,8 +723,15 @@ async function handleResize() {
     }
   }
 
-  // Restore scroll position (approximately)
-  pdfContainer.scrollTop = scrollTop;
+  // Scroll to the target page (the one that was visible before resize)
+  const targetCanvas = pdfContainer.querySelector(`.pdf-page-canvas[data-page-num="${targetPageNum}"]`);
+  if (targetCanvas) {
+    targetCanvas.scrollIntoView({ behavior: 'instant', block: 'start' });
+    console.log(`[PDF] Scrolled to page ${targetPageNum}`);
+  }
+
+  // Update page indicator
+  updateCurrentPage(targetPageNum);
 
   console.log('[PDF] Resize handling complete');
 }
