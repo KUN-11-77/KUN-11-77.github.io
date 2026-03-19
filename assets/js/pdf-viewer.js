@@ -1,7 +1,7 @@
 // PDF.js Viewer System
 // Phase 3 — Full-page PDF renderer with lazy loading, high-DPI support, and page indicators
 
-console.log('[PDF Viewer] Loaded - Phase 3 implementation');
+// PDF Viewer loaded - Phase 3 implementation
 
 // Configuration
 const PDF_CONFIG = {
@@ -113,7 +113,7 @@ async function loadPDF(category = PDFState.currentCategory) {
   const pdfUrl = PDF_CONFIG.pdfFiles[category] || PDF_CONFIG.pdfFiles[PDF_CONFIG.defaultCategory];
 
   PDFState.isLoading = true;
-  console.log(`[PDF] Loading ${category.toUpperCase()} PDF from:`, pdfUrl);
+  // Loading PDF from: ${pdfUrl}
 
   try {
     // Show loading state
@@ -125,7 +125,7 @@ async function loadPDF(category = PDFState.currentCategory) {
     PDFState.pdfDoc = await pdfjsLib.getDocument(pdfUrl).promise;
     PDFState.totalPages = PDFState.pdfDoc.numPages;
 
-    console.log(`[PDF] ${category.toUpperCase()} loaded successfully. Total pages: ${PDFState.totalPages}`);
+    // PDF loaded successfully. Total pages: ${PDFState.totalPages}
 
     // Initialize page placeholders for lazy loading
     initPagePlaceholders();
@@ -242,7 +242,7 @@ async function renderPage(pageNum, placeholder) {
   // Skip if already rendered or rendering
   if (PDFState.renderedPages.has(pageNum) || !PDFState.pdfDoc) return;
 
-  console.log(`[PDF] Rendering page ${pageNum}`);
+  // Rendering page ${pageNum}
   PDFState.renderedPages.add(pageNum);
 
   try {
@@ -272,7 +272,7 @@ async function renderPage(pageNum, placeholder) {
     const viewport = page.getViewport({ scale: width / page.getViewport({ scale: 1 }).width });
     await page.render({ canvasContext: ctx, viewport }).promise;
 
-    console.log(`[PDF] Page ${pageNum} rendered successfully`);
+    // Page ${pageNum} rendered successfully
 
     // Replace placeholder with rendered canvas
     placeholder.parentNode.replaceChild(canvas, placeholder);
@@ -402,7 +402,7 @@ function handleResize() {
 // Public API & Initialization
 // --------------------------------------------------------------------------
 function initPDFViewer() {
-  console.log('[PDF Viewer] Initializing...');
+  // PDF Viewer initializing...
 
   // Get DOM elements
   pdfContainer = document.getElementById('pdf-container');
@@ -410,7 +410,7 @@ function initPDFViewer() {
   loadingElement = document.querySelector('.pdf-loading');
 
   if (!pdfContainer) {
-    console.debug('[PDF Viewer] PDF container not found (expected on index page)');
+    // PDF container not found (expected on index page)
     return;
   }
 

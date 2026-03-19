@@ -1,7 +1,7 @@
 // Custom Cursor System
 // Phase 2 implementation placeholder
 
-console.log('[Cursor] Loaded - Phase 2 placeholder');
+// Cursor loaded - Phase 2 placeholder
 
 // Cursor element references
 let innerCursor, outerCursor;
@@ -15,13 +15,13 @@ function lerp(a, b, t) {
 
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('[Cursor] Initializing custom cursor');
+  // Cursor initializing custom cursor
 
   innerCursor = document.querySelector('.cursor-inner');
   outerCursor = document.querySelector('.cursor-outer');
 
   if (!innerCursor || !outerCursor) {
-    console.warn('[Cursor] Cursor elements not found in DOM');
+    // Cursor elements not found in DOM
     return;
   }
 

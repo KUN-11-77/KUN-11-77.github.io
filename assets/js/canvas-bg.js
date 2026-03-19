@@ -1,7 +1,7 @@
 // Canvas Background Particle System
 // Phase 1 implementation placeholder
 
-console.log('[Canvas BG] Loaded - Phase 1 placeholder');
+// Canvas BG loaded - Phase 1 placeholder
 
 // Configuration
 const CONFIG = {
@@ -11,6 +11,6 @@ const CONFIG = {
 
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('[Canvas BG] Initializing particle system');
+  // Canvas BG initializing particle system
   // Phase 1 implementation will go here
 });

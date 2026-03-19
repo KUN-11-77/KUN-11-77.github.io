@@ -1,7 +1,7 @@
 // Main JavaScript Entry Point
 // Handles global functionality and coordination between modules
 
-console.log('[Main] Neuraverse site loaded');
+// Main: Neuraverse site loaded
 
 // Global state
 const AppState = {
@@ -12,11 +12,11 @@ const AppState = {
 
 // Initialize everything when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('[Main] Initializing Neuraverse application');
+  // Main: Initializing Neuraverse application
 
   // Detect mobile devices for performance adjustments
-  console.log(`[Main] Device: ${AppState.isMobile ? 'Mobile' : 'Desktop'}`);
-  console.log(`[Main] Reduced motion: ${AppState.prefersReducedMotion ? 'Yes' : 'No'}`);
+  // Device: ${AppState.isMobile ? 'Mobile' : 'Desktop'}
+  // Reduced motion: ${AppState.prefersReducedMotion ? 'Yes' : 'No'}
 
   // Setup intersection observers for scroll animations
   initScrollAnimations();
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Handle visibility changes (pause animations when tab is hidden)
   document.addEventListener('visibilitychange', () => {
     AppState.visibility = document.visibilityState;
-    console.log(`[Main] Visibility changed: ${AppState.visibility}`);
+    // Visibility changed: ${AppState.visibility}
   });
 });
 
