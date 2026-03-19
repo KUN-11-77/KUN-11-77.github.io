@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO & Social Meta Tags -->
+  <title>Course Notes — Neuraverse</title>
+  <meta name="description" content="Organized course notes by discipline: AI, Computer Science, Physics, Mathematics, and ECE. High-fidelity PDF rendering with interactive navigation.">
+  <meta property="og:title" content="Course Notes — Neuraverse">
+  <meta property="og:description" content="Organized course notes by discipline: AI, Computer Science, Physics, Mathematics, and ECE. High-fidelity PDF rendering with interactive navigation.">
+  <meta property="og:image" content="https://kun-11-77.github.io/assets/Neuraverse2.jpg">
+  <meta property="og:url" content="https://kun-11-77.github.io/notes.html">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Fonts (Syne for headings, DM Mono for code/data, Geist for body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Phosphor Icons (lightweight icons) -->
+  <script src="https://unpkg.com/phosphor-icons"></script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+
+  <!-- PDF.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body class="notes-page">
+  <!-- Background Canvas Layers -->
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+  <canvas id="click-canvas" aria-hidden="true"></canvas>
+
+  <!-- Custom Cursor -->
+  <div id="cursor" aria-hidden="true">
+    <div class="cursor-inner"></div>
+    <div class="cursor-outer"></div>
+  </div>
+
+  <!-- Page Progress Bar -->
+  <div id="progress-bar"></div>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <a href="index.html" class="logo">Neuraverse</a>
+      <div class="nav-links">
+        <a href="index.html#about">About</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="notes.html" class="active">Notes</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">
+        <span class="hero-line">Course</span>
+        <span class="hero-line">Notes</span>
+      </h1>
+      <p class="hero-subtitle">Organized by discipline • Interactive PDF viewer</p>
+      <div class="hero-scroll">
+        <i class="ph ph-arrow-down"></i>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- PDF Viewer Section -->
+    <section id="pdf-viewer" class="section">
+      <div class="section-container">
+        <h2 class="section-title">Browse Notes</h2>
+        <p class="section-subtitle">Select a discipline to view summarized course notes</p>
+
+        <!-- PDF Category Selector -->
+        <div class="pdf-category-selector">
+          <button class="pdf-category-btn active" data-category="ai">AI</button>
+          <button class="pdf-category-btn" data-category="cs">CS</button>
+          <button class="pdf-category-btn" data-category="physics">Physics</button>
+          <button class="pdf-category-btn" data-category="math">Mathematics</button>
+          <button class="pdf-category-btn" data-category="ece">ECE</button>
+        </div>
+
+        <div id="pdf-container">
+          <!-- PDF pages will be inserted here by JS -->
+          <div class="pdf-loading">
+            <div class="skeleton"></div>
+            <div class="skeleton"></div>
+            <div class="skeleton"></div>
+          </div>
+        </div>
+        <div id="page-indicator">Page 1 of 1</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Back to Home Link -->
+  <div class="section">
+    <div class="section-container text-center">
+      <a href="index.html" class="back-to-home">
+        <i class="ph ph-arrow-left"></i>
+        Back to Portfolio
+      </a>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="assets/js/particles.js"></script>
+  <script src="assets/js/cursor.js"></script>
+  <script src="assets/js/pdf-viewer.js"></script>
+  <script src="assets/js/progress-bar.js"></script>
+  <script src="assets/js/animations.js"></script>
+
+  <script>
+    // Initialize components for notes page
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('[Notes] Page initialized');
+    });
+  </script>
+</body>
+</html>

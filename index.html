@@ -54,7 +54,7 @@
       <div class="nav-links">
         <a href="#about">About</a>
         <a href="#projects">Projects</a>
-        <a href="#pdf-viewer">Resume</a>
+        <a href="notes.html">Notes</a>
         <a href="#contact">Contact</a>
       </div>
     </div>
@@ -128,30 +128,46 @@
       </div>
     </section>
 
-    <!-- PDF Viewer Section -->
-    <section id="pdf-viewer" class="section">
-      <div class="section-container">
+    <!-- Notes Preview Section -->
+    <section class="section">
+      <div class="section-container text-center">
         <h2 class="section-title">Course Notes</h2>
-        <p class="section-subtitle">Summarized notes organized by discipline</p>
+        <p class="section-subtitle">Organized notes across multiple disciplines</p>
 
-        <!-- PDF Category Selector -->
-        <div class="pdf-category-selector">
-          <button class="pdf-category-btn active" data-category="ai">AI</button>
-          <button class="pdf-category-btn" data-category="cs">CS</button>
-          <button class="pdf-category-btn" data-category="physics">Physics</button>
-          <button class="pdf-category-btn" data-category="math">Mathematics</button>
-          <button class="pdf-category-btn" data-category="ece">ECE</button>
-        </div>
-
-        <div id="pdf-container">
-          <!-- PDF pages will be inserted here by JS -->
-          <div class="pdf-loading">
-            <div class="skeleton"></div>
-            <div class="skeleton"></div>
-            <div class="skeleton"></div>
+        <div class="notes-preview">
+          <div class="notes-categories">
+            <div class="notes-category">
+              <i class="ph ph-brain"></i>
+              <h3>AI</h3>
+              <p>Artificial Intelligence & Machine Learning</p>
+            </div>
+            <div class="notes-category">
+              <i class="ph ph-cpu"></i>
+              <h3>CS</h3>
+              <p>Computer Science Fundamentals</p>
+            </div>
+            <div class="notes-category">
+              <i class="ph ph-atom"></i>
+              <h3>Physics</h3>
+              <p>Classical & Modern Physics</p>
+            </div>
+            <div class="notes-category">
+              <i class="ph ph-math-operations"></i>
+              <h3>Mathematics</h3>
+              <p>Calculus, Linear Algebra, Statistics</p>
+            </div>
+            <div class="notes-category">
+              <i class="ph ph-circuitry"></i>
+              <h3>ECE</h3>
+              <p>Electronics & Computer Engineering</p>
+            </div>
           </div>
+
+          <a href="notes.html" class="btn-primary">
+            <i class="ph ph-notebook"></i>
+            View All Notes
+          </a>
         </div>
-        <div id="page-indicator">Page 1 of 1</div>
       </div>
     </section>
 

@@ -651,6 +651,113 @@ footer {
 }
 
 /* --------------------------------------------------------------------------
+   Notes Preview Section
+   -------------------------------------------------------------------------- */
+.text-center {
+  text-align: center;
+}
+
+.notes-preview {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-xl) 0;
+}
+
+.notes-categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-lg);
+  margin-bottom: var(--space-2xl);
+}
+
+.notes-category {
+  background: rgba(var(--nebula-layer-rgb), 0.4);
+  border: 0.5px solid rgba(var(--glow-cyan-rgb), 0.2);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  text-align: center;
+  transition: all var(--transition-base);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.notes-category:hover {
+  transform: translateY(-4px);
+  border-color: rgba(var(--glow-cyan-rgb), 0.4);
+  background: rgba(var(--glow-cyan-rgb), 0.1);
+  box-shadow: 0 8px 24px rgba(0, 229, 255, 0.15);
+}
+
+.notes-category i {
+  font-size: 2rem;
+  color: var(--glow-cyan);
+  margin-bottom: var(--space-sm);
+}
+
+.notes-category h3 {
+  margin-bottom: var(--space-xs);
+  color: var(--text-primary);
+}
+
+.notes-category p {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background: rgba(var(--glow-cyan-rgb), 0.15);
+  color: var(--glow-cyan);
+  border: 0.5px solid rgba(var(--glow-cyan-rgb), 0.4);
+  border-radius: var(--radius-md);
+  padding: var(--space-md) var(--space-xl);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  text-decoration: none;
+  transition: all var(--transition-base);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.btn-primary:hover {
+  background: rgba(var(--glow-cyan-rgb), 0.25);
+  border-color: rgba(var(--glow-cyan-rgb), 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 229, 255, 0.2);
+}
+
+.btn-primary i {
+  font-size: 1.25rem;
+}
+
+.back-to-home {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--text-muted);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  padding: var(--space-sm) var(--space-md);
+  border: 0.5px solid rgba(var(--glow-cyan-rgb), 0.2);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-base);
+}
+
+.back-to-home:hover {
+  color: var(--glow-cyan);
+  border-color: rgba(var(--glow-cyan-rgb), 0.4);
+  background: rgba(var(--glow-cyan-rgb), 0.05);
+}
+
+.back-to-home i {
+  font-size: 1rem;
+}
+
+/* --------------------------------------------------------------------------
    Responsive Adjustments
    -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
@@ -676,6 +783,20 @@ footer {
     right: var(--space-md);
     padding: var(--space-xs) var(--space-md);
   }
+}
+
+/* Notes Page Background */
+.notes-page {
+  background: linear-gradient(to bottom, rgba(10, 14, 26, 0.9), rgba(10, 14, 26, 0.95)),
+              url('../images/Neuraverse2.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-blend-mode: overlay;
+}
+
+.notes-page #bg-canvas {
+  opacity: 0.3; /* Reduce particle opacity to emphasize background image */
 }
 
 /* --------------------------------------------------------------------------
