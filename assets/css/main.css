@@ -450,6 +450,51 @@ nav {
 #pdf-container {
   margin-top: var(--space-xl);
   position: relative;
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg); /* Page spacing */
+}
+
+/* PDF Page Canvas (rendered pages) */
+.pdf-page-canvas {
+  width: 100% !important;
+  height: auto !important;
+  border-radius: var(--radius-md);
+  background: rgba(26, 31, 53, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 0 40px rgba(0, 229, 255, 0.08);
+  transition: box-shadow var(--transition-slow);
+}
+
+.pdf-page-canvas:hover {
+  box-shadow: 0 0 60px rgba(0, 229, 255, 0.12);
+}
+
+/* PDF Page Placeholder (loading skeleton) */
+.pdf-page-placeholder {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.05);
+  border: 0.5px solid rgba(var(--glow-cyan-rgb), 0.1);
+}
+
+/* PDF Error State */
+.pdf-error {
+  padding: var(--space-2xl);
+  text-align: center;
+  border-radius: var(--radius-md);
+  background: rgba(var(--nebula-layer-rgb), 0.9);
+  border: 0.5px solid rgba(var(--neural-pink-rgb), 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .pdf-loading {

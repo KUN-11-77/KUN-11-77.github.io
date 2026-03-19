@@ -76,6 +76,18 @@
 .delay-5 { animation-delay: 0.5s; }
 
 /* --------------------------------------------------------------------------
+   PDF Loading Animations
+   -------------------------------------------------------------------------- */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* --------------------------------------------------------------------------
    Accessibility: Reduce Motion
    -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
@@ -89,6 +101,11 @@
   .animate-fade-up,
   .animate-scale-in,
   .animate-pulse-glow {
+    animation: none !important;
+  }
+
+  [class*="shimmer"],
+  .pdf-page-placeholder div {
     animation: none !important;
   }
 }

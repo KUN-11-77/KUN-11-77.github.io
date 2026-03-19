@@ -388,36 +388,11 @@ function initPDFViewer() {
   loadPDF();
 }
 
-// --------------------------------------------------------------------------
-// Shimmer Animation CSS (injected dynamically)
-// --------------------------------------------------------------------------
-function injectShimmerAnimation() {
-  if (!document.getElementById('pdf-shimmer-animation')) {
-    const style = document.createElement('style');
-    style.id = 'pdf-shimmer-animation';
-    style.textContent = `
-      @keyframes shimmer {
-        0% { transform: translateX(-100%); }
-        100% { transform: translateX(100%); }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .pdf-page-placeholder div {
-          animation: none !important;
-        }
-      }
-    `;
-    document.head.appendChild(style);
-  }
-}
 
 // --------------------------------------------------------------------------
 // Export & Initialization
 // --------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
-  // Inject shimmer animation CSS
-  injectShimmerAnimation();
-
   // Initialize PDF viewer
   initPDFViewer();
 });
