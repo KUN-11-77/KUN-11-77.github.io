@@ -221,7 +221,7 @@ function drawConnections() {
 
       if (distSq < thresholdSq) {
         const dist = Math.sqrt(distSq);
-        const alpha = (1 - dist / threshold) * 0.3;
+        const alpha = (1 - dist / threshold) * 0.5;
 
         ctx.beginPath();
         ctx.moveTo(particles[i].x, particles[i].y);

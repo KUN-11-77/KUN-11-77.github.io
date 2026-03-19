@@ -1276,10 +1276,9 @@ footer {
   align-items: center;
 }
 
-/* PDF页面保持1.414:1比例 (A4纸比例) */
+/* PDF页面使用实际宽高比渲染 */
 .pdf-viewer-container .pdf-page-canvas,
 .pdf-viewer-container .pdf-page-placeholder {
-  aspect-ratio: 1.414 / 1;
   width: 100% !important;
   max-width: 900px;
   height: auto !important;
