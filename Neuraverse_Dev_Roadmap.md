@@ -242,13 +242,16 @@ particles.forEach(p => {
 > 这是最核心的功能，也是最容易踩坑的地方
 
 **用途说明**：PDF 展示系统将用于汇总课程笔记，按学科分类：
-- **AI** — 人工智能相关课程笔记
-- **CS** — 计算机科学核心课程
-- **Physics** — 物理学课程笔记
-- **MATH** — 数学课程笔记
-- **ECE** — 电子与计算机工程课程笔记
+- **AI** — 人工智能相关课程笔记（多份PDF文件）
+- **CS** — 计算机科学核心课程（多份PDF文件）
+- **Physics** — 物理学课程笔记（多份PDF文件）
+- **MATH** — 数学课程笔记（多份PDF文件）
+- **ECE** — 电子与计算机工程课程笔记（多份PDF文件）
 
-每个分类对应独立的 PDF 文件。课程笔记将部署在独立页面（notes.html），通过主页导航访问，提供更好的专注阅读体验。页面内采用选项卡式切换界面，支持按学科分类查看。
+每个分类包含多个 PDF 文件。课程笔记将部署在独立页面（notes.html），通过主页导航访问，提供更好的专注阅读体验。页面采用三部分布局：
+1. **顶部大类选择器**：显示学科分类选项卡
+2. **左侧PDF列表栏**（窄栏）：显示当前学科下所有PDF文件列表
+3. **右侧PDF展示区**（大矩形区域）：高清晰度显示选中的PDF内容
 
 ### 任务 3-A：PDF.js 全页渲染器
 
@@ -297,24 +300,110 @@ async function renderPDF(url) {
 |------|------|---------|
 | Canvas 内容模糊 | devicePixelRatio = 2 时 canvas 实际像素不足 | canvas 物理尺寸 × dpr，CSS 尺寸保持不变，ctx.scale(dpr, dpr) |
 
-### 任务 3-B：PDF 容器样式
+### 任务 3-B：新版PDF展示界面设计
 
+**布局结构**：
+```html
+<!-- 顶部大类选择器（保持现有） -->
+<div class="pdf-category-selector">
+  <button class="pdf-category-btn active" data-category="ai">AI</button>
+  <!-- ... -->
+</div>
+
+<!-- 主内容区域：左侧PDF列表 + 右侧PDF展示 -->
+<div class="pdf-main-layout">
+  <!-- 左侧PDF列表栏（窄栏，宽度300px） -->
+  <div class="pdf-sidebar">
+    <div class="pdf-list">
+      <!-- PDF列表项将通过JS动态生成 -->
+      <div class="pdf-list-item active" data-pdf="机器学习笔记.pdf">
+        <i class="ph ph-file-pdf"></i>
+        <span>机器学习笔记.pdf</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 右侧PDF展示区（自适应宽度） -->
+  <div class="pdf-viewer-container">
+    <div id="pdf-container">
+      <!-- PDF页面将通过JS动态渲染 -->
+      <div class="pdf-loading">加载中...</div>
+    </div>
+    <div id="page-indicator">Page 1 of 1</div>
+  </div>
+</div>
+```
+
+**CSS样式**：
 ```css
-#pdf-container {
-  max-width: 860px;
+/* 主布局 */
+.pdf-main-layout {
+  display: flex;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
+  gap: 24px;
+}
+
+/* 左侧PDF列表栏 */
+.pdf-sidebar {
+  width: 300px;
+  flex-shrink: 0;
+  background: rgba(26, 31, 53, 0.6);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  border: 0.5px solid rgba(0, 229, 255, 0.1);
+  padding: 20px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.pdf-list-item {
   display: flex;
-  flex-direction: column;
-  gap: 16px;              /* 页面间距 */
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: rgba(10, 14, 26, 0.3);
+  border: 0.5px solid transparent;
+}
+
+.pdf-list-item:hover {
+  background: rgba(0, 229, 255, 0.08);
+  border-color: rgba(0, 229, 255, 0.2);
+}
+
+.pdf-list-item.active {
+  background: rgba(0, 229, 255, 0.12);
+  border-color: var(--glow-cyan);
+  color: var(--glow-cyan);
+}
+
+/* 右侧PDF展示区 */
+.pdf-viewer-container {
+  flex: 1;
+  min-width: 0; /* 防止flex元素溢出 */
+}
+
+#pdf-container {
+  background: rgba(26, 31, 53, 0.85);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  border: 0.5px solid rgba(0, 229, 255, 0.15);
+  padding: 24px;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 #pdf-container canvas {
   width: 100%;
+  max-width: 100%;
   border-radius: 8px;
-  background: rgba(26, 31, 53, 0.85);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 0 40px rgba(0, 229, 255, 0.08);
+  box-shadow: 0 0 40px rgba(0, 229, 255, 0.05);
 }
 
 /* 浮动页码指示器 */
@@ -330,6 +419,7 @@ async function renderPDF(url) {
   font-size: 12px;
   color: var(--glow-cyan);
   backdrop-filter: blur(8px);
+  z-index: 1000;
 }
 ```
 

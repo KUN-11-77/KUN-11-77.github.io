@@ -100,19 +100,28 @@ function initHeroAnimations() {
   const heroSubtitle = document.querySelector('.hero-subtitle');
   const heroScroll = document.querySelector('.hero-scroll');
 
-  if (heroLines.length === 0 || !heroSubtitle || !heroScroll) return;
+  if (heroLines.length === 0) return;
 
-  // Staggered entrance animation
+  console.log('[Hero] Initializing hero animations, lines:', heroLines.length);
+
+  // Add animation class to trigger any enhanced states
   heroLines.forEach((line, index) => {
-    line.style.animationDelay = `${0.3 + index * 0.2}s`;
-    line.classList.add('animate-fade-up');
+    setTimeout(() => {
+      line.classList.add('animate-fade-up');
+    }, 100 + index * 150);
   });
 
-  heroSubtitle.style.animationDelay = '0.8s';
-  heroSubtitle.classList.add('animate-fade-up');
+  if (heroSubtitle) {
+    setTimeout(() => {
+      heroSubtitle.classList.add('animate-fade-up');
+    }, 400);
+  }
 
-  heroScroll.style.animationDelay = '1.2s';
-  heroScroll.classList.add('animate-fade-up');
+  if (heroScroll) {
+    setTimeout(() => {
+      heroScroll.classList.add('animate-fade-up');
+    }, 600);
+  }
 }
 
 // --------------------------------------------------------------------------

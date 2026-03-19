@@ -1106,14 +1106,14 @@ footer {
 
   .pdf-sidebar {
     width: 100%;
-    max-height: 200px;
+    max-height: 250px;
     min-height: auto;
     position: relative;
     top: 0;
   }
 
   .pdf-viewer-container #pdf-container {
-    max-height: calc(100vh - 300px);
+    max-height: calc(100vh - 350px);
     min-height: 350px;
   }
 }

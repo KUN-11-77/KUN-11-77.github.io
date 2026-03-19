@@ -78,7 +78,7 @@
   <main>
     <!-- PDF Viewer Section -->
     <section id="pdf-viewer" class="section">
-      <div class="section-container">
+      <div class="pdf-section-container">
         <h2 class="section-title">Browse Notes</h2>
         <p class="section-subtitle">Select a discipline to view summarized course notes</p>
 
@@ -91,15 +91,36 @@
           <button class="pdf-category-btn" data-category="ece">ECE</button>
         </div>
 
-        <div id="pdf-container">
-          <!-- PDF pages will be inserted here by JS -->
-          <div class="pdf-loading">
-            <div class="skeleton"></div>
-            <div class="skeleton"></div>
-            <div class="skeleton"></div>
+        <!-- 主内容区域：左侧PDF列表 + 右侧PDF展示 -->
+        <div class="pdf-main-layout">
+          <!-- 左侧PDF列表栏 -->
+          <div class="pdf-sidebar">
+            <div class="pdf-list-header">
+              <h3>PDF Files</h3>
+              <span class="pdf-count">0 files</span>
+            </div>
+            <div id="pdf-list" class="pdf-list">
+              <!-- PDF列表项将通过JS动态生成 -->
+              <div class="pdf-list-empty">
+                <i class="ph ph-file-pdf"></i>
+                <p>Select a category to view PDF files</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 右侧PDF展示区 -->
+          <div class="pdf-viewer-container">
+            <div id="pdf-container">
+              <!-- PDF页面将通过JS动态渲染 -->
+              <div class="pdf-loading">
+                <div class="skeleton"></div>
+                <div class="skeleton"></div>
+                <div class="skeleton"></div>
+              </div>
+            </div>
+            <div id="page-indicator">Page 1 of 1</div>
           </div>
         </div>
-        <div id="page-indicator">Page 1 of 1</div>
       </div>
     </section>
   </main>
@@ -115,16 +136,15 @@
   </div>
 
   <!-- JavaScript -->
-  <script src="assets/js/particles.js"></script>
+  <script src="assets/js/canvas-bg.js"></script>
   <script src="assets/js/cursor.js"></script>
   <script src="assets/js/pdf-viewer.js"></script>
+  <script src="assets/js/main.js"></script>
   <!-- PDF.js Worker Setup -->
   <script>
     pdfjsLib.GlobalWorkerOptions.workerSrc =
       'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.10.111/pdf.worker.min.js';
   </script>
-  <script src="assets/js/progress-bar.js"></script>
-  <script src="assets/js/animations.js"></script>
 
   <script>
     // Initialize components for notes page
