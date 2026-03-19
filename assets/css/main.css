@@ -309,6 +309,7 @@ nav {
   background-size: 300% 100%;
   -webkit-background-clip: text;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
   color: transparent;
   animation: flowGradient 8s ease-in-out infinite;
   transform: translateZ(0); /* Hardware acceleration */
@@ -363,6 +364,7 @@ nav {
   background-size: 300% 100%;
   -webkit-background-clip: text;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
   color: transparent;
   animation: flowGradient 8s ease-in-out infinite;
   transform: translateZ(0); /* Hardware acceleration */
@@ -370,7 +372,7 @@ nav {
 
 .hero-line {
   display: block;
-  opacity: 0;
+  opacity: 1; /* Changed from 0 to ensure visible by default */
   transform: translateY(20px);
 }
 
