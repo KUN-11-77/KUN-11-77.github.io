@@ -674,17 +674,40 @@ function initIntersectionObserver() {
 // --------------------------------------------------------------------------
 async function handleResize() {
   // Recreate placeholders and re-render on resize
-  if (PDFState.pdfDoc) {
-    await initPagePlaceholders();
+  if (!PDFState.pdfDoc || !pdfContainer) return;
 
-    // Re-render already rendered pages
-    PDFState.renderedPages.forEach(pageNum => {
-      const placeholder = PDFState.pagePlaceholders[pageNum - 1];
-      if (placeholder && placeholder.parentNode) {
-        renderPage(pageNum, placeholder);
-      }
-    });
+  console.log('[PDF] Handling resize, re-rendering all pages');
+
+  // Save current scroll position
+  const scrollTop = pdfContainer.scrollTop;
+
+  // Get all currently rendered pages
+  const renderedPageNums = Array.from(PDFState.renderedPages).sort((a, b) => a - b);
+
+  // Clear the container but preserve structure
+  pdfContainer.innerHTML = '';
+
+  // Reset tracking arrays
+  PDFState.pagePlaceholders = [];
+  PDFState.renderedPages.clear();
+
+  // Recreate all placeholders
+  for (let pageNum = 1; pageNum <= PDFState.totalPages; pageNum++) {
+    await createPagePlaceholder(pageNum);
   }
+
+  // Re-render all previously rendered pages
+  for (const pageNum of renderedPageNums) {
+    const placeholder = PDFState.pagePlaceholders[pageNum - 1];
+    if (placeholder) {
+      await renderPage(pageNum, placeholder);
+    }
+  }
+
+  // Restore scroll position (approximately)
+  pdfContainer.scrollTop = scrollTop;
+
+  console.log('[PDF] Resize handling complete');
 }
 
 // --------------------------------------------------------------------------

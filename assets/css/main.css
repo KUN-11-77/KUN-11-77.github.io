@@ -922,7 +922,7 @@ footer {
   max-width: 1800px;
   margin: 0 auto;
   padding: 0 var(--space-xl);
-  height: calc(100vh - 200px); /* Full viewport minus header/nav */
+  height: calc(100vh - 80px); /* Full viewport minus minimal header */
   display: flex;
   flex-direction: column;
 }
