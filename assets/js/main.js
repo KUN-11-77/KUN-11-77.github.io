@@ -30,6 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Setup hero animations
   initHeroAnimations();
 
+  // Setup neural cursor
+  initNeuralCursor();
+
   // Handle visibility changes (pause animations when tab is hidden)
   document.addEventListener('visibilitychange', () => {
     AppState.visibility = document.visibilityState;
@@ -152,6 +155,238 @@ function throttle(func, limit) {
   };
 }
 
+// --------------------------------------------------------------------------
+// Neural Cursor - Advanced Neuron-themed Mouse Interaction
+// --------------------------------------------------------------------------
+function initNeuralCursor() {
+  const cursor = document.getElementById('cursor');
+  const soma = document.querySelector('.cursor-soma');
+  const axon = document.querySelector('.cursor-axon');
+
+  if (!cursor || !soma || !axon) return;
+
+  // Skip on touch devices
+  if (window.matchMedia('(pointer: coarse)').matches) {
+    cursor.style.display = 'none';
+    return;
+  }
+
+  // Position tracking
+  let mouseX = 0, mouseY = 0;
+  let somaX = 0, somaY = 0;
+  let axonX = 0, axonY = 0;
+  let lastX = 0, lastY = 0;
+  let lastTrailTime = 0;
+  let lastRippleTime = 0;
+  let rafId = null;
+
+  // Movement tracking for direction changes
+  let velocityX = 0, velocityY = 0;
+  let lastVelocityX = 0, lastVelocityY = 0;
+
+  // Show cursor after initial movement
+  document.addEventListener('mousemove', () => {
+    cursor.style.opacity = '1';
+  }, { once: true, passive: true });
+
+  // Update mouse position
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  }, { passive: true });
+
+  // Animation loop
+  function animate() {
+    // Calculate velocity for ripple detection
+    velocityX = mouseX - lastX;
+    velocityY = mouseY - lastY;
+
+    // Smooth follow with different lerp speeds for soma and axon
+    somaX += (mouseX - somaX) * 0.25;
+    somaY += (mouseY - somaY) * 0.25;
+
+    // Axon follows slowly (delayed effect - lerp)
+    axonX += (mouseX - axonX) * 0.08;
+    axonY += (mouseY - axonY) * 0.08;
+
+    // Update positions
+    soma.style.transform = `translate(${somaX - 12}px, ${somaY - 12}px)`;
+    axon.style.transform = `translate(${axonX - 30}px, ${axonY - 30}px)`;
+
+    // Trail effect
+    const now = performance.now();
+    if (now - lastTrailTime > 25) {
+      const speed = Math.sqrt(velocityX * velocityX + velocityY * velocityY);
+      if (speed > 2) {
+        createTrailParticle(somaX, somaY, speed);
+      }
+      lastTrailTime = now;
+    }
+
+    // Ripple on direction change or high speed
+    const velocityChange = Math.abs(velocityX - lastVelocityX) + Math.abs(velocityY - lastVelocityY);
+    const speed = Math.sqrt(velocityX * velocityX + velocityY * velocityY);
+
+    if (now - lastRippleTime > 200 && (velocityChange > 15 || speed > 25)) {
+      createRipple(somaX, somaY);
+      lastRippleTime = now;
+    }
+
+    // Store for next frame
+    lastX = mouseX;
+    lastY = mouseY;
+    lastVelocityX = velocityX;
+    lastVelocityY = velocityY;
+
+    rafId = requestAnimationFrame(animate);
+  }
+
+  // Create trail particle with varied colors
+  function createTrailParticle(x, y, speed) {
+    const particle = document.createElement('div');
+    const types = ['trail-particle-1', 'trail-particle-2', 'trail-particle-3'];
+    const type = types[Math.floor(Math.random() * types.length)];
+
+    particle.className = `neural-trail ${type}`;
+    particle.style.left = x + 'px';
+    particle.style.top = y + 'px';
+
+    const scatter = Math.min(speed * 0.5, 10);
+    const offsetX = (Math.random() - 0.5) * scatter;
+    const offsetY = (Math.random() - 0.5) * scatter;
+
+    document.body.appendChild(particle);
+
+    const duration = 400 + Math.random() * 400;
+    particle.animate([
+      { opacity: 0.8, transform: `translate(-50%, -50%) scale(1)` },
+      { opacity: 0, transform: `translate(calc(-50% + ${offsetX}px), calc(-50% + ${offsetY}px)) scale(0.3)` }
+    ], {
+      duration: duration,
+      easing: 'ease-out'
+    }).onfinish = () => particle.remove();
+  }
+
+  // Create ripple effect
+  function createRipple(x, y) {
+    const ripple = document.createElement('div');
+    ripple.className = 'neural-ripple';
+    ripple.style.left = x + 'px';
+    ripple.style.top = y + 'px';
+    ripple.style.width = '30px';
+    ripple.style.height = '30px';
+
+    document.body.appendChild(ripple);
+
+    ripple.animate([
+      { transform: 'translate(-50%, -50%) scale(0)', opacity: 0.5 },
+      { transform: 'translate(-50%, -50%) scale(2.5)', opacity: 0 }
+    ], {
+      duration: 500,
+      easing: 'ease-out'
+    }).onfinish = () => ripple.remove();
+  }
+
+  // Hover effect on interactive elements
+  const hoverElements = document.querySelectorAll('a, button, .pdf-category-btn, .pdf-list-item, .project-card, input, textarea');
+  hoverElements.forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      soma.classList.add('hover');
+      axon.classList.add('hover');
+    });
+    el.addEventListener('mouseleave', () => {
+      soma.classList.remove('hover');
+      axon.classList.remove('hover');
+    });
+  });
+
+  // Click effects - synaptic burst
+  document.addEventListener('mousedown', (e) => {
+    soma.classList.add('click');
+    createClickBurst(e.clientX, e.clientY);
+  });
+
+  document.addEventListener('mouseup', () => {
+    soma.classList.remove('click');
+  });
+
+  function createClickBurst(x, y) {
+    const particleCount = 8 + Math.floor(Math.random() * 4);
+
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'click-burst burst-particle';
+      particle.style.left = x + 'px';
+      particle.style.top = y + 'px';
+
+      const angle = (Math.PI * 2 * i) / particleCount + (Math.random() - 0.5) * 0.5;
+      const distance = 25 + Math.random() * 35;
+      const tx = Math.cos(angle) * distance;
+      const ty = Math.sin(angle) * distance;
+
+      document.body.appendChild(particle);
+
+      particle.animate([
+        { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
+        { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(0.2)`, opacity: 0 }
+      ], {
+        duration: 300 + Math.random() * 200,
+        easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+      }).onfinish = () => particle.remove();
+    }
+
+    setTimeout(() => createSynapse(x, y), 200);
+  }
+
+  function createSynapse(x, y) {
+    const synapse = document.createElement('div');
+    synapse.className = 'synapse';
+    synapse.style.left = x + 'px';
+    synapse.style.top = y + 'px';
+
+    const node1 = document.createElement('div');
+    node1.className = 'synapse-node';
+    node1.style.left = '-8px';
+    node1.style.top = '0';
+
+    const node2 = document.createElement('div');
+    node2.className = 'synapse-node';
+    node2.style.left = '8px';
+    node2.style.top = '0';
+
+    const line = document.createElement('div');
+    line.className = 'synapse-line';
+    line.style.width = '16px';
+    line.style.left = '-8px';
+    line.style.top = '2px';
+
+    synapse.appendChild(node1);
+    synapse.appendChild(node2);
+    synapse.appendChild(line);
+    document.body.appendChild(synapse);
+
+    synapse.animate([
+      { opacity: 0, transform: 'translate(-50%, -50%) scale(0.5)' },
+      { opacity: 1, transform: 'translate(-50%, -50%) scale(1)', offset: 0.3 },
+      { opacity: 0.5, transform: 'translate(-50%, -50%) scale(1)', offset: 0.6 },
+      { opacity: 0, transform: 'translate(-50%, -50%) scale(1)', offset: 1 }
+    ], {
+      duration: 600,
+      easing: 'ease-in-out'
+    }).onfinish = () => synapse.remove();
+  }
+
+  animate();
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && rafId) {
+      cancelAnimationFrame(rafId);
+    } else if (!document.hidden) {
+      animate();
+    }
+  });
+}
+
 // Export for debugging
 window.AppState = AppState;
-window.Neuraverse = { initScrollAnimations, initProgressBar, initHeroAnimations };
+window.Neuraverse = { initScrollAnimations, initProgressBar, initHeroAnimations, initNeuralCursor };
