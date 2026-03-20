@@ -29,7 +29,8 @@ const PDF_CONFIG = {
       { name: 'CS231n Notes.pdf', path: 'assets/notes/AI/CS231n Notes.pdf' } // Placeholder
     ],
     physics: [
-      { name: '大学物理笔记.pdf', path: 'assets/notes/Physics/大学物理笔记.pdf' }
+      { name: '大学物理笔记_1.pdf', path: 'assets/notes/Physics/大学物理笔记_1.pdf' },
+      { name: '大学物理笔记_2.pdf', path: 'assets/notes/Physics/大学物理笔记_2.pdf' }
     ],
     math: [
       { name: '线性代数_I.pdf', path: 'assets/notes/MATH/线性代数_I.pdf' },
