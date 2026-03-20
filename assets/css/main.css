@@ -2490,6 +2490,46 @@ footer {
   line-height: 1.5;
 }
 
+/* Timeline Node Type Styling */
+.timeline-node[data-type="education"] .node-marker {
+  border-color: var(--glow-cyan);
+  box-shadow: 0 0 20px rgba(var(--glow-cyan-rgb), 0.4);
+}
+
+.timeline-node[data-type="education"] .node-marker::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  background: var(--glow-cyan);
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+.timeline-node[data-type="education"] .node-year {
+  color: var(--glow-cyan);
+  text-shadow: 0 0 10px rgba(var(--glow-cyan-rgb), 0.3);
+}
+
+.timeline-node[data-type="education"] .node-title {
+  color: var(--glow-cyan);
+}
+
+.timeline-node[data-type="project"] .node-marker {
+  border-color: var(--glow-purple);
+}
+
+.timeline-node[data-type="project"] .node-year {
+  color: var(--glow-purple);
+}
+
+.timeline-node[data-type="work"] .node-marker {
+  border-color: var(--singularity);
+}
+
+.timeline-node[data-type="work"] .node-year {
+  color: var(--singularity);
+}
+
 /* Avatar Orb */
 .avatar-orb {
   position: absolute;

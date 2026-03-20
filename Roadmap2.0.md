@@ -808,11 +808,12 @@ const PROJECTS = [
 // 事件点沿螺旋线排布，滚动时摄像机沿螺旋飞行
 
 const TIMELINE_EVENTS = [
-  { year: 2020, title: "Started ECE", type: "education", color: "#00e5ff" },
-  { year: 2021, title: "First ML Project", type: "project", color: "#b388ff" },
-  { year: 2022, title: "Research Intern", type: "work", color: "#ff6b35" },
-  { year: 2023, title: "Open Source", type: "project", color: "#4fc3f7" },
-  { year: 2024, title: "Graduate", type: "milestone", color: "#f48fb1" },
+  { year: 2018, title: "浙江省杭州第二中学", type: "education", color: "#00e5ff", desc: "高中" },
+  { year: 2021, title: "浙江大学 信息与电子工程学院", type: "education", color: "#00e5ff", desc: "本科 · 香农卓越班 · 竺可桢学院工程教育高级班" },
+  { year: 2022, title: "First ML Project", type: "project", color: "#b388ff" },
+  { year: 2023, title: "Research Intern", type: "work", color: "#ff6b35" },
+  { year: 2024, title: "Open Source", type: "project", color: "#4fc3f7" },
+  { year: 2025, title: "Graduate", type: "milestone", color: "#f48fb1" },
 ];
 
 // 螺旋坐标生成

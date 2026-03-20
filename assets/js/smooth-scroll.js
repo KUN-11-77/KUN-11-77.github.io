@@ -187,6 +187,158 @@ class SmoothScroll {
     });
 
     console.log('[Horizontal Scroll] Gallery initialized with', cards.length, 'cards');
+
+    // Drag-to-scroll functionality
+    this.initDragScroll(track, horizontalSection);
+  }
+
+  initDragScroll(track, section) {
+    let isDragging = false;
+    let startX = 0;
+    let scrollLeft = 0;
+    let currentX = 0;
+    let velocity = 0;
+    let lastX = 0;
+    let rafId = null;
+
+    // Mouse events
+    track.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      startX = e.pageX;
+      track.style.cursor = 'grabbing';
+      track.style.userSelect = 'none';
+
+      // Get current transform X value
+      const transform = gsap.getProperty(track, 'x');
+      scrollLeft = transform;
+      lastX = e.pageX;
+
+      // Pause scroll-triggered animation while dragging
+      const st = ScrollTrigger.getAll().find(t => t.trigger === section);
+      if (st) st.disable();
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+
+      e.preventDefault();
+      const x = e.pageX;
+      const walk = (x - startX) * 1.5; // Drag sensitivity
+      currentX = scrollLeft + walk;
+
+      // Calculate velocity for inertia
+      velocity = x - lastX;
+      lastX = x;
+
+      // Apply transform
+      gsap.set(track, { x: currentX });
+
+      // Update progress indicator
+      this.updateDragProgress(track, section);
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (!isDragging) return;
+      isDragging = false;
+      track.style.cursor = 'grab';
+      track.style.userSelect = '';
+
+      // Apply inertia
+      this.applyInertia(track, velocity, section);
+
+      // Re-enable scroll trigger
+      const st = ScrollTrigger.getAll().find(t => t.trigger === section);
+      if (st) {
+        // Sync scroll position to match drag position
+        const transform = gsap.getProperty(track, 'x');
+        const maxScroll = track.scrollWidth - window.innerWidth + 100;
+        const progress = Math.abs(transform) / maxScroll;
+        st.scroll(st.start + (st.end - st.start) * progress);
+        st.enable();
+      }
+    });
+
+    // Touch events for mobile
+    track.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      startX = e.touches[0].pageX;
+      const transform = gsap.getProperty(track, 'x');
+      scrollLeft = transform;
+      lastX = e.touches[0].pageX;
+
+      const st = ScrollTrigger.getAll().find(t => t.trigger === section);
+      if (st) st.disable();
+    }, { passive: true });
+
+    window.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      const x = e.touches[0].pageX;
+      const walk = (x - startX) * 1.5;
+      currentX = scrollLeft + walk;
+      velocity = x - lastX;
+      lastX = x;
+      gsap.set(track, { x: currentX });
+      this.updateDragProgress(track, section);
+    }, { passive: true });
+
+    window.addEventListener('touchend', () => {
+      if (!isDragging) return;
+      isDragging = false;
+      this.applyInertia(track, velocity, section);
+
+      const st = ScrollTrigger.getAll().find(t => t.trigger === section);
+      if (st) {
+        const transform = gsap.getProperty(track, 'x');
+        const maxScroll = track.scrollWidth - window.innerWidth + 100;
+        const progress = Math.min(Math.abs(transform) / maxScroll, 1);
+        st.scroll(st.start + (st.end - st.start) * progress);
+        st.enable();
+      }
+    });
+
+    // Set initial cursor
+    track.style.cursor = 'grab';
+  }
+
+  updateDragProgress(track, section) {
+    const transform = gsap.getProperty(track, 'x');
+    const maxScroll = track.scrollWidth - window.innerWidth + 100;
+    const progress = Math.min(Math.abs(transform) / maxScroll, 1);
+
+    const progressFill = document.querySelector('.progress-fill');
+    const dots = document.querySelectorAll('.progress-dots .dot');
+    const cards = track.querySelectorAll('.project-card-v2');
+
+    if (progressFill) {
+      progressFill.style.width = `${progress * 100}%`;
+    }
+
+    const activeIndex = Math.floor(progress * cards.length);
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === activeIndex);
+    });
+  }
+
+  applyInertia(track, velocity, section) {
+    if (Math.abs(velocity) < 0.5) return;
+
+    const friction = 0.95;
+    let currentVelocity = velocity * 2;
+
+    const animate = () => {
+      currentVelocity *= friction;
+      const currentX = gsap.getProperty(track, 'x');
+      const newX = currentX + currentVelocity;
+
+      gsap.set(track, { x: newX });
+      this.updateDragProgress(track, section);
+
+      if (Math.abs(currentVelocity) > 0.5) {
+        requestAnimationFrame(animate);
+      }
+    };
+
+    requestAnimationFrame(animate);
   }
 
   setupTimelineAnimation() {
