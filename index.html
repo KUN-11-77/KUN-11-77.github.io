@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO & Social Meta Tags -->
+  <title>Neuraverse — Realm of Negentropy</title>
+  <meta name="description" content="A cosmic neural portfolio showcasing advanced web interactions with particle backgrounds, PDF rendering, and custom cursor systems.">
+  <meta property="og:title" content="Neuraverse — Realm of Negentropy">
+  <meta property="og:description" content="A cosmic neural portfolio showcasing advanced web interactions with particle backgrounds, PDF rendering, and custom cursor systems.">
+  <meta property="og:image" content="https://kun-11-77.github.io/assets/Neuraverse2.jpg">
+  <meta property="og:url" content="https://kun-11-77.github.io">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Fonts (Syne for headings, DM Mono for code/data, Geist for body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Phosphor Icons (lightweight icons) -->
+  <script src="https://unpkg.com/phosphor-icons"></script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="icon.png">
+
+  <!-- PDF.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.10.111/pdf.min.js"></script>
+</head>
+<body>
+  <!-- Background Canvas Layers -->
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+  <canvas id="click-canvas" aria-hidden="true"></canvas>
+
+  <!-- Custom Cursor - Neural Theme -->
+  <div id="cursor" aria-hidden="true">
+    <div class="cursor-soma"></div>
+    <div class="cursor-axon"></div>
+  </div>
+
+  <!-- Page Progress Bar -->
+  <div id="progress-bar"></div>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <a href="/" class="logo">Neuraverse</a>
+      <div class="neural-bolt" aria-hidden="true">
+        <svg viewBox="0 0 120 30" class="bolt-svg">
+          <defs>
+            <linearGradient id="boltGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#00e5ff;stop-opacity:0" />
+              <stop offset="15%" style="stop-color:#00e5ff;stop-opacity:0.8" />
+              <stop offset="35%" style="stop-color:#4fc3f7;stop-opacity:1" />
+              <stop offset="50%" style="stop-color:#b388ff;stop-opacity:1" />
+              <stop offset="65%" style="stop-color:#4fc3f7;stop-opacity:1" />
+              <stop offset="85%" style="stop-color:#00e5ff;stop-opacity:0.8" />
+              <stop offset="100%" style="stop-color:#00e5ff;stop-opacity:0" />
+            </linearGradient>
+            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <!-- Main lightning path with jagged edges -->
+          <path class="bolt-path" d="M5,15 L20,12 L35,18 L50,8 L65,20 L80,10 L95,16 L110,12 L115,14"
+                fill="none" stroke="url(#boltGradient)" stroke-width="2.5" filter="url(#glow)" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Secondary thinner path -->
+          <path class="bolt-path-secondary" d="M8,18 L22,14 L38,20 L52,11 L68,22 L82,13 L98,19 L112,15"
+                fill="none" stroke="url(#boltGradient)" stroke-width="1" filter="url(#glow)" opacity="0.6"/>
+          <!-- Pulse nodes along the path -->
+          <circle class="pulse-node" cx="20" cy="12" r="2.5" fill="#00e5ff" filter="url(#glow)"/>
+          <circle class="pulse-node" cx="50" cy="8" r="2.5" fill="#4fc3f7" filter="url(#glow)"/>
+          <circle class="pulse-node" cx="80" cy="10" r="2.5" fill="#b388ff" filter="url(#glow)"/>
+          <circle class="pulse-node" cx="110" cy="12" r="2.5" fill="#00e5ff" filter="url(#glow)"/>
+        </svg>
+      </div>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="notes.html">Notes</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">
+        <span class="hero-line">Realm of</span>
+        <span class="hero-line">Negentropy</span>
+      </h1>
+      <p class="hero-subtitle">A cosmic neural portfolio by KUN-11-77</p>
+      <div class="hero-scroll">
+        <i class="ph ph-arrow-down"></i>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- About Section -->
+    <section id="about" class="section">
+      <div class="section-container">
+        <h2 class="section-title">About</h2>
+        <div class="about-grid">
+          <div class="about-avatar">
+            <img src="assets/images/avatar.jpg" alt="Profile avatar" class="avatar">
+          </div>
+          <div class="about-text">
+            <p>Welcome to Neuraverse—a digital space where cosmic aesthetics meet neural network inspiration. This portfolio showcases advanced web techniques with pure HTML/CSS/JS.</p>
+            <p>Focus areas: interactive particle systems, high-fidelity PDF rendering, custom cursor physics, and performance‑conscious animations.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+      <div class="section-container">
+        <h2 class="section-title">Projects</h2>
+        <div class="projects-grid">
+          <article class="project-card">
+            <h3>Neuraverse Site</h3>
+            <p>This very portfolio—a canvas‑driven cosmic experience with custom physics and seamless PDF integration.</p>
+            <div class="project-tags">
+              <span>HTML/CSS</span>
+              <span>Canvas</span>
+              <span>PDF.js</span>
+            </div>
+          </article>
+          <article class="project-card">
+            <h3>Particle Engine</h3>
+            <p>A lightweight 2D particle system with gravitational interaction, object pooling, and mobile‑first降级.</p>
+            <div class="project-tags">
+              <span>JavaScript</span>
+              <span>Canvas 2D</span>
+              <span>Performance</span>
+            </div>
+          </article>
+          <article class="project-card">
+            <h3>PDF Renderer</h3>
+            <p>High‑DPI PDF rendering solution with lazy loading, skeleton placeholders, and floating page indicators.</p>
+            <div class="project-tags">
+              <span>PDF.js</span>
+              <span>Lazy Loading</span>
+              <span>Accessibility</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Notes Preview Section -->
+    <section class="section">
+      <div class="section-container text-center">
+        <h2 class="section-title">Course Notes</h2>
+        <p class="section-subtitle">Organized notes across multiple disciplines</p>
+
+        <div class="notes-preview">
+          <div class="notes-categories">
+            <div class="notes-category">
+              <i class="ph ph-brain"></i>
+              <h3>AI</h3>
+              <p>Artificial Intelligence</p>
+            </div>
+            <div class="notes-category">
+              <i class="ph ph-terminal"></i>
+              <h3>CS</h3>
+              <p>Computer Science Fundamentals</p>
+            </div>
+            <div class="notes-category">
+              <i class="ph ph-atom"></i>
+              <h3>Physics</h3>
+              <p>Classical & Modern Physics</p>
+            </div>
+            <div class="notes-category">
+              <i class="ph ph-math-operations"></i>
+              <h3>MATH</h3>
+              <p>Mathmatical Fundamentals</p>
+            </div>
+            <div class="notes-category">
+              <i class="ph ph-cpu"></i>
+              <h3>ECE</h3>
+              <p>Electronics & Computer Engineering</p>
+            </div>
+          </div>
+
+          <a href="notes.html" class="btn-primary">
+            <i class="ph ph-notebook"></i>
+            View All Notes
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+      <div class="section-container">
+        <h2 class="section-title">Contact</h2>
+        <p>Feel free to reach out via GitHub or email for collaborations, discussions, or just to share thoughts on cosmic‑neural aesthetics.</p>
+        <div class="contact-links">
+          <a href="https://github.com/KUN-11-77" class="contact-link">
+            <i class="ph ph-github-logo"></i>
+            GitHub
+          </a>
+          <a href="mailto:your-email@example.com" class="contact-link">
+            <i class="ph ph-envelope"></i>
+            Email
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <p>© 2026 Neuraverse — Built with pure HTML/CSS/JS. Hosted on GitHub Pages.</p>
+      <p class="footer-note">Designed for cosmic‑neural aesthetics. Performance‑first. Accessible by default.</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript Modules -->
+  <script src="assets/js/canvas-bg.js"></script>
+  <script src="assets/js/click-effects.js"></script>
+  <script src="assets/js/cursor.js"></script>
+  <script src="assets/js/pdf-viewer.js"></script>
+  <script src="assets/js/main.js"></script>
+
+  <!-- PDF.js Worker Setup -->
+  <script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.10.111/pdf.worker.min.js';
+  </script>
+</body>
+</html>
