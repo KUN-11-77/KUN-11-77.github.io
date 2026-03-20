@@ -15,7 +15,7 @@ const CONFIG = {
 // State
 let canvas, ctx;
 let particles = [];
-let animationId = null;
+let bgAnimationId = null;
 let isActive = true;
 let isMobile = false;
 
@@ -194,7 +194,7 @@ function setupVisibilityHandling() {
     if (document.hidden) {
       isActive = false;
       if (animationId) {
-        cancelAnimationFrame(animationId);
+        cancelAnimationFrame(bgAnimationId);
         animationId = null;
       }
     } else {
@@ -248,7 +248,7 @@ function animate() {
   // Draw connections
   drawConnections();
 
-  animationId = requestAnimationFrame(animate);
+  bgAnimationId = requestAnimationFrame(animate);
 }
 
 // Utility: Debounce

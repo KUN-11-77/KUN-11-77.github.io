@@ -10,8 +10,8 @@ const GALAXY_CONFIG = {
   randomness: 0.3,
   randomPower: 3,
   colors: {
-    inner: new THREE.Color('#00e5ff'),  // Match theme cyan
-    outer: new THREE.Color('#b388ff'),  // Match theme purple
+    inner: '#00e5ff',  // Match theme cyan (string, converted later)
+    outer: '#b388ff',  // Match theme purple (string, converted later)
   },
   mobile: {
     count: 3_000,      // Further reduced for mobile
@@ -161,8 +161,8 @@ class GalaxyScene {
     const colors = new Float32Array(particleCount * 3);
     const sizes = new Float32Array(particleCount);
 
-    const colorInside = GALAXY_CONFIG.colors.inner;
-    const colorOutside = GALAXY_CONFIG.colors.outer;
+    const colorInside = new THREE.Color(GALAXY_CONFIG.colors.inner);
+    const colorOutside = new THREE.Color(GALAXY_CONFIG.colors.outer);
 
     for (let i = 0; i < particleCount; i++) {
       const i3 = i * 3;

@@ -631,9 +631,8 @@ class MagneticElements {
   }
 }
 
-// Initialize on DOM ready
-document.addEventListener('DOMContentLoaded', () => {
-  // Wait for GSAP and Lenis to be loaded
+// Initialize on DOM ready - wait for libraries to load
+function initSmoothScroll() {
   if (typeof gsap !== 'undefined' && typeof Lenis !== 'undefined') {
     // Register ScrollTrigger
     gsap.registerPlugin(ScrollTrigger);
@@ -652,6 +651,17 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('[Smooth Scroll] All systems initialized');
   } else {
     console.log('[Smooth Scroll] GSAP or Lenis not loaded, skipping smooth scroll');
+  }
+}
+
+// Try on DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+  // Libraries may not be ready yet, wait a bit
+  if (typeof gsap !== 'undefined' && typeof Lenis !== 'undefined') {
+    initSmoothScroll();
+  } else {
+    // Retry after short delay
+    setTimeout(initSmoothScroll, 100);
   }
 });
 

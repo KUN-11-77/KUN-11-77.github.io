@@ -17,8 +17,8 @@ const CLICK_CONFIG = {
 let clickCanvas, clickCtx;
 let particlePool = [];
 let activeParticles = [];
-let animationId = null;
-let isActive = true;
+let clickAnimationId = null;
+let isClickActive = true;
 
 // Click particle class
 class ClickParticle {
@@ -179,11 +179,11 @@ function setupClickHandler() {
 // Setup visibility handling
 function setupVisibilityHandling() {
   document.addEventListener('visibilitychange', () => {
-    isActive = !document.hidden;
-    if (!isActive && animationId) {
-      cancelAnimationFrame(animationId);
-      animationId = null;
-    } else if (isActive && !animationId) {
+    isClickActive = !document.hidden;
+    if (!isClickActive && clickAnimationId) {
+      cancelAnimationFrame(clickAnimationId);
+      clickAnimationId = null;
+    } else if (isClickActive && !clickAnimationId) {
       animateClickEffects();
     }
   });
@@ -191,7 +191,7 @@ function setupVisibilityHandling() {
 
 // Animation loop
 function animateClickEffects() {
-  if (!isActive) return;
+  if (!isClickActive) return;
 
   // Clear canvas
   clickCtx.clearRect(0, 0, clickCanvas.width, clickCanvas.height);
@@ -209,7 +209,7 @@ function animateClickEffects() {
     }
   }
 
-  animationId = requestAnimationFrame(animateClickEffects);
+  clickAnimationId = requestAnimationFrame(animateClickEffects);
 }
 
 // Utility: Debounce

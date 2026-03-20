@@ -123,20 +123,25 @@ class StatsCounter {
       </div>
     `).join('');
 
-    // Insert after hero subtitle
+    // Insert after hero subtitle (V1 or V2)
     const heroContent = hero.querySelector('.hero-content');
-    const heroSubtitle = hero.querySelector('.hero-subtitle');
+    const heroSubtitle = hero.querySelector('.hero-subtitle') || hero.querySelector('.hero-subtitle-v2');
     if (heroContent && heroSubtitle) {
       heroContent.insertBefore(statsContainer, heroSubtitle.nextSibling);
+    } else if (heroContent) {
+      // Fallback: append to hero content
+      heroContent.appendChild(statsContainer);
     }
 
-    // Setup scroll trigger
-    ScrollTrigger.create({
-      trigger: '.hero-stats',
-      start: 'top 80%',
-      once: true,
-      onEnter: () => this.animate()
-    });
+    // Setup scroll trigger (only if stats container was created)
+    if (statsContainer.parentElement) {
+      ScrollTrigger.create({
+        trigger: '.hero-stats',
+        start: 'top 80%',
+        once: true,
+        onEnter: () => this.animate()
+      });
+    }
   }
 
   animate() {
@@ -169,34 +174,60 @@ class StatsCounter {
 
 // Hero entrance animation
 function initHeroEntrance() {
+  // Check for V2 hero structure first
+  const heroTitleV2 = document.querySelector('.hero-title-v2');
+  const heroSubtitleV2 = document.querySelector('.hero-subtitle-v2');
+  const heroScrollV2 = document.querySelector('.hero-scroll-v2');
+
   const tl = gsap.timeline({ delay: 0.5 });
 
-  // Animate hero title lines
-  tl.from('.hero-line', {
-    y: 100,
-    opacity: 0,
-    rotateX: 90,
-    duration: 1,
-    stagger: 0.15,
-    ease: 'power4.out',
-    transformOrigin: 'bottom center'
-  });
+  // Animate hero title lines (V1) or title spans (V2)
+  const titleLines = document.querySelectorAll('.hero-line');
+  const titleSpans = document.querySelectorAll('.title-line');
 
-  // Animate subtitle
-  tl.from('.hero-subtitle', {
-    y: 30,
-    opacity: 0,
-    duration: 0.8,
-    ease: 'power2.out'
-  }, '-=0.4');
+  if (titleLines.length > 0) {
+    tl.from(titleLines, {
+      y: 100,
+      opacity: 0,
+      rotateX: 90,
+      duration: 1,
+      stagger: 0.15,
+      ease: 'power4.out',
+      transformOrigin: 'bottom center'
+    });
+  } else if (titleSpans.length > 0) {
+    tl.from(titleSpans, {
+      y: 100,
+      opacity: 0,
+      rotateX: 90,
+      duration: 1,
+      stagger: 0.15,
+      ease: 'power4.out',
+      transformOrigin: 'bottom center'
+    });
+  }
 
-  // Animate scroll indicator
-  tl.from('.hero-scroll', {
-    y: 20,
-    opacity: 0,
-    duration: 0.6,
-    ease: 'power2.out'
-  }, '-=0.2');
+  // Animate subtitle (V1 or V2)
+  const subtitle = document.querySelector('.hero-subtitle') || heroSubtitleV2;
+  if (subtitle) {
+    tl.from(subtitle, {
+      y: 30,
+      opacity: 0,
+      duration: 0.8,
+      ease: 'power2.out'
+    }, '-=0.4');
+  }
+
+  // Animate scroll indicator (V1 or V2)
+  const scrollIndicator = document.querySelector('.hero-scroll') || heroScrollV2;
+  if (scrollIndicator) {
+    tl.from(scrollIndicator, {
+      y: 20,
+      opacity: 0,
+      duration: 0.6,
+      ease: 'power2.out'
+    }, '-=0.2');
+  }
 }
 
 // Initialize on DOM ready
