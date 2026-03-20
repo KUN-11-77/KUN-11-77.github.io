@@ -7,7 +7,8 @@
 const AppState = {
   isMobile: window.matchMedia('(max-width: 768px)').matches,
   prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-  visibility: document.visibilityState
+  visibility: document.visibilityState,
+  lenis: null
 };
 
 // Initialize everything when DOM is ready
@@ -32,6 +33,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Setup neural cursor
   initNeuralCursor();
+
+  // Setup Lenis smooth scroll (V2)
+  initLenisSmoothScroll();
+
+  // Setup GSAP ScrollTrigger animations (V2)
+  initGSAPAnimations();
 
   // Handle visibility changes (pause animations when tab is hidden)
   document.addEventListener('visibilitychange', () => {
@@ -387,6 +394,222 @@ function initNeuralCursor() {
   });
 }
 
+// --------------------------------------------------------------------------
+// Lenis Smooth Scroll (V2)
+// --------------------------------------------------------------------------
+function initLenisSmoothScroll() {
+  // Skip if reduced motion preferred
+  if (AppState.prefersReducedMotion) return;
+
+  // Check if Lenis is available
+  if (typeof Lenis === 'undefined') {
+    console.log('[Lenis] Not available, using native scroll');
+    return;
+  }
+
+  // Initialize Lenis with cosmic-neural feel
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    orientation: 'vertical',
+    gestureOrientation: 'vertical',
+    smoothWheel: true,
+    wheelMultiplier: 1,
+    touchMultiplier: 2,
+    infinite: false,
+  });
+
+  AppState.lenis = lenis;
+
+  // Integrate with GSAP ScrollTrigger
+  lenis.on('scroll', ScrollTrigger.update);
+
+  gsap.ticker.add((time) => {
+    lenis.raf(time * 1000);
+  });
+
+  gsap.ticker.lagSmoothing(0);
+
+  // Smooth scroll to anchors
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', (e) => {
+      const href = anchor.getAttribute('href');
+      if (href === '#') return;
+
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        lenis.scrollTo(target, {
+          offset: -80,
+          duration: 1.5,
+        });
+      }
+    });
+  });
+
+  console.log('[Lenis] Smooth scroll initialized');
+}
+
+// --------------------------------------------------------------------------
+// GSAP ScrollTrigger Animations (V2)
+// --------------------------------------------------------------------------
+function initGSAPAnimations() {
+  // Check if GSAP is available
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+    console.log('[GSAP] Not available, using native animations');
+    return;
+  }
+
+  // Register ScrollTrigger
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Store triggers for cleanup
+  const triggers = [];
+
+  // Hero parallax fade-out on scroll
+  const hero = document.querySelector('.hero');
+  if (hero) {
+    const heroTrigger = ScrollTrigger.create({
+      trigger: hero,
+      start: 'top top',
+      end: 'bottom top',
+      scrub: true,
+      onUpdate: (self) => {
+        const progress = self.progress;
+        hero.style.opacity = 1 - progress * 1.5;
+        hero.style.transform = `translateY(${progress * 100}px)`;
+      }
+    });
+    triggers.push(heroTrigger);
+  }
+
+  // Section headers reveal
+  gsap.utils.toArray('.section-header').forEach((header) => {
+    const anim = gsap.fromTo(header,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: header,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse'
+        }
+      }
+    );
+    if (anim.scrollTrigger) triggers.push(anim.scrollTrigger);
+  });
+
+  // Project cards staggered reveal
+  const projectGrid = document.querySelector('.projects-grid');
+  if (projectGrid) {
+    const cards = projectGrid.querySelectorAll('.project-card');
+    const anim = gsap.fromTo(cards,
+      { opacity: 0, y: 60, rotateX: 10 },
+      {
+        opacity: 1,
+        y: 0,
+        rotateX: 0,
+        duration: 0.7,
+        stagger: 0.15,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: projectGrid,
+          start: 'top 80%',
+          toggleActions: 'play none none reverse'
+        }
+      }
+    );
+    if (anim.scrollTrigger) triggers.push(anim.scrollTrigger);
+  }
+
+  // About section avatar 3D rotation on scroll
+  const avatar = document.querySelector('.avatar-container');
+  if (avatar) {
+    const anim = gsap.fromTo(avatar,
+      { rotateY: -15, scale: 0.9 },
+      {
+        rotateY: 0,
+        scale: 1,
+        duration: 1,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: avatar,
+          start: 'top 80%',
+          end: 'center center',
+          scrub: 1,
+        }
+      }
+    );
+    if (anim.scrollTrigger) triggers.push(anim.scrollTrigger);
+  }
+
+  // Contact links cascade reveal
+  const contactLinks = document.querySelectorAll('.contact-link');
+  if (contactLinks.length > 0) {
+    const anim = gsap.fromTo(contactLinks,
+      { opacity: 0, x: -30 },
+      {
+        opacity: 1,
+        x: 0,
+        duration: 0.5,
+        stagger: 0.1,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '#contact',
+          start: 'top 70%',
+          toggleActions: 'play none none reverse'
+        }
+      }
+    );
+    if (anim.scrollTrigger) triggers.push(anim.scrollTrigger);
+  }
+
+  // Speed-based skew effect for project cards
+  let skewSetter = gsap.quickSetter('.project-card', 'skewY', 'deg');
+  let proxy = { skew: 0 };
+  let skewClamp = gsap.utils.clamp(-5, 5);
+
+  const skewTrigger = ScrollTrigger.create({
+    onUpdate: (self) => {
+      let skew = skewClamp(self.getVelocity() / -300);
+      if (Math.abs(skew) > Math.abs(proxy.skew)) {
+        proxy.skew = skew;
+        gsap.to(proxy, {
+          skew: 0,
+          duration: 0.8,
+          ease: 'power3',
+          overwrite: true,
+          onUpdate: () => skewSetter(proxy.skew)
+        });
+      }
+    }
+  });
+  triggers.push(skewTrigger);
+
+  // Neural cursor glow intensity on scroll speed
+  const cursor = document.getElementById('cursor');
+  if (cursor) {
+    const glowTrigger = ScrollTrigger.create({
+      onUpdate: (self) => {
+        const velocity = Math.abs(self.getVelocity());
+        const intensity = Math.min(velocity / 2000, 1);
+        cursor.style.setProperty('--glow-intensity', intensity);
+      }
+    });
+    triggers.push(glowTrigger);
+  }
+
+  console.log(`[GSAP] ${triggers.length} ScrollTrigger animations initialized`);
+
+  // Cleanup on page unload
+  window.addEventListener('beforeunload', () => {
+    triggers.forEach(t => t.kill());
+  });
+}
+
 // Export for debugging
 window.AppState = AppState;
-window.Neuraverse = { initScrollAnimations, initProgressBar, initHeroAnimations, initNeuralCursor };
+window.Neuraverse = { initScrollAnimations, initProgressBar, initHeroAnimations, initNeuralCursor, initLenisSmoothScroll, initGSAPAnimations };
