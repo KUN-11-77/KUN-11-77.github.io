@@ -200,38 +200,73 @@ class SmoothScroll {
     let velocity = 0;
     let lastX = 0;
     let rafId = null;
+    let dragStartTime = 0;
+    let dragStartElement = null;
+    let hasMoved = false;
+    const DRAG_THRESHOLD = 5; // pixels to consider it a drag vs click
+
+    // Helper to get current X transform
+    const getCurrentX = () => {
+      const style = window.getComputedStyle(track);
+      const matrix = new DOMMatrix(style.transform);
+      return matrix.m41 || 0;
+    };
 
     // Mouse events
     track.addEventListener('mousedown', (e) => {
+      // Only left mouse button
+      if (e.button !== 0) return;
+
       isDragging = true;
+      hasMoved = false;
+      dragStartTime = Date.now();
+      dragStartElement = e.target;
       startX = e.pageX;
       track.style.cursor = 'grabbing';
       track.style.userSelect = 'none';
 
       // Get current transform X value
-      const transform = gsap.getProperty(track, 'x');
-      scrollLeft = transform;
+      scrollLeft = getCurrentX();
       lastX = e.pageX;
 
       // Pause scroll-triggered animation while dragging
       const st = ScrollTrigger.getAll().find(t => t.trigger === section);
-      if (st) st.disable();
+      if (st) {
+        st.disable();
+        // Kill any active GSAP tweens on the track
+        gsap.killTweensOf(track);
+      }
     });
 
     window.addEventListener('mousemove', (e) => {
       if (!isDragging) return;
 
-      e.preventDefault();
       const x = e.pageX;
+      const deltaX = Math.abs(x - startX);
+
+      // Check if we've moved enough to consider it a drag
+      if (deltaX > DRAG_THRESHOLD) {
+        hasMoved = true;
+      }
+
+      // Only prevent default if we're actually dragging (not just clicking)
+      if (hasMoved) {
+        e.preventDefault();
+      }
+
       const walk = (x - startX) * 1.5; // Drag sensitivity
       currentX = scrollLeft + walk;
+
+      // Clamp to bounds
+      const maxScroll = -(track.scrollWidth - window.innerWidth + 100);
+      currentX = Math.max(maxScroll, Math.min(0, currentX));
 
       // Calculate velocity for inertia
       velocity = x - lastX;
       lastX = x;
 
-      // Apply transform
-      gsap.set(track, { x: currentX });
+      // Apply transform using CSS (no GSAP dependency)
+      track.style.transform = `translateX(${currentX}px)`;
 
       // Update progress indicator
       this.updateDragProgress(track, section);
@@ -239,18 +274,32 @@ class SmoothScroll {
 
     window.addEventListener('mouseup', () => {
       if (!isDragging) return;
+
+      const dragDuration = Date.now() - dragStartTime;
+
+      // If it was a quick click without much movement, treat it as a click
+      if (!hasMoved && dragDuration < 300) {
+        // Find closest clickable element
+        const clickable = dragStartElement?.closest('a, button');
+        if (clickable) {
+          clickable.click();
+        }
+      }
+
       isDragging = false;
       track.style.cursor = 'grab';
       track.style.userSelect = '';
 
-      // Apply inertia
-      this.applyInertia(track, velocity, section);
+      // Only apply inertia if we actually dragged
+      if (hasMoved) {
+        this.applyInertia(track, velocity, section);
+      }
 
       // Re-enable scroll trigger
       const st = ScrollTrigger.getAll().find(t => t.trigger === section);
       if (st) {
         // Sync scroll position to match drag position
-        const transform = gsap.getProperty(track, 'x');
+        const transform = getCurrentX();
         const maxScroll = track.scrollWidth - window.innerWidth + 100;
         const progress = Math.abs(transform) / maxScroll;
         st.scroll(st.start + (st.end - st.start) * progress);
@@ -262,12 +311,14 @@ class SmoothScroll {
     track.addEventListener('touchstart', (e) => {
       isDragging = true;
       startX = e.touches[0].pageX;
-      const transform = gsap.getProperty(track, 'x');
-      scrollLeft = transform;
+      scrollLeft = getCurrentX();
       lastX = e.touches[0].pageX;
 
       const st = ScrollTrigger.getAll().find(t => t.trigger === section);
-      if (st) st.disable();
+      if (st) {
+        st.disable();
+        gsap.killTweensOf(track);
+      }
     }, { passive: true });
 
     window.addEventListener('touchmove', (e) => {
@@ -275,9 +326,14 @@ class SmoothScroll {
       const x = e.touches[0].pageX;
       const walk = (x - startX) * 1.5;
       currentX = scrollLeft + walk;
+
+      // Clamp to bounds
+      const maxScroll = -(track.scrollWidth - window.innerWidth + 100);
+      currentX = Math.max(maxScroll, Math.min(0, currentX));
+
       velocity = x - lastX;
       lastX = x;
-      gsap.set(track, { x: currentX });
+      track.style.transform = `translateX(${currentX}px)`;
       this.updateDragProgress(track, section);
     }, { passive: true });
 
@@ -288,7 +344,9 @@ class SmoothScroll {
 
       const st = ScrollTrigger.getAll().find(t => t.trigger === section);
       if (st) {
-        const transform = gsap.getProperty(track, 'x');
+        const style = window.getComputedStyle(track);
+        const matrix = new DOMMatrix(style.transform);
+        const transform = matrix.m41 || 0;
         const maxScroll = track.scrollWidth - window.innerWidth + 100;
         const progress = Math.min(Math.abs(transform) / maxScroll, 1);
         st.scroll(st.start + (st.end - st.start) * progress);
@@ -301,7 +359,9 @@ class SmoothScroll {
   }
 
   updateDragProgress(track, section) {
-    const transform = gsap.getProperty(track, 'x');
+    const style = window.getComputedStyle(track);
+    const matrix = new DOMMatrix(style.transform);
+    const transform = matrix.m41 || 0;
     const maxScroll = track.scrollWidth - window.innerWidth + 100;
     const progress = Math.min(Math.abs(transform) / maxScroll, 1);
 
@@ -313,7 +373,7 @@ class SmoothScroll {
       progressFill.style.width = `${progress * 100}%`;
     }
 
-    const activeIndex = Math.floor(progress * cards.length);
+    const activeIndex = Math.min(Math.floor(progress * cards.length), cards.length - 1);
     dots.forEach((dot, i) => {
       dot.classList.toggle('active', i === activeIndex);
     });
@@ -324,13 +384,19 @@ class SmoothScroll {
 
     const friction = 0.95;
     let currentVelocity = velocity * 2;
+    const maxScroll = -(track.scrollWidth - window.innerWidth + 100);
 
     const animate = () => {
       currentVelocity *= friction;
-      const currentX = gsap.getProperty(track, 'x');
-      const newX = currentX + currentVelocity;
+      const style = window.getComputedStyle(track);
+      const matrix = new DOMMatrix(style.transform);
+      const currentX = matrix.m41 || 0;
+      let newX = currentX + currentVelocity;
 
-      gsap.set(track, { x: newX });
+      // Clamp to bounds
+      newX = Math.max(maxScroll, Math.min(0, newX));
+
+      track.style.transform = `translateX(${newX}px)`;
       this.updateDragProgress(track, section);
 
       if (Math.abs(currentVelocity) > 0.5) {
@@ -633,36 +699,56 @@ class MagneticElements {
 
 // Initialize on DOM ready - wait for libraries to load
 function initSmoothScroll() {
-  if (typeof gsap !== 'undefined' && typeof Lenis !== 'undefined') {
-    // Register ScrollTrigger
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Initialize smooth scroll
-    window.smoothScroll = new SmoothScroll();
-
-    // Initialize magnetic elements
-    new MagneticElements();
-
-    // Add magnetic attribute to buttons and cards
-    document.querySelectorAll('.btn-primary, .project-card, .pdf-category-btn').forEach((el) => {
-      el.dataset.magnetic = '0.3';
-    });
-
-    console.log('[Smooth Scroll] All systems initialized');
-  } else {
-    console.log('[Smooth Scroll] GSAP or Lenis not loaded, skipping smooth scroll');
+  if (typeof gsap === 'undefined') {
+    console.log('[Smooth Scroll] GSAP not loaded yet, retrying...');
+    return false;
   }
+  if (typeof Lenis === 'undefined') {
+    console.log('[Smooth Scroll] Lenis not loaded yet, retrying...');
+    return false;
+  }
+  if (typeof ScrollTrigger === 'undefined') {
+    console.log('[Smooth Scroll] ScrollTrigger not loaded yet, retrying...');
+    return false;
+  }
+
+  // Register ScrollTrigger
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Initialize smooth scroll
+  window.smoothScroll = new SmoothScroll();
+
+  // Initialize magnetic elements
+  new MagneticElements();
+
+  // Add magnetic attribute to buttons and cards
+  document.querySelectorAll('.btn-primary, .project-card, .pdf-category-btn').forEach((el) => {
+    el.dataset.magnetic = '0.3';
+  });
+
+  console.log('[Smooth Scroll] All systems initialized');
+  return true;
 }
 
-// Try on DOM ready
+// Try on DOM ready with multiple retries
 document.addEventListener('DOMContentLoaded', () => {
-  // Libraries may not be ready yet, wait a bit
-  if (typeof gsap !== 'undefined' && typeof Lenis !== 'undefined') {
-    initSmoothScroll();
-  } else {
-    // Retry after short delay
-    setTimeout(initSmoothScroll, 100);
+  let attempts = 0;
+  const maxAttempts = 20; // Try for up to 2 seconds
+
+  function tryInit() {
+    attempts++;
+    if (initSmoothScroll()) {
+      return; // Success
+    }
+
+    if (attempts < maxAttempts) {
+      setTimeout(tryInit, 100);
+    } else {
+      console.error('[Smooth Scroll] Failed to initialize after', maxAttempts, 'attempts');
+    }
   }
+
+  tryInit();
 });
 
 // Export for module usage
