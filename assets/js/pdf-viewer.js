@@ -13,8 +13,8 @@ const PDF_CONFIG = {
   // PDF files for each category - array of {name: '显示名称', path: '文件路径'}
   pdfFilesByCategory: {
     ai: [
+       { name: 'CS231n Notes.pdf', path: 'assets/notes/AI/CS231n Notes.pdf' },
       { name: '机器学习笔记.pdf', path: 'assets/notes/AI/机器学习笔记.pdf' },
-      { name: 'CS231n Notes.pdf', path: 'assets/notes/AI/CS231n Notes.pdf' },
       { name: 'Transformer论文阅读笔记.pdf', path: 'assets/notes/AI/Transformer论文阅读笔记.pdf' },
       { name: 'ViT论文阅读笔记.pdf', path: 'assets/notes/AI/ViT论文阅读笔记.pdf' },
       { name: 'NeRF论文阅读笔记.pdf', path: 'assets/notes/AI/NeRF论文阅读笔记.pdf' },
