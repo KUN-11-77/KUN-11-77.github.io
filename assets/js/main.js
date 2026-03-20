@@ -8,8 +8,116 @@ const AppState = {
   isMobile: window.matchMedia('(max-width: 768px)').matches,
   prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
   visibility: document.visibilityState,
-  lenis: null
+  lenis: null,
+  performanceTier: 'HIGH', // HIGH, MEDIUM, LOW
+  fps: 60
 };
+
+// Performance Monitor (Phase H)
+class PerformanceMonitor {
+  constructor() {
+    this.frames = [];
+    this.lastTime = performance.now();
+    this.rafId = null;
+    this.isRunning = false;
+  }
+
+  start() {
+    if (this.isRunning) return;
+    this.isRunning = true;
+    this.measure();
+  }
+
+  measure() {
+    const now = performance.now();
+    const delta = now - this.lastTime;
+    const fps = 1000 / delta;
+
+    this.frames.push(fps);
+    if (this.frames.length > 60) this.frames.shift();
+
+    // Calculate average FPS every 60 frames
+    if (this.frames.length === 60) {
+      const avgFPS = this.frames.reduce((a, b) => a + b, 0) / 60;
+      AppState.fps = Math.round(avgFPS);
+
+      // Adjust performance tier
+      if (avgFPS < 30) {
+        this.setPerformanceTier('LOW');
+      } else if (avgFPS < 50) {
+        this.setPerformanceTier('MEDIUM');
+      }
+    }
+
+    this.lastTime = now;
+    this.rafId = requestAnimationFrame(() => this.measure());
+  }
+
+  setPerformanceTier(tier) {
+    if (AppState.performanceTier === tier) return;
+    AppState.performanceTier = tier;
+
+    console.log(`[Performance] Tier changed to ${tier}`);
+
+    // Apply optimizations
+    document.body.dataset.performanceTier = tier;
+
+    if (tier === 'LOW') {
+      // Disable heavy effects
+      if (window.GalaxyScene) {
+        window.GalaxyScene.setPerformanceTier('LOW');
+      }
+      // Reduce particle counts
+      document.querySelectorAll('.data-column').forEach(el => el.style.display = 'none');
+    }
+  }
+
+  stop() {
+    this.isRunning = false;
+    if (this.rafId) cancelAnimationFrame(this.rafId);
+  }
+}
+
+// Lazy Load Images
+function initLazyLoading() {
+  const lazyImages = document.querySelectorAll('img[data-src]');
+
+  if ('IntersectionObserver' in window) {
+    const imageObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          img.src = img.dataset.src;
+          img.removeAttribute('data-src');
+          imageObserver.unobserve(img);
+        }
+      });
+    }, { rootMargin: '50px' });
+
+    lazyImages.forEach(img => imageObserver.observe(img));
+  } else {
+    // Fallback: load all images immediately
+    lazyImages.forEach(img => {
+      img.src = img.dataset.src;
+    });
+  }
+}
+
+// Resource Hints
+function addResourceHints() {
+  const hints = [
+    { rel: 'preconnect', href: 'https://cdnjs.cloudflare.com' },
+    { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+    { rel: 'dns-prefetch', href: 'https://unpkg.com' },
+  ];
+
+  hints.forEach(hint => {
+    const link = document.createElement('link');
+    link.rel = hint.rel;
+    link.href = hint.href;
+    document.head.appendChild(link);
+  });
+}
 
 // Initialize everything when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
@@ -40,12 +148,55 @@ document.addEventListener('DOMContentLoaded', () => {
   // Setup GSAP ScrollTrigger animations (V2)
   initGSAPAnimations();
 
+  // Performance optimizations (Phase H)
+  initPerformanceOptimizations();
+
   // Handle visibility changes (pause animations when tab is hidden)
   document.addEventListener('visibilitychange', () => {
     AppState.visibility = document.visibilityState;
     // Visibility changed: ${AppState.visibility}
   });
 });
+
+// --------------------------------------------------------------------------
+// Performance Optimizations (Phase H)
+// --------------------------------------------------------------------------
+function initPerformanceOptimizations() {
+  // Add resource hints for faster loading
+  addResourceHints();
+
+  // Initialize lazy loading for images
+  initLazyLoading();
+
+  // Start performance monitoring (non-mobile only)
+  if (!AppState.isMobile) {
+    const monitor = new PerformanceMonitor();
+    monitor.start();
+
+    // Stop monitoring after 10 seconds
+    setTimeout(() => monitor.stop(), 10000);
+  }
+
+  // Preload critical resources
+  preloadCriticalResources();
+
+  console.log('[Performance] Optimizations initialized');
+}
+
+function preloadCriticalResources() {
+  const criticalResources = [
+    'assets/css/main.css',
+    'assets/css/animations.css',
+  ];
+
+  criticalResources.forEach(href => {
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = href.endsWith('.css') ? 'style' : 'script';
+    link.href = href;
+    document.head.appendChild(link);
+  });
+}
 
 // --------------------------------------------------------------------------
 // Scroll Animations

@@ -76,8 +76,8 @@ class SmoothScroll {
     // Hero section - subtle parallax and fade
     this.setupHeroAnimation();
 
-    // About section - fade up on scroll
-    this.setupAboutAnimation();
+    // About section - 3D timeline
+    this.setupTimelineAnimation();
 
     // Projects section - staggered card reveal
     this.setupProjectsAnimation();
@@ -85,8 +85,189 @@ class SmoothScroll {
     // Contact section - fade in
     this.setupContactAnimation();
 
+    // Horizontal scroll gallery
+    this.setupHorizontalScroll();
+
     // Progress bar update
     this.setupProgressBar();
+  }
+
+  setupHorizontalScroll() {
+    const horizontalSection = document.querySelector('.section-horizontal');
+    const track = document.querySelector('.horizontal-track');
+
+    if (!horizontalSection || !track) return;
+
+    const cards = track.querySelectorAll('.project-card-v2');
+    const totalWidth = track.scrollWidth - window.innerWidth;
+
+    // Horizontal scroll animation
+    const horizontalTween = gsap.to(track, {
+      x: () => -(track.scrollWidth - window.innerWidth + 100),
+      ease: 'none',
+      scrollTrigger: {
+        trigger: horizontalSection,
+        start: 'top top',
+        end: () => `+=${track.scrollWidth}`,
+        scrub: 1.5,
+        pin: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          // Update progress indicator
+          const progress = self.progress;
+          const progressFill = document.querySelector('.progress-fill');
+          const dots = document.querySelectorAll('.progress-dots .dot');
+
+          if (progressFill) {
+            progressFill.style.width = `${progress * 100}%`;
+          }
+
+          // Update active dot
+          const activeIndex = Math.floor(progress * cards.length);
+          dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === activeIndex);
+          });
+        }
+      }
+    });
+
+    // Card hover effects with skew based on scroll velocity
+    cards.forEach((card) => {
+      card.addEventListener('mouseenter', () => {
+        gsap.to(card, {
+          scale: 1.03,
+          y: -10,
+          duration: 0.4,
+          ease: 'power2.out'
+        });
+
+        // Glitch effect on hover
+        const glitchOverlay = card.querySelector('.card-glitch-overlay');
+        if (glitchOverlay) {
+          gsap.fromTo(glitchOverlay,
+            { x: '-100%', opacity: 0 },
+            { x: '100%', opacity: 1, duration: 0.4, ease: 'power2.inOut' }
+          );
+        }
+      });
+
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          scale: 1,
+          y: 0,
+          duration: 0.4,
+          ease: 'power2.out'
+        });
+      });
+    });
+
+    // Velocity-based skew effect
+    let currentSkew = 0;
+    let targetSkew = 0;
+
+    ScrollTrigger.create({
+      trigger: horizontalSection,
+      start: 'top top',
+      end: () => `+=${track.scrollWidth}`,
+      onUpdate: (self) => {
+        const velocity = self.getVelocity();
+        targetSkew = gsap.utils.clamp(-5, 5, velocity / 500);
+      }
+    });
+
+    // Smooth skew animation
+    gsap.ticker.add(() => {
+      currentSkew += (targetSkew - currentSkew) * 0.1;
+      targetSkew *= 0.9; // Decay
+
+      cards.forEach((card) => {
+        gsap.set(card, { skewX: currentSkew });
+      });
+    });
+
+    console.log('[Horizontal Scroll] Gallery initialized with', cards.length, 'cards');
+  }
+
+  setupTimelineAnimation() {
+    // 3D Timeline reveal animation
+    const timelineNodes = document.querySelectorAll('.timeline-node');
+    const timelineProgress = document.querySelector('.timeline-progress');
+
+    if (timelineNodes.length === 0) return;
+
+    // Reveal nodes on scroll
+    timelineNodes.forEach((node, index) => {
+      gsap.fromTo(node,
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: node,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse',
+            onEnter: () => node.classList.add('visible'),
+            onLeaveBack: () => node.classList.remove('visible'),
+          },
+          delay: index * 0.1,
+        }
+      );
+    });
+
+    // Progress line animation
+    if (timelineProgress) {
+      ScrollTrigger.create({
+        trigger: '.about-timeline',
+        start: 'top 60%',
+        end: 'bottom 60%',
+        scrub: true,
+        onUpdate: (self) => {
+          timelineProgress.style.height = `${self.progress * 100}%`;
+        },
+      });
+    }
+
+    // Stats counter animation
+    const statNumbers = document.querySelectorAll('.stat-number');
+    statNumbers.forEach((stat) => {
+      const targetValue = parseInt(stat.dataset.value, 10);
+      if (!targetValue) return;
+
+      gsap.fromTo(stat,
+        { textContent: 0 },
+        {
+          textContent: targetValue,
+          duration: 2,
+          ease: 'power2.out',
+          snap: { textContent: 1 },
+          scrollTrigger: {
+            trigger: stat,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      );
+    });
+
+    // Avatar orb rotation on scroll
+    const avatarOrb = document.querySelector('.avatar-orb');
+    if (avatarOrb) {
+      gsap.to(avatarOrb, {
+        rotationY: 360,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.about-v2',
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 2,
+        },
+      });
+    }
+
+    console.log('[Timeline] 3D timeline animations initialized');
   }
 
   setupHeroAnimation() {

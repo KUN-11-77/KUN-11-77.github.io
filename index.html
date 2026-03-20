@@ -6,12 +6,34 @@
 
   <!-- SEO & Social Meta Tags -->
   <title>Neuraverse — Realm of Negentropy</title>
-  <meta name="description" content="A cosmic neural portfolio showcasing advanced web interactions with particle backgrounds, PDF rendering, and custom cursor systems.">
+  <meta name="description" content="A cosmic neural portfolio showcasing advanced web interactions with Three.js galaxy backgrounds, PDF rendering, and custom cursor physics. Built with HTML/CSS/JS.">
+  <meta name="keywords" content="portfolio, Three.js, WebGL, GSAP, Lenis, smooth scroll, PDF rendering, particle system, cosmic design">
+  <meta name="author" content="KUN-11-77">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0a0e1a">
+
+  <!-- Open Graph -->
   <meta property="og:title" content="Neuraverse — Realm of Negentropy">
-  <meta property="og:description" content="A cosmic neural portfolio showcasing advanced web interactions with particle backgrounds, PDF rendering, and custom cursor systems.">
+  <meta property="og:description" content="A cosmic neural portfolio showcasing advanced web interactions with Three.js galaxy backgrounds, PDF rendering, and custom cursor physics.">
   <meta property="og:image" content="https://kun-11-77.github.io/assets/Neuraverse2.jpg">
   <meta property="og:url" content="https://kun-11-77.github.io">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Neuraverse">
+
+  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Neuraverse — Realm of Negentropy">
+  <meta name="twitter:description" content="A cosmic neural portfolio showcasing advanced web interactions with Three.js galaxy backgrounds.">
+  <meta name="twitter:image" content="https://kun-11-77.github.io/assets/Neuraverse2.jpg">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://kun-11-77.github.io/">
+
+  <!-- Performance: Preconnect to critical domains -->
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 
   <!-- Fonts (Syne for headings, DM Mono for code/data, Geist for body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -166,54 +188,228 @@
 
   <!-- Main Content -->
   <main>
-    <!-- About Section -->
-    <section id="about" class="section">
+    <!-- About Section V2 — 3D Timeline -->
+    <section id="about" class="section about-v2">
       <div class="section-container">
-        <h2 class="section-title">About</h2>
-        <div class="about-grid">
-          <div class="about-avatar">
-            <img src="assets/images/avatar.jpg" alt="Profile avatar" class="avatar">
+        <div class="about-header">
+          <span class="section-eyebrow">Identity</span>
+          <h2 class="section-title">About</h2>
+        </div>
+
+        <div class="about-timeline">
+          <!-- Timeline Track -->
+          <div class="timeline-track">
+            <div class="timeline-line" aria-hidden="true"></div>
+            <div class="timeline-progress" aria-hidden="true"></div>
+
+            <!-- Timeline Node 1 -->
+            <div class="timeline-node" data-year="2024">
+              <div class="node-marker"></div>
+              <div class="node-card">
+                <span class="node-year">2024</span>
+                <h3 class="node-title">Neuraverse V2</h3>
+                <p class="node-desc">Immersive WebGL galaxy, Lenis smooth scroll, GSAP animations.</p>
+              </div>
+            </div>
+
+            <!-- Timeline Node 2 -->
+            <div class="timeline-node" data-year="2023">
+              <div class="node-marker"></div>
+              <div class="node-card">
+                <span class="node-year">2023</span>
+                <h3 class="node-title">PDF Nexus</h3>
+                <p class="node-desc">High-fidelity PDF rendering with lazy loading and HiDPI support.</p>
+              </div>
+            </div>
+
+            <!-- Timeline Node 3 -->
+            <div class="timeline-node" data-year="2022">
+              <div class="node-marker"></div>
+              <div class="node-card">
+                <span class="node-year">2022</span>
+                <h3 class="node-title">Particle Engine</h3>
+                <p class="node-desc">50k+ particle system with gravitational fields and mobile optimization.</p>
+              </div>
+            </div>
+
+            <!-- Timeline Node 4 -->
+            <div class="timeline-node" data-year="2021">
+              <div class="node-marker"></div>
+              <div class="node-card">
+                <span class="node-year">2021</span>
+                <h3 class="node-title">Origin</h3>
+                <p class="node-desc">Started the journey into creative web development and cosmic aesthetics.</p>
+              </div>
+            </div>
           </div>
-          <div class="about-text">
-            <p>Welcome to Neuraverse—a digital space where cosmic aesthetics meet neural network inspiration. This portfolio showcases advanced web techniques with pure HTML/CSS/JS.</p>
-            <p>Focus areas: interactive particle systems, high-fidelity PDF rendering, custom cursor physics, and performance‑conscious animations.</p>
+
+          <!-- Avatar Orb -->
+          <div class="avatar-orb">
+            <div class="orb-ring ring-1"></div>
+            <div class="orb-ring ring-2"></div>
+            <div class="orb-ring ring-3"></div>
+            <img src="assets/images/avatar.jpg" alt="Profile avatar" class="orb-avatar">
+          </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="about-stats">
+          <div class="stat-item">
+            <span class="stat-number" data-value="400">0</span>
+            <span class="stat-suffix">K</span>
+            <span class="stat-label">Particles</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" data-value="60">0</span>
+            <span class="stat-suffix">FPS</span>
+            <span class="stat-label">Target</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" data-value="99">0</span>
+            <span class="stat-suffix">%</span>
+            <span class="stat-label">Accessibility</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" data-value="100">0</span>
+            <span class="stat-suffix">%</span>
+            <span class="stat-label">Pure Code</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="section">
-      <div class="section-container">
+    <!-- Projects Section V2 — Horizontal Scroll Gallery -->
+    <section id="projects" class="section section-horizontal">
+      <div class="horizontal-header">
+        <span class="section-eyebrow">Selected Work</span>
         <h2 class="section-title">Projects</h2>
-        <div class="projects-grid">
-          <article class="project-card">
-            <h3>Neuraverse Site</h3>
-            <p>This very portfolio—a canvas‑driven cosmic experience with custom physics and seamless PDF integration.</p>
-            <div class="project-tags">
-              <span>HTML/CSS</span>
-              <span>Canvas</span>
-              <span>PDF.js</span>
+        <div class="scroll-hint">
+          <span class="hint-line"></span>
+          <span class="hint-text">Scroll to explore</span>
+        </div>
+      </div>
+
+      <div class="horizontal-container">
+        <div class="horizontal-track">
+          <!-- Project 01: Neuraverse -->
+          <article class="project-card-v2" data-index="01">
+            <div class="card-visual">
+              <div class="visual-placeholder nebula-gradient">
+                <div class="visual-icon"></ph-globe></div>
+                <div class="visual-particles"></div>
+              </div>
+              <div class="card-glitch-overlay"></div>
+            </div>
+            <div class="card-content">
+              <span class="card-index">01</span>
+              <h3 class="card-title">Neuraverse</h3>
+              <p class="card-desc">A cosmic neural portfolio with Three.js galaxy backgrounds, custom cursor physics, and immersive scroll animations.</p>
+              <div class="card-tags">
+                <span>Three.js</span>
+                <span>WebGL</span>
+                <span>GSAP</span>
+              </div>
+              <div class="card-links">
+                <a href="#" class="card-link">View Live →</a>
+                <a href="#" class="card-link secondary">GitHub</a>
+              </div>
             </div>
           </article>
-          <article class="project-card">
-            <h3>Particle Engine</h3>
-            <p>A lightweight 2D particle system with gravitational interaction, object pooling, and mobile‑first降级.</p>
-            <div class="project-tags">
-              <span>JavaScript</span>
-              <span>Canvas 2D</span>
-              <span>Performance</span>
+
+          <!-- Project 02: Particle Engine -->
+          <article class="project-card-v2" data-index="02">
+            <div class="card-visual">
+              <div class="visual-placeholder particle-gradient">
+                <div class="visual-icon"></ph-shapes></div>
+                <canvas class="particle-preview"></canvas>
+              </div>
+              <div class="card-glitch-overlay"></div>
+            </div>
+            <div class="card-content">
+              <span class="card-index">02</span>
+              <h3 class="card-title">Particle Engine</h3>
+              <p class="card-desc">Lightweight 2D particle system with 50k+ particles, gravitational fields, and GPU acceleration.</p>
+              <div class="card-tags">
+                <span>Canvas API</span>
+                <span>Physics</span>
+                <span>Performance</span>
+              </div>
+              <div class="card-links">
+                <a href="#" class="card-link">Demo →</a>
+                <a href="#" class="card-link secondary">GitHub</a>
+              </div>
             </div>
           </article>
-          <article class="project-card">
-            <h3>PDF Renderer</h3>
-            <p>High‑DPI PDF rendering solution with lazy loading, skeleton placeholders, and floating page indicators.</p>
-            <div class="project-tags">
-              <span>PDF.js</span>
-              <span>Lazy Loading</span>
-              <span>Accessibility</span>
+
+          <!-- Project 03: PDF Nexus -->
+          <article class="project-card-v2" data-index="03">
+            <div class="card-visual">
+              <div class="visual-placeholder pdf-gradient">
+                <div class="visual-icon"></ph-file-pdf></div>
+                <div class="pdf-preview">
+                  <div class="pdf-page"></div>
+                  <div class="pdf-page stacked"></div>
+                </div>
+              </div>
+              <div class="card-glitch-overlay"></div>
+            </div>
+            <div class="card-content">
+              <span class="card-index">03</span>
+              <h3 class="card-title">PDF Nexus</h3>
+              <p class="card-desc">High-fidelity PDF renderer with lazy loading, skeleton states, and HiDPI crisp rendering.</p>
+              <div class="card-tags">
+                <span>PDF.js</span>
+                <span>Lazy Loading</span>
+                <span>Canvas</span>
+              </div>
+              <div class="card-links">
+                <a href="#" class="card-link">View →</a>
+                <a href="#" class="card-link secondary">GitHub</a>
+              </div>
             </div>
           </article>
+
+          <!-- Project 04: Neural Cursor -->
+          <article class="project-card-v2" data-index="04">
+            <div class="card-visual">
+              <div class="visual-placeholder cursor-gradient">
+                <div class="visual-icon"></ph-cursor></div>
+                <div class="cursor-trail-preview">
+                  <div class="trail-dot"></div>
+                  <div class="trail-dot"></div>
+                  <div class="trail-dot"></div>
+                </div>
+              </div>
+              <div class="card-glitch-overlay"></div>
+            </div>
+            <div class="card-content">
+              <span class="card-index">04</span>
+              <h3 class="card-title">Neural Cursor</h3>
+              <p class="card-desc">Synapse-themed cursor with lerp physics, trail effects, ripple bursts, and hover interactions.</p>
+              <div class="card-tags">
+                <span>DOM API</span>
+                <span>Animation</span>
+                <span>Physics</span>
+              </div>
+              <div class="card-links">
+                <a href="#" class="card-link">Try It →</a>
+                <a href="#" class="card-link secondary">GitHub</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- Progress Indicator -->
+      <div class="horizontal-progress">
+        <div class="progress-track">
+          <div class="progress-fill"></div>
+        </div>
+        <div class="progress-dots">
+          <span class="dot active"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
         </div>
       </div>
     </section>
