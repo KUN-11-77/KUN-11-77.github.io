@@ -103,35 +103,176 @@ function initPageIndicator() {
 }
 
 // --------------------------------------------------------------------------
-// Hero Animations
+// Hero Animations V2 - Typewriter & Glitch Effects
 // --------------------------------------------------------------------------
 function initHeroAnimations() {
-  const heroLines = document.querySelectorAll('.hero-line');
-  const heroSubtitle = document.querySelector('.hero-subtitle');
-  const heroScroll = document.querySelector('.hero-scroll');
+  // Legacy fallback for old hero structure
+  const legacyHeroLines = document.querySelectorAll('.hero-line');
+  if (legacyHeroLines.length > 0 && !document.querySelector('.hero-title-v2')) {
+    legacyHeroLines.forEach((line, index) => {
+      setTimeout(() => line.classList.add('animate-fade-up'), 100 + index * 150);
+    });
+    return;
+  }
 
-  if (heroLines.length === 0) return;
+  // V2 Typewriter Hero
+  initTypewriterHero();
+  initGlitchEffect();
+  initDataStream();
+  initBinaryPills();
+}
 
-  console.log('[Hero] Initializing hero animations, lines:', heroLines.length);
+function initTypewriterHero() {
+  const titleLines = document.querySelectorAll('.title-line');
+  const subtitleText = document.querySelector('.subtitle-text');
+  const fullSubtitle = 'A cosmic neural portfolio by KUN-11-77';
 
-  // Add animation class to trigger any enhanced states
-  heroLines.forEach((line, index) => {
+  // Phase 1: Type first line
+  typeLine(titleLines[0], 0, () => {
+    // Phase 2: Type second line with glitch
     setTimeout(() => {
-      line.classList.add('animate-fade-up');
-    }, 100 + index * 150);
+      typeLine(titleLines[1], 0, () => {
+        // Phase 3: Type subtitle character by character
+        setTimeout(() => {
+          typeCharacters(subtitleText, fullSubtitle, 0);
+        }, 300);
+      });
+    }, 200);
+  });
+}
+
+function typeLine(element, index, callback) {
+  if (!element) {
+    if (callback) callback();
+    return;
+  }
+
+  const text = element.dataset.type || element.textContent;
+  element.textContent = '';
+  element.classList.add('typing');
+
+  let charIndex = 0;
+  const baseSpeed = 80;
+
+  function type() {
+    if (charIndex < text.length) {
+      element.textContent += text[charIndex];
+      charIndex++;
+
+      // Variable typing speed for realism
+      const variance = Math.random() * 60 - 30;
+      const speed = baseSpeed + variance;
+
+      setTimeout(type, speed);
+    } else {
+      element.classList.remove('typing');
+      element.classList.add('typed');
+      if (callback) callback();
+    }
+  }
+
+  setTimeout(type, 100);
+}
+
+function typeCharacters(element, text, index) {
+  if (!element) return;
+
+  if (index < text.length) {
+    element.textContent += text[index];
+    setTimeout(() => typeCharacters(element, text, index + 1), 30);
+  } else {
+    element.classList.add('completed');
+    // Hide cursor after completion
+    const cursor = document.querySelector('.cursor-blink');
+    if (cursor) {
+      setTimeout(() => cursor.style.opacity = '0', 2000);
+    }
+  }
+}
+
+function initGlitchEffect() {
+  const glitchElement = document.querySelector('.glitch');
+  if (!glitchElement) return;
+
+  const chars = '!<>-_\\/[]{}—=+*^?#________';
+  const originalText = glitchElement.dataset.type || 'Negentropy';
+
+  glitchElement.addEventListener('mouseenter', () => {
+    let iterations = 0;
+    const maxIterations = 10;
+
+    const interval = setInterval(() => {
+      glitchElement.textContent = originalText
+        .split('')
+        .map((char, index) => {
+          if (index < iterations) return originalText[index];
+          return chars[Math.floor(Math.random() * chars.length)];
+        })
+        .join('');
+
+      iterations += 1 / 2;
+
+      if (iterations >= maxIterations) {
+        clearInterval(interval);
+        glitchElement.textContent = originalText;
+      }
+    }, 50);
   });
 
-  if (heroSubtitle) {
-    setTimeout(() => {
-      heroSubtitle.classList.add('animate-fade-up');
-    }, 400);
-  }
+  // Occasional auto-glitch
+  setInterval(() => {
+    if (Math.random() > 0.95) {
+      glitchElement.classList.add('glitching');
+      setTimeout(() => glitchElement.classList.remove('glitching'), 300);
+    }
+  }, 3000);
+}
 
-  if (heroScroll) {
-    setTimeout(() => {
-      heroScroll.classList.add('animate-fade-up');
-    }, 600);
-  }
+function initDataStream() {
+  const columns = document.querySelectorAll('.data-column');
+  if (columns.length === 0) return;
+
+  columns.forEach((column, i) => {
+    const speed = parseFloat(column.dataset.speed) || 0.5;
+    const spans = column.querySelectorAll('span');
+
+    spans.forEach((span, j) => {
+      span.style.animationDelay = `${j * 0.2}s`;
+      span.style.animationDuration = `${3 / speed}s`;
+    });
+  });
+}
+
+function initBinaryPills() {
+  const pills = document.querySelectorAll('.pill');
+  if (pills.length === 0) return;
+
+  const binaryChars = ['0', '1'];
+
+  pills.forEach(pill => {
+    const originalValue = pill.dataset.value || pill.textContent;
+
+    pill.addEventListener('mouseenter', () => {
+      let iterations = 0;
+      const maxIterations = 8;
+
+      const interval = setInterval(() => {
+        pill.textContent = originalValue
+          .split('')
+          .map((_, i) => {
+            if (i < iterations / 2) return originalValue[i];
+            return binaryChars[Math.random() > 0.5 ? 0 : 1];
+          })
+          .join('');
+
+        iterations++;
+        if (iterations >= maxIterations) {
+          clearInterval(interval);
+          pill.textContent = originalValue;
+        }
+      }, 60);
+    });
+  });
 }
 
 // --------------------------------------------------------------------------
