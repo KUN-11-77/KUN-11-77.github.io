@@ -246,40 +246,6 @@ const ChromaticAberrationShader = {
 };
 ```
 
-### A-4：摄像机电影叙事运动系统
-
-```javascript
-// camera-director.js — 摄像机根据滚动位置执行电影级运动
-
-class CameraDirector {
-  constructor(camera) {
-    this.camera = camera;
-    this.keyframes = [
-      // [进度(0-1), 位置xyz, lookAt xyz, bloomStrength]
-      [0.0, [0, 2, 12], [0, 0, 0], 1.2], // Hero：正面俯视银河
-      [0.2, [-6, 4, 8], [0, 0, 0], 1.8], // About：侧飞进入
-      [0.45, [0, 8, 3], [0, 0, 0], 2.4], // Projects：垂直俯冲
-      [0.7, [8, 1, 6], [0, 0, 0], 1.0], // Notes：轨道环绕
-      [1.0, [0, 0, 15], [0, 0, 0], 0.6], // Contact：退出全景
-    ];
-  }
-
-  // 平滑插值当前进度对应的摄像机状态
-  update(scrollProgress) {
-    const [pos, lookAt, bloom] = this.interpolate(scrollProgress);
-    gsap.to(this.camera.position, {
-      x: pos[0],
-      y: pos[1],
-      z: pos[2],
-      duration: 1.2,
-      ease: "power2.out",
-    });
-  }
-}
-```
-
----
-
 ## Phase B — 流体滚动与叙事动效系统
 
 > **目标**：把"页面滚动"变成"时间轴穿越"体验
