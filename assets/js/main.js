@@ -220,7 +220,7 @@ function initScrollAnimations() {
   }, observerOptions);
 
   // Observe elements that should animate on scroll
-  document.querySelectorAll('.project-card, .avatar, .contact-link, #page-indicator').forEach(el => {
+  document.querySelectorAll('.project-card, .project-card-3d, .avatar, .contact-link, #page-indicator').forEach(el => {
     observer.observe(el);
   });
 }
@@ -590,7 +590,7 @@ function initNeuralCursor() {
   }
 
   // Hover effect on interactive elements
-  const hoverElements = document.querySelectorAll('a, button, .pdf-category-btn, .pdf-list-item, .project-card, input, textarea');
+  const hoverElements = document.querySelectorAll('a, button, .pdf-category-btn, .pdf-list-item, .project-card, .project-card-3d, input, textarea');
   hoverElements.forEach(el => {
     el.addEventListener('mouseenter', () => {
       soma.classList.add('hover');

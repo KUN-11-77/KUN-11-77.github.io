@@ -237,8 +237,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Hero entrance animation
     initHeroEntrance();
 
-    // Stats counter
-    new StatsCounter();
+    // Stats counter - DISABLED per user request
+    // new StatsCounter();
 
     // Morphing text (if element exists)
     const morphingElement = document.querySelector('.morphing-text');

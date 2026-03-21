@@ -1,0 +1,255 @@
+/* Tech Arc Loader - 科技感多层旋转电弧 */
+
+.pdf-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: var(--space-lg);
+}
+
+/* 科技电弧容器 */
+.tech-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.tech-rings {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 电弧层 */
+.tech-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+/* 内层高速旋转 - 顺时针 */
+.ring-core {
+  animation: rotateCW 0.8s linear infinite;
+}
+
+.ring-core .arc-short {
+  stroke-dasharray: 80, 80;
+  animation: arcGlow1 1.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 6px #ff00ff) drop-shadow(0 0 12px #00ffff);
+}
+
+.ring-core .arc-delay {
+  animation-delay: 0.2s;
+  stroke-dasharray: 60, 100;
+}
+
+/* 中层1 - 顺时针 */
+.ring-mid1 {
+  animation: rotateCW 2s linear infinite;
+}
+
+.ring-mid1 .arc-medium {
+  stroke-dasharray: 100, 164;
+  animation: arcGlow2 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 4px #00e5ff) drop-shadow(0 0 8px #f472b6);
+}
+
+/* 中层2 - 逆时针 */
+.ring-mid2 {
+  animation: rotateCCW 2.5s linear infinite;
+}
+
+.ring-mid2 .arc-long {
+  stroke-dasharray: 120, 226;
+  animation: arcGlow3 2.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 4px #fbbf24) drop-shadow(0 0 8px #ef4444);
+}
+
+/* 外层 - 顺时针慢速 */
+.ring-outer {
+  animation: rotateCW 4s linear infinite;
+}
+
+.ring-outer .arc-pulse {
+  stroke-dasharray: 80, 360;
+  animation: arcPulse 4s ease-in-out infinite, arcGlow4 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 6px #22d3ee);
+}
+
+/* 粒子环 - 逆时针 */
+.ring-particles {
+  animation: rotateCCW 6s linear infinite;
+}
+
+.particle-ring {
+  transform-origin: center;
+  animation: particlePulse 3s ease-in-out infinite;
+}
+
+/* 核心能量球 */
+.energy-core {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.core-inner {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, #ffffff 0%, #00ffff 30%, #ff00ff 60%, transparent 70%);
+  border-radius: 50%;
+  animation: corePulse 1s ease-in-out infinite;
+  box-shadow:
+    0 0 10px #00ffff,
+    0 0 20px #ff00ff,
+    0 0 40px rgba(0, 229, 255, 0.5);
+}
+
+.core-glow {
+  position: absolute;
+  inset: -8px;
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  border-radius: 50%;
+  animation: coreGlow 2s ease-out infinite;
+}
+
+.core-glow::before,
+.core-glow::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border: 1px solid rgba(255, 0, 255, 0.2);
+  border-radius: 50%;
+  animation: coreGlow 2s ease-out infinite;
+  animation-delay: 0.5s;
+}
+
+.core-glow::after {
+  animation-delay: 1s;
+}
+
+/* 扫描线 */
+.scan-line {
+  position: absolute;
+  width: 2px;
+  height: 40%;
+  background: linear-gradient(to bottom,
+    transparent 0%,
+    rgba(0, 229, 255, 0.8) 50%,
+    transparent 100%
+  );
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: scanSweep 3s linear infinite;
+  transform-origin: bottom center;
+  opacity: 0.6;
+  filter: drop-shadow(0 0 8px #00e5ff);
+}
+
+/* 加载文字 */
+.loading-text {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+}
+
+.tech-text {
+  color: var(--glow-cyan);
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+}
+
+.tech-dots {
+  color: var(--glow-purple);
+  animation: dotsPulse 1.5s ease-in-out infinite;
+}
+
+.tech-status {
+  color: #fbbf24;
+  animation: statusFlicker 2s ease-in-out infinite;
+}
+
+/* 动画定义 */
+@keyframes rotateCW {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes rotateCCW {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes arcGlow1 {
+  0%, 100% { opacity: 0.6; filter: drop-shadow(0 0 4px #ff00ff); }
+  50% { opacity: 1; filter: drop-shadow(0 0 12px #00ffff) drop-shadow(0 0 20px #ff00ff); }
+}
+
+@keyframes arcGlow2 {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+@keyframes arcGlow3 {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.9; }
+}
+
+@keyframes arcGlow4 {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes arcPulse {
+  0% { stroke-dashoffset: 0; }
+  50% { stroke-dashoffset: 220; }
+  100% { stroke-dashoffset: 440; }
+}
+
+@keyframes particlePulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+@keyframes corePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+@keyframes coreGlow {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+@keyframes scanSweep {
+  0% { transform: translateX(-50%) rotate(0deg); }
+  100% { transform: translateX(-50%) rotate(360deg); }
+}
+
+@keyframes dotsPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+@keyframes statusFlicker {
+  0%, 100% { opacity: 1; }
+  10% { opacity: 0.8; }
+  20% { opacity: 1; }
+  30% { opacity: 0.9; }
+  40% { opacity: 1; }
+  90% { opacity: 0.7; }
+  95% { opacity: 1; }
+}

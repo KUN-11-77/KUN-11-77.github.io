@@ -327,144 +327,131 @@
       </div>
     </section>
 
-    <!-- Projects Section V2 — Horizontal Scroll Gallery -->
-    <section id="projects" class="section section-horizontal">
-      <div class="horizontal-header">
-        <span class="section-eyebrow">Selected Work</span>
-        <h2 class="section-title">Projects</h2>
-        <div class="scroll-hint">
-          <span class="hint-line"></span>
-          <span class="hint-text">← 鼠标滚轮滚动浏览 →</span>
+    <!-- Projects Section V3 — 3D Grid Gallery -->
+    <section id="projects" class="section projects-v3">
+      <div class="section-container">
+        <div class="projects-header">
+          <span class="section-eyebrow">Selected Work</span>
+          <h2 class="section-title">Projects</h2>
+          <p class="section-subtitle">Scroll to explore • Hover for 3D effect</p>
         </div>
-        <div class="drag-indicator">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 5v14M5 12l7 7 7-7"></path>
-          </svg>
-          <span>滚轮滑动</span>
-        </div>
-      </div>
 
-      <div class="horizontal-container">
-        <div class="horizontal-track">
+        <!-- 3D Grid Container -->
+        <div class="projects-grid-3d">
           <!-- Project 01: Neuraverse -->
-          <article class="project-card-v2" data-index="01">
-            <div class="card-visual">
-              <div class="visual-placeholder nebula-gradient">
-                <div class="visual-icon"></ph-globe></div>
-                <div class="visual-particles"></div>
+          <article class="project-card-3d" data-index="01">
+            <div class="card-3d-inner">
+              <div class="card-visual-3d">
+                <div class="visual-placeholder nebula-gradient">
+                  <i class="ph ph-globe visual-icon"></i>
+                  <div class="visual-particles"></div>
+                </div>
+                <div class="card-glitch-overlay"></div>
               </div>
-              <div class="card-glitch-overlay"></div>
-            </div>
-            <div class="card-content">
-              <span class="card-index">01</span>
-              <h3 class="card-title">Neuraverse</h3>
-              <p class="card-desc">A cosmic neural portfolio with Three.js galaxy backgrounds, custom cursor physics, and immersive scroll animations.</p>
-              <div class="card-tags">
-                <span>Three.js</span>
-                <span>WebGL</span>
-                <span>GSAP</span>
-              </div>
-              <div class="card-links">
-                <a href="#" class="card-link">View Live →</a>
-                <a href="#" class="card-link secondary">GitHub</a>
+              <div class="card-content-3d">
+                <span class="card-index">01</span>
+                <h3 class="card-title">Neuraverse</h3>
+                <p class="card-desc">A cosmic neural portfolio with Three.js galaxy backgrounds, custom cursor physics, and immersive scroll animations.</p>
+                <div class="card-tags">
+                  <span>Three.js</span>
+                  <span>WebGL</span>
+                  <span>GSAP</span>
+                </div>
+                <div class="card-links">
+                  <a href="#" class="card-link">View Live →</a>
+                  <a href="#" class="card-link secondary">GitHub</a>
+                </div>
               </div>
             </div>
           </article>
 
           <!-- Project 02: Particle Engine -->
-          <article class="project-card-v2" data-index="02">
-            <div class="card-visual">
-              <div class="visual-placeholder particle-gradient">
-                <div class="visual-icon"></ph-shapes></div>
-                <canvas class="particle-preview"></canvas>
+          <article class="project-card-3d" data-index="02">
+            <div class="card-3d-inner">
+              <div class="card-visual-3d">
+                <div class="visual-placeholder particle-gradient">
+                  <i class="ph ph-shapes visual-icon"></i>
+                  <canvas class="particle-preview"></canvas>
+                </div>
+                <div class="card-glitch-overlay"></div>
               </div>
-              <div class="card-glitch-overlay"></div>
-            </div>
-            <div class="card-content">
-              <span class="card-index">02</span>
-              <h3 class="card-title">Particle Engine</h3>
-              <p class="card-desc">Lightweight 2D particle system with 50k+ particles, gravitational fields, and GPU acceleration.</p>
-              <div class="card-tags">
-                <span>Canvas API</span>
-                <span>Physics</span>
-                <span>Performance</span>
-              </div>
-              <div class="card-links">
-                <a href="#" class="card-link">Demo →</a>
-                <a href="#" class="card-link secondary">GitHub</a>
+              <div class="card-content-3d">
+                <span class="card-index">02</span>
+                <h3 class="card-title">Particle Engine</h3>
+                <p class="card-desc">Lightweight 2D particle system with 50k+ particles, gravitational fields, and GPU acceleration.</p>
+                <div class="card-tags">
+                  <span>Canvas API</span>
+                  <span>Physics</span>
+                  <span>Performance</span>
+                </div>
+                <div class="card-links">
+                  <a href="#" class="card-link">Demo →</a>
+                  <a href="#" class="card-link secondary">GitHub</a>
+                </div>
               </div>
             </div>
           </article>
 
           <!-- Project 03: PDF Nexus -->
-          <article class="project-card-v2" data-index="03">
-            <div class="card-visual">
-              <div class="visual-placeholder pdf-gradient">
-                <div class="visual-icon"></ph-file-pdf></div>
-                <div class="pdf-preview">
-                  <div class="pdf-page"></div>
-                  <div class="pdf-page stacked"></div>
+          <article class="project-card-3d" data-index="03">
+            <div class="card-3d-inner">
+              <div class="card-visual-3d">
+                <div class="visual-placeholder pdf-gradient">
+                  <i class="ph ph-file-pdf visual-icon"></i>
+                  <div class="pdf-preview">
+                    <div class="pdf-page"></div>
+                    <div class="pdf-page stacked"></div>
+                  </div>
                 </div>
+                <div class="card-glitch-overlay"></div>
               </div>
-              <div class="card-glitch-overlay"></div>
-            </div>
-            <div class="card-content">
-              <span class="card-index">03</span>
-              <h3 class="card-title">PDF Nexus</h3>
-              <p class="card-desc">High-fidelity PDF renderer with lazy loading, skeleton states, and HiDPI crisp rendering.</p>
-              <div class="card-tags">
-                <span>PDF.js</span>
-                <span>Lazy Loading</span>
-                <span>Canvas</span>
-              </div>
-              <div class="card-links">
-                <a href="#" class="card-link">View →</a>
-                <a href="#" class="card-link secondary">GitHub</a>
+              <div class="card-content-3d">
+                <span class="card-index">03</span>
+                <h3 class="card-title">PDF Nexus</h3>
+                <p class="card-desc">High-fidelity PDF renderer with lazy loading, skeleton states, and HiDPI crisp rendering.</p>
+                <div class="card-tags">
+                  <span>PDF.js</span>
+                  <span>Lazy Loading</span>
+                  <span>Canvas</span>
+                </div>
+                <div class="card-links">
+                  <a href="#" class="card-link">View →</a>
+                  <a href="#" class="card-link secondary">GitHub</a>
+                </div>
               </div>
             </div>
           </article>
 
           <!-- Project 04: Neural Cursor -->
-          <article class="project-card-v2" data-index="04">
-            <div class="card-visual">
-              <div class="visual-placeholder cursor-gradient">
-                <div class="visual-icon"></ph-cursor></div>
-                <div class="cursor-trail-preview">
-                  <div class="trail-dot"></div>
-                  <div class="trail-dot"></div>
-                  <div class="trail-dot"></div>
+          <article class="project-card-3d" data-index="04">
+            <div class="card-3d-inner">
+              <div class="card-visual-3d">
+                <div class="visual-placeholder cursor-gradient">
+                  <i class="ph ph-cursor visual-icon"></i>
+                  <div class="cursor-trail-preview">
+                    <div class="trail-dot"></div>
+                    <div class="trail-dot"></div>
+                    <div class="trail-dot"></div>
+                  </div>
                 </div>
+                <div class="card-glitch-overlay"></div>
               </div>
-              <div class="card-glitch-overlay"></div>
-            </div>
-            <div class="card-content">
-              <span class="card-index">04</span>
-              <h3 class="card-title">Neural Cursor</h3>
-              <p class="card-desc">Synapse-themed cursor with lerp physics, trail effects, ripple bursts, and hover interactions.</p>
-              <div class="card-tags">
-                <span>DOM API</span>
-                <span>Animation</span>
-                <span>Physics</span>
-              </div>
-              <div class="card-links">
-                <a href="#" class="card-link">Try It →</a>
-                <a href="#" class="card-link secondary">GitHub</a>
+              <div class="card-content-3d">
+                <span class="card-index">04</span>
+                <h3 class="card-title">Neural Cursor</h3>
+                <p class="card-desc">Synapse-themed cursor with lerp physics, trail effects, ripple bursts, and hover interactions.</p>
+                <div class="card-tags">
+                  <span>DOM API</span>
+                  <span>Animation</span>
+                  <span>Physics</span>
+                </div>
+                <div class="card-links">
+                  <a href="#" class="card-link">Try It →</a>
+                  <a href="#" class="card-link secondary">GitHub</a>
+                </div>
               </div>
             </div>
           </article>
-        </div>
-      </div>
-
-      <!-- Progress Indicator -->
-      <div class="horizontal-progress">
-        <div class="progress-track">
-          <div class="progress-fill"></div>
-        </div>
-        <div class="progress-dots">
-          <span class="dot active"></span>
-          <span class="dot"></span>
-          <span class="dot"></span>
-          <span class="dot"></span>
         </div>
       </div>
     </section>
