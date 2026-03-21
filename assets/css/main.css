@@ -2661,11 +2661,11 @@ footer {
 /* Avatar Orb with Enhanced 3D */
 .avatar-orb {
   position: absolute;
-  right: 0;
+  right: 60px;
   top: 50%;
   transform: translateY(-50%);
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
   perspective: 1000px;
   transform-style: preserve-3d;
   z-index: 10;
