@@ -145,8 +145,8 @@
     </div>
 
     <div class="hero-content">
-      <!-- Eyebrow Tag -->
-      <div class="hero-eyebrow">
+      <!-- Eyebrow Tag (hidden) -->
+      <div class="hero-eyebrow" style="display: none;">
         <span class="eyebrow-pulse"></span>
         <span class="eyebrow-text">Neuraverse V2</span>
       </div>
@@ -206,7 +206,7 @@
             <div class="timeline-node" data-year="2018" data-type="education">
               <div class="node-marker"></div>
               <div class="node-card">
-                <span class="node-year">2018 — 2021</span>
+                <span class="node-year">2021 — 2024</span>
                 <h3 class="node-title">浙江省杭州第二中学</h3>
                 <p class="node-desc">高中</p>
               </div>
@@ -285,13 +285,13 @@
         <h2 class="section-title">Projects</h2>
         <div class="scroll-hint">
           <span class="hint-line"></span>
-          <span class="hint-text">← 拖拽或滚动浏览 →</span>
+          <span class="hint-text">← 鼠标滚轮滚动浏览 →</span>
         </div>
         <div class="drag-indicator">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+            <path d="M12 5v14M5 12l7 7 7-7"></path>
           </svg>
-          <span>拖拽滑动</span>
+          <span>滚轮滑动</span>
         </div>
       </div>
 
@@ -463,6 +463,48 @@
       </div>
     </section>
 
+    <!-- GitHub Widget Section -->
+    <section class="section github-section">
+      <div class="section-container">
+        <div class="github-widget animate-on-scroll" id="github-widget">
+          <div class="widget-border"></div>
+          <div class="widget-glow"></div>
+          <div class="widget-content">
+            <div class="widget-avatar">
+              <img src="https://github.com/KUN-11-77.png" alt="KUN-11-77 GitHub avatar" class="avatar-img">
+              <div class="avatar-ring"></div>
+              <div class="avatar-ring ring-2"></div>
+            </div>
+            <div class="widget-info">
+              <h3 class="widget-username">KUN-11-77</h3>
+              <p class="widget-bio">Neuraverse Creator</p>
+              <div class="widget-stats">
+                <div class="stat">
+                  <i class="ph ph-star"></i>
+                  <span class="stat-value" id="github-stars">--</span>
+                  <span class="stat-label">Stars</span>
+                </div>
+                <div class="stat">
+                  <i class="ph ph-git-fork"></i>
+                  <span class="stat-value" id="github-forks">--</span>
+                  <span class="stat-label">Forks</span>
+                </div>
+                <div class="stat">
+                  <i class="ph ph-users"></i>
+                  <span class="stat-value" id="github-followers">--</span>
+                  <span class="stat-label">Followers</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a href="https://github.com/KUN-11-77" target="_blank" rel="noopener" class="widget-link">
+            <span>View Profile</span>
+            <i class="ph ph-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact" class="section">
       <div class="section-container">
@@ -498,6 +540,7 @@
   <script src="assets/js/click-effects.js"></script>
   <script src="assets/js/cursor.js"></script>
   <script src="assets/js/pdf-viewer.js"></script>
+  <script src="assets/js/projects.js"></script>
   <script src="assets/js/main.js"></script>
 
   <!-- PDF.js Worker Setup -->

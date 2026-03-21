@@ -151,6 +151,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Performance optimizations (Phase H)
   initPerformanceOptimizations();
 
+  // Initialize GitHub Widget
+  initGitHubWidget();
+
   // Handle visibility changes (pause animations when tab is hidden)
   document.addEventListener('visibilitychange', () => {
     AppState.visibility = document.visibilityState;
@@ -211,13 +214,15 @@ function initScrollAnimations() {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('animate-fade-up');
+        // Use 'visible' class for github-widget, 'animate-fade-up' for others
+        const className = entry.target.classList.contains('github-widget') ? 'visible' : 'animate-fade-up';
+        entry.target.classList.add(className);
       }
     });
   }, observerOptions);
 
   // Observe elements that should animate on scroll
-  document.querySelectorAll('.project-card, .avatar, .contact-link, #page-indicator').forEach(el => {
+  document.querySelectorAll('.project-card, .avatar, .contact-link, #page-indicator, .github-widget').forEach(el => {
     observer.observe(el);
   });
 }
@@ -902,6 +907,94 @@ function initGSAPAnimations() {
   });
 }
 
+// --------------------------------------------------------------------------
+// GitHub Widget — Fetch and display GitHub stats
+// --------------------------------------------------------------------------
+function initGitHubWidget() {
+  const widget = document.getElementById('github-widget');
+  if (!widget) return;
+
+  const username = 'KUN-11-77';
+  const starsEl = document.getElementById('github-stars');
+  const forksEl = document.getElementById('github-forks');
+  const followersEl = document.getElementById('github-followers');
+
+  // Fetch user data
+  fetch(`https://api.github.com/users/${username}`)
+    .then(res => {
+      if (!res.ok) throw new Error('Failed to fetch user data');
+      return res.json();
+    })
+    .then(data => {
+      if (followersEl) {
+        animateNumber(followersEl, data.followers || 0);
+      }
+    })
+    .catch(err => {
+      console.log('[GitHub Widget] User fetch error:', err.message);
+      if (followersEl) followersEl.textContent = '0';
+    });
+
+  // Fetch repos data for stars and forks
+  fetch(`https://api.github.com/users/${username}/repos?per_page=100`)
+    .then(res => {
+      if (!res.ok) throw new Error('Failed to fetch repos');
+      return res.json();
+    })
+    .then(repos => {
+      let totalStars = 0;
+      let totalForks = 0;
+
+      repos.forEach(repo => {
+        totalStars += repo.stargazers_count || 0;
+        totalForks += repo.forks_count || 0;
+      });
+
+      if (starsEl) animateNumber(starsEl, totalStars);
+      if (forksEl) animateNumber(forksEl, totalForks);
+    })
+    .catch(err => {
+      console.log('[GitHub Widget] Repos fetch error:', err.message);
+      if (starsEl) starsEl.textContent = '0';
+      if (forksEl) forksEl.textContent = '0';
+    });
+}
+
+// Animate number counting up
+function animateNumber(element, target) {
+  const duration = 1500;
+  const start = 0;
+  const startTime = performance.now();
+
+  function update(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+
+    // Easing function (ease-out)
+    const easeOut = 1 - Math.pow(1 - progress, 3);
+    const current = Math.floor(start + (target - start) * easeOut);
+
+    element.textContent = formatNumber(current);
+
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    }
+  }
+
+  requestAnimationFrame(update);
+}
+
+// Format large numbers (e.g., 1500 -> 1.5k)
+function formatNumber(num) {
+  if (num >= 1000000) {
+    return (num / 1000000).toFixed(1) + 'M';
+  }
+  if (num >= 1000) {
+    return (num / 1000).toFixed(1) + 'k';
+  }
+  return num.toString();
+}
+
 // Export for debugging
 window.AppState = AppState;
-window.Neuraverse = { initScrollAnimations, initProgressBar, initHeroAnimations, initNeuralCursor, initLenisSmoothScroll, initGSAPAnimations };
+window.Neuraverse = { initScrollAnimations, initProgressBar, initHeroAnimations, initNeuralCursor, initLenisSmoothScroll, initGSAPAnimations, initGitHubWidget };
