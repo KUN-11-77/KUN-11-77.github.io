@@ -302,8 +302,8 @@ nav {
   z-index: 1000;
   backdrop-filter: blur(12px) saturate(180%);
   -webkit-backdrop-filter: blur(12px) saturate(180%);
-  background: rgba(var(--cosmos-bg-rgb), 0.7);
-  border-bottom: 0.5px solid rgba(var(--glow-cyan-rgb), 0.15);
+  background: rgba(var(--cosmos-bg-rgb), 0.45);
+  border-bottom: 0.5px solid rgba(var(--glow-cyan-rgb), 0.12);
 }
 
 .nav-container {
