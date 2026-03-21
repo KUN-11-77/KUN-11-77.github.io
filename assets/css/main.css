@@ -2347,6 +2347,11 @@ footer {
   min-height: 100vh;
   padding: 6rem 0;
   perspective: 2000px;
+  overflow: visible;
+}
+
+.about-v2 .section-container {
+  overflow: visible;
 }
 
 .about-header {
@@ -2363,6 +2368,9 @@ footer {
   min-height: 700px;
   perspective: 2000px;
   transform-style: preserve-3d;
+  width: calc(100% + 200px);
+  margin-left: -100px;
+  padding: 0 100px;
 }
 
 /* Timeline Track with 3D Depth */
@@ -2653,13 +2661,14 @@ footer {
 /* Avatar Orb with Enhanced 3D */
 .avatar-orb {
   position: absolute;
-  right: 5%;
+  right: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 220px;
-  height: 220px;
+  width: 200px;
+  height: 200px;
   perspective: 1000px;
   transform-style: preserve-3d;
+  z-index: 10;
 }
 
 .orb-ring {
@@ -2795,11 +2804,19 @@ footer {
 }
 
 /* Responsive */
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
+  .about-timeline {
+    width: 100%;
+    margin-left: 0;
+    padding: 0;
+  }
+
   .avatar-orb {
     display: none;
   }
+}
 
+@media (max-width: 1024px) {
   .about-timeline {
     perspective: 1200px;
   }
