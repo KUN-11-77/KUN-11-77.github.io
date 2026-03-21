@@ -129,45 +129,49 @@
         </div>
       </div>
 
-      <!-- Right: GitHub Widget -->
-      <a href="https://github.com/KUN-11-77" target="_blank" rel="noopener" class="nav-github" id="nav-github">
-        <div class="github-avatar-wrap">
-          <img src="https://github.com/KUN-11-77.png" alt="KUN-11-77" class="github-avatar">
-          <!-- Electric ring around avatar -->
-          <svg class="electric-ring" viewBox="0 0 100 100">
-            <defs>
-              <linearGradient id="electricGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#00e5ff;stop-opacity:0" />
-                <stop offset="25%" style="stop-color:#00e5ff;stop-opacity:1" />
-                <stop offset="50%" style="stop-color:#b388ff;stop-opacity:1" />
-                <stop offset="75%" style="stop-color:#00e5ff;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#00e5ff;stop-opacity:0" />
-              </linearGradient>
-              <filter id="electricGlow">
-                <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-                <feMerge>
-                  <feMergeNode in="coloredBlur"/>
-                  <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-              </filter>
-            </defs>
-            <!-- Electric arcs -->
-            <circle class="arc arc-1" cx="50" cy="50" r="46" fill="none" stroke="url(#electricGradient)" stroke-width="2" filter="url(#electricGlow)" stroke-linecap="round" stroke-dasharray="60 120"/>
-            <circle class="arc arc-2" cx="50" cy="50" r="46" fill="none" stroke="url(#electricGradient)" stroke-width="1.5" filter="url(#electricGlow)" stroke-linecap="round" stroke-dasharray="40 140"/>
-            <circle class="arc arc-3" cx="50" cy="50" r="46" fill="none" stroke="#00e5ff" stroke-width="1" opacity="0.6" stroke-dasharray="20 80"/>
-            <!-- Electric sparks -->
-            <circle class="spark spark-1" cx="50" cy="4" r="2" fill="#00e5ff" filter="url(#electricGlow)"/>
-            <circle class="spark spark-2" cx="96" cy="50" r="1.5" fill="#b388ff" filter="url(#electricGlow)"/>
-            <circle class="spark spark-3" cx="50" cy="96" r="2" fill="#00e5ff" filter="url(#electricGlow)"/>
-          </svg>
-        </div>
-        <div class="github-info">
-          <span class="github-name">KUN-11-77</span>
-          <span class="github-stats">
-            <i class="ph ph-star"></i> <span id="nav-stars">--</span>
-          </span>
-        </div>
-      </a>
+      <!-- Right: Avatar + Star/Fork buttons -->
+      <div class="nav-github-wrap">
+        <!-- Avatar with electric ring (left side) -->
+        <a href="https://github.com/KUN-11-77" target="_blank" rel="noopener" class="nav-avatar" title="KUN-11-77">
+          <div class="github-avatar-wrap">
+            <img src="https://github.com/KUN-11-77.png" alt="KUN-11-77" class="github-avatar" width="40" height="40">
+            <svg class="electric-ring" viewBox="0 0 100 100">
+              <defs>
+                <linearGradient id="electricGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#00e5ff;stop-opacity:0" />
+                  <stop offset="25%" style="stop-color:#00e5ff;stop-opacity:1" />
+                  <stop offset="50%" style="stop-color:#b388ff;stop-opacity:1" />
+                  <stop offset="75%" style="stop-color:#00e5ff;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#00e5ff;stop-opacity:0" />
+                </linearGradient>
+                <filter id="electricGlow">
+                  <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                  <feMerge>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+              </defs>
+              <circle class="arc arc-1" cx="50" cy="50" r="46" fill="none" stroke="url(#electricGradient)" stroke-width="2" filter="url(#electricGlow)" stroke-linecap="round" stroke-dasharray="60 120"/>
+              <circle class="arc arc-2" cx="50" cy="50" r="46" fill="none" stroke="url(#electricGradient)" stroke-width="1.5" filter="url(#electricGlow)" stroke-linecap="round" stroke-dasharray="40 140"/>
+              <circle class="arc arc-3" cx="50" cy="50" r="46" fill="none" stroke="#00e5ff" stroke-width="1" opacity="0.6" stroke-dasharray="20 80"/>
+              <circle class="spark spark-1" cx="50" cy="4" r="2" fill="#00e5ff" filter="url(#electricGlow)"/>
+              <circle class="spark spark-2" cx="96" cy="50" r="1.5" fill="#b388ff" filter="url(#electricGlow)"/>
+              <circle class="spark spark-3" cx="50" cy="96" r="2" fill="#00e5ff" filter="url(#electricGlow)"/>
+            </svg>
+          </div>
+        </a>
+        <!-- Star Button -->
+        <a href="https://github.com/KUN-11-77/KUN-11-77.github.io" target="_blank" rel="noopener" class="gh-btn gh-star">
+          <i class="ph ph-star"></i>
+          <span>Star</span>
+        </a>
+        <!-- Fork Button -->
+        <a href="https://github.com/KUN-11-77/KUN-11-77.github.io/fork" target="_blank" rel="noopener" class="gh-btn gh-fork">
+          <i class="ph ph-git-fork"></i>
+          <span>Fork</span>
+        </a>
+      </div>
     </div>
   </nav>
 

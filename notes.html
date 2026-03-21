@@ -26,6 +26,7 @@
   <!-- CSS -->
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/arc-loader.css">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="icon.png">
@@ -50,46 +51,92 @@
   <!-- Navigation -->
   <nav>
     <div class="nav-container">
+      <!-- Left: Logo -->
       <a href="index.html" class="logo">Neuraverse</a>
-      <div class="neural-bolt" aria-hidden="true">
-        <svg viewBox="0 0 120 30" class="bolt-svg">
-          <defs>
-            <linearGradient id="boltGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style="stop-color:#00e5ff;stop-opacity:0" />
-              <stop offset="15%" style="stop-color:#00e5ff;stop-opacity:0.8" />
-              <stop offset="35%" style="stop-color:#4fc3f7;stop-opacity:1" />
-              <stop offset="50%" style="stop-color:#b388ff;stop-opacity:1" />
-              <stop offset="65%" style="stop-color:#4fc3f7;stop-opacity:1" />
-              <stop offset="85%" style="stop-color:#00e5ff;stop-opacity:0.8" />
-              <stop offset="100%" style="stop-color:#00e5ff;stop-opacity:0" />
-            </linearGradient>
-            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
-              <feMerge>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
-          </defs>
-          <!-- Main lightning path with jagged edges -->
-          <path class="bolt-path" d="M5,15 L20,12 L35,18 L50,8 L65,20 L80,10 L95,16 L110,12 L115,14"
-                fill="none" stroke="url(#boltGradient)" stroke-width="2.5" filter="url(#glow)" stroke-linecap="round" stroke-linejoin="round"/>
-          <!-- Secondary thinner path -->
-          <path class="bolt-path-secondary" d="M8,18 L22,14 L38,20 L52,11 L68,22 L82,13 L98,19 L112,15"
-                fill="none" stroke="url(#boltGradient)" stroke-width="1" filter="url(#glow)" opacity="0.6"/>
-          <!-- Pulse nodes along the path -->
-          <circle class="pulse-node" cx="20" cy="12" r="2.5" fill="#00e5ff" filter="url(#glow)"/>
-          <circle class="pulse-node" cx="50" cy="8" r="2.5" fill="#4fc3f7" filter="url(#glow)"/>
-          <circle class="pulse-node" cx="80" cy="10" r="2.5" fill="#b388ff" filter="url(#glow)"/>
-          <circle class="pulse-node" cx="110" cy="12" r="2.5" fill="#00e5ff" filter="url(#glow)"/>
-        </svg>
+
+      <!-- Center: Neural Bolt + Nav Links -->
+      <div class="nav-center">
+        <div class="neural-bolt" aria-hidden="true">
+          <svg viewBox="0 0 120 30" class="bolt-svg">
+            <defs>
+              <linearGradient id="boltGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#00e5ff;stop-opacity:0" />
+                <stop offset="15%" style="stop-color:#00e5ff;stop-opacity:0.8" />
+                <stop offset="35%" style="stop-color:#4fc3f7;stop-opacity:1" />
+                <stop offset="50%" style="stop-color:#b388ff;stop-opacity:1" />
+                <stop offset="65%" style="stop-color:#4fc3f7;stop-opacity:1" />
+                <stop offset="85%" style="stop-color:#00e5ff;stop-opacity:0.8" />
+                <stop offset="100%" style="stop-color:#00e5ff;stop-opacity:0" />
+              </linearGradient>
+              <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+                <feMerge>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+            <path class="bolt-path" d="M5,15 L20,12 L35,18 L50,8 L65,20 L80,10 L95,16 L110,12 L115,14"
+                  fill="none" stroke="url(#boltGradient)" stroke-width="2.5" filter="url(#glow)" stroke-linecap="round" stroke-linejoin="round"/>
+            <path class="bolt-path-secondary" d="M8,18 L22,14 L38,20 L52,11 L68,22 L82,13 L98,19 L112,15"
+                  fill="none" stroke="url(#boltGradient)" stroke-width="1" filter="url(#glow)" opacity="0.6"/>
+            <circle class="pulse-node" cx="20" cy="12" r="2.5" fill="#00e5ff" filter="url(#glow)"/>
+            <circle class="pulse-node" cx="50" cy="8" r="2.5" fill="#4fc3f7" filter="url(#glow)"/>
+            <circle class="pulse-node" cx="80" cy="10" r="2.5" fill="#b388ff" filter="url(#glow)"/>
+            <circle class="pulse-node" cx="110" cy="12" r="2.5" fill="#00e5ff" filter="url(#glow)"/>
+          </svg>
+        </div>
+        <div class="nav-links">
+          <a href="index.html#about">About</a>
+          <a href="index.html#projects">Projects</a>
+          <a href="notes.html" class="active">Notes</a>
+          <a href="index.html#contact">Contact</a>
+        </div>
       </div>
-      <div class="nav-links">
-        <a href="index.html#about">About</a>
-        <a href="index.html#projects">Projects</a>
-        <a href="notes.html" class="active">Notes</a>
-        <a href="index.html#contact">Contact</a>
+
+      <!-- Right: Avatar + Star/Fork buttons -->
+      <div class="nav-github-wrap">
+        <!-- Avatar with electric ring (left side) -->
+        <a href="https://github.com/KUN-11-77" target="_blank" rel="noopener" class="nav-avatar" title="KUN-11-77">
+          <div class="github-avatar-wrap">
+            <img src="https://github.com/KUN-11-77.png" alt="KUN-11-77" class="github-avatar" width="40" height="40">
+            <svg class="electric-ring" viewBox="0 0 100 100">
+              <defs>
+                <linearGradient id="electricGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#00e5ff;stop-opacity:0" />
+                  <stop offset="25%" style="stop-color:#00e5ff;stop-opacity:1" />
+                  <stop offset="50%" style="stop-color:#b388ff;stop-opacity:1" />
+                  <stop offset="75%" style="stop-color:#00e5ff;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#00e5ff;stop-opacity:0" />
+                </linearGradient>
+                <filter id="electricGlow">
+                  <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                  <feMerge>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+              </defs>
+              <circle class="arc arc-1" cx="50" cy="50" r="46" fill="none" stroke="url(#electricGradient)" stroke-width="2" filter="url(#electricGlow)" stroke-linecap="round" stroke-dasharray="60 120"/>
+              <circle class="arc arc-2" cx="50" cy="50" r="46" fill="none" stroke="url(#electricGradient)" stroke-width="1.5" filter="url(#electricGlow)" stroke-linecap="round" stroke-dasharray="40 140"/>
+              <circle class="arc arc-3" cx="50" cy="50" r="46" fill="none" stroke="#00e5ff" stroke-width="1" opacity="0.6" stroke-dasharray="20 80"/>
+              <circle class="spark spark-1" cx="50" cy="4" r="2" fill="#00e5ff" filter="url(#electricGlow)"/>
+              <circle class="spark spark-2" cx="96" cy="50" r="1.5" fill="#b388ff" filter="url(#electricGlow)"/>
+              <circle class="spark spark-3" cx="50" cy="96" r="2" fill="#00e5ff" filter="url(#electricGlow)"/>
+            </svg>
+          </div>
+        </a>
+        <!-- Star Button -->
+        <a href="https://github.com/KUN-11-77/KUN-11-77.github.io" target="_blank" rel="noopener" class="gh-btn gh-star">
+          <i class="ph ph-star"></i>
+          <span>Star</span>
+        </a>
+        <!-- Fork Button -->
+        <a href="https://github.com/KUN-11-77/KUN-11-77.github.io/fork" target="_blank" rel="noopener" class="gh-btn gh-fork">
+          <i class="ph ph-git-fork"></i>
+          <span>Fork</span>
+        </a>
       </div>
     </div>
   </nav>
@@ -147,9 +194,91 @@
             <div id="pdf-container">
               <!-- PDF页面将通过JS动态渲染 -->
               <div class="pdf-loading">
-                <div class="skeleton"></div>
-                <div class="skeleton"></div>
-                <div class="skeleton"></div>
+                <div class="tech-loader">
+                  <!-- 科技电弧容器 -->
+                  <div class="tech-rings">
+                    <!-- 内层高速旋转环 -->
+                    <svg class="tech-ring ring-core" viewBox="0 0 200 200">
+                      <defs>
+                        <linearGradient id="grad-core" x1="0%" y1="0%" x2="100%" y2="0%">
+                          <stop offset="0%" stop-color="#ff00ff" stop-opacity="0"/>
+                          <stop offset="20%" stop-color="#ff00ff" stop-opacity="0.8"/>
+                          <stop offset="50%" stop-color="#00ffff" stop-opacity="1"/>
+                          <stop offset="80%" stop-color="#ff00ff" stop-opacity="0.8"/>
+                          <stop offset="100%" stop-color="#ff00ff" stop-opacity="0"/>
+                        </linearGradient>
+                      </defs>
+                      <circle class="tech-arc arc-short" cx="100" cy="100" r="25" fill="none" stroke="url(#grad-core)" stroke-width="3" stroke-linecap="round"/>
+                      <circle class="tech-arc arc-short arc-delay" cx="100" cy="100" r="25" fill="none" stroke="url(#grad-core)" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+
+                    <!-- 中层1 - 顺时针 -->
+                    <svg class="tech-ring ring-mid1" viewBox="0 0 200 200">
+                      <defs>
+                        <linearGradient id="grad-mid1" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stop-color="#00e5ff" stop-opacity="0"/>
+                          <stop offset="25%" stop-color="#00e5ff" stop-opacity="1"/>
+                          <stop offset="50%" stop-color="#7c3aed" stop-opacity="1"/>
+                          <stop offset="75%" stop-color="#f472b6" stop-opacity="0.8"/>
+                          <stop offset="100%" stop-color="#00e5ff" stop-opacity="0"/>
+                        </linearGradient>
+                      </defs>
+                      <circle class="tech-arc arc-medium" cx="100" cy="100" r="42" fill="none" stroke="url(#grad-mid1)" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+
+                    <!-- 中层2 - 逆时针 -->
+                    <svg class="tech-ring ring-mid2" viewBox="0 0 200 200">
+                      <defs>
+                        <linearGradient id="grad-mid2" x1="0%" y1="0%" x2="100%" y2="0%">
+                          <stop offset="0%" stop-color="#fbbf24" stop-opacity="0"/>
+                          <stop offset="30%" stop-color="#f59e0b" stop-opacity="1"/>
+                          <stop offset="60%" stop-color="#ef4444" stop-opacity="1"/>
+                          <stop offset="100%" stop-color="#fbbf24" stop-opacity="0"/>
+                        </linearGradient>
+                      </defs>
+                      <circle class="tech-arc arc-long" cx="100" cy="100" r="55" fill="none" stroke="url(#grad-mid2)" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+
+                    <!-- 外层 - 顺时针慢速 -->
+                    <svg class="tech-ring ring-outer" viewBox="0 0 200 200">
+                      <defs>
+                        <linearGradient id="grad-outer" x1="0%" y1="0%" x2="0%" y2="100%">
+                          <stop offset="0%" stop-color="#22d3ee" stop-opacity="0"/>
+                          <stop offset="40%" stop-color="#06b6d4" stop-opacity="0.9"/>
+                          <stop offset="50%" stop-color="#ffffff" stop-opacity="1"/>
+                          <stop offset="60%" stop-color="#8b5cf6" stop-opacity="0.9"/>
+                          <stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/>
+                        </linearGradient>
+                      </defs>
+                      <circle class="tech-arc arc-pulse" cx="100" cy="100" r="70" fill="none" stroke="url(#grad-outer)" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+
+                    <!-- 最外层粒子环 -->
+                    <svg class="tech-ring ring-particles" viewBox="0 0 200 200">
+                      <g class="particle-ring">
+                        <circle cx="100" cy="25" r="2" fill="#00ffff" opacity="0.8"/>
+                        <circle cx="100" cy="175" r="2" fill="#ff00ff" opacity="0.8"/>
+                        <circle cx="25" cy="100" r="1.5" fill="#fbbf24" opacity="0.6"/>
+                        <circle cx="175" cy="100" r="1.5" fill="#22d3ee" opacity="0.6"/>
+                      </g>
+                    </svg>
+
+                    <!-- 核心能量球 -->
+                    <div class="energy-core">
+                      <div class="core-inner"></div>
+                      <div class="core-glow"></div>
+                    </div>
+
+                    <!-- 扫描线 -->
+                    <div class="scan-line"></div>
+                  </div>
+
+                  <div class="loading-text">
+                    <span class="tech-text">SYSTEM</span>
+                    <span class="tech-dots">...</span>
+                    <span class="tech-status">INITIALIZING</span>
+                  </div>
+                </div>
               </div>
             </div>
             <div id="page-indicator">Page 1 of 1</div>

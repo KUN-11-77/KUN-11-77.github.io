@@ -307,17 +307,27 @@ nav {
 }
 
 .nav-container {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 var(--space-lg);
+  gap: var(--space-lg);
+}
+
+/* Center section: Neural Bolt + Nav Links */
+.nav-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  justify-self: center;
 }
 
 .logo {
   font-family: var(--font-heading);
-  font-size: 1.5rem;
+  font-size: 1.875rem;
   font-weight: 700;
   color: var(--glow-cyan); /* Fallback for older browsers */
   background: linear-gradient(
@@ -334,6 +344,7 @@ nav {
   color: transparent;
   animation: flowGradient 8s ease-in-out infinite;
   transform: translateZ(0); /* Hardware acceleration */
+  letter-spacing: -0.02em;
 }
 
 .nav-links {
@@ -2900,24 +2911,23 @@ footer {
   gap: var(--space-lg);
 }
 
-/* Right: GitHub Widget in Nav */
-.nav-github {
+/* Right: GitHub Widget Container - positioned at far right */
+.nav-github-wrap {
   display: flex;
+  flex-direction: row;
   align-items: center;
   gap: var(--space-sm);
-  padding: var(--space-xs) var(--space-sm);
-  background: rgba(var(--cosmos-bg-rgb), 0.4);
-  border: 1px solid rgba(var(--glow-cyan-rgb), 0.2);
-  border-radius: var(--radius-full);
-  text-decoration: none;
-  transition: all 0.3s ease;
   justify-self: end;
+  margin-left: auto;
 }
 
-.nav-github:hover {
-  background: rgba(var(--glow-cyan-rgb), 0.1);
-  border-color: rgba(var(--glow-cyan-rgb), 0.5);
-  box-shadow: 0 0 20px rgba(var(--glow-cyan-rgb), 0.2);
+/* Avatar link */
+.nav-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  flex-shrink: 0;
 }
 
 /* Electric Avatar Container */
@@ -2929,20 +2939,21 @@ footer {
 }
 
 .github-avatar {
-  width: 100%;
-  height: 100%;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   object-fit: cover;
   position: relative;
   z-index: 2;
+  display: block;
 }
 
 /* Electric Ring SVG around avatar */
 .electric-ring {
   position: absolute;
   inset: -6px;
-  width: calc(100% + 12px);
-  height: calc(100% + 12px);
+  width: 52px;
+  height: 52px;
   z-index: 3;
   pointer-events: none;
   overflow: visible;
@@ -3002,31 +3013,34 @@ footer {
   }
 }
 
-/* GitHub Info */
-.github-info {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.2;
-}
-
-.github-name {
-  font-family: var(--font-heading);
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.github-stats {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  color: var(--glow-cyan);
-  display: flex;
+/* Star/Fork Buttons */
+.gh-btn {
+  display: inline-flex;
+  flex-direction: row;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  background: rgba(var(--cosmos-bg-rgb), 0.5);
+  border: 1px solid rgba(var(--glow-cyan-rgb), 0.25);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
-.github-stats i {
-  font-size: 0.625rem;
+.gh-btn:hover {
+  background: rgba(var(--glow-cyan-rgb), 0.1);
+  border-color: rgba(var(--glow-cyan-rgb), 0.5);
+  box-shadow: 0 0 12px rgba(var(--glow-cyan-rgb), 0.2);
+  color: var(--glow-cyan);
+}
+
+.gh-btn i {
+  font-size: 0.875rem;
+  color: var(--glow-cyan);
 }
 
 /* Responsive Navigation */
@@ -3057,12 +3071,16 @@ footer {
     display: none; /* Hide center section on mobile */
   }
 
-  .nav-github {
-    padding: var(--space-xs);
+  .nav-github-wrap {
+    gap: var(--space-xs);
   }
 
-  .github-info {
-    display: none; /* Hide text on mobile, show only avatar */
+  .gh-btn span {
+    display: none; /* Hide button text on mobile */
+  }
+
+  .gh-btn {
+    padding: 0.5rem;
   }
 
   .github-avatar-wrap {
@@ -3070,10 +3088,15 @@ footer {
     height: 36px;
   }
 
+  .github-avatar {
+    width: 36px;
+    height: 36px;
+  }
+
   .electric-ring {
     inset: -4px;
-    width: calc(100% + 8px);
-    height: calc(100% + 8px);
+    width: 44px;
+    height: 44px;
   }
 }
 
