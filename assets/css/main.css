@@ -2764,274 +2764,330 @@ footer {
 }
 
 /* ==========================================================================
-   GitHub Widget — Cosmic Neural Style
+   Navigation — Updated with GitHub Widget & Electric Avatar
    ========================================================================== */
 
-.github-section {
-  padding: var(--space-2xl) 0;
-}
-
-.github-widget {
-  position: relative;
-  max-width: 480px;
+/* Nav container — 3-column layout */
+.nav-container {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  max-width: 1400px;
   margin: 0 auto;
-  border-radius: var(--radius-lg);
-  background: var(--glass-fill);
-  overflow: hidden;
-  transition: all 0.4s var(--ease-inertia);
-  opacity: 0;
-  transform: translateY(30px) scale(0.95);
+  padding: 0 var(--space-lg);
 }
 
-.github-widget.visible {
-  opacity: 1;
-  transform: translateY(0) scale(1);
+/* Center section: Neural Bolt + Nav Links */
+.nav-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
 }
 
-/* Animated border gradient */
-.widget-border {
-  position: absolute;
-  inset: 0;
-  border-radius: var(--radius-lg);
-  padding: 2px;
-  background: linear-gradient(
-    135deg,
-    var(--glow-cyan) 0%,
-    var(--glow-purple) 25%,
-    var(--neural-pink) 50%,
-    var(--glow-blue) 75%,
-    var(--glow-cyan) 100%
-  );
-  background-size: 300% 300%;
-  animation: borderRotate 4s linear infinite;
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-}
-
-@keyframes borderRotate {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Glow effect behind the widget */
-.widget-glow {
-  position: absolute;
-  inset: -2px;
-  border-radius: calc(var(--radius-lg) + 2px);
-  background: linear-gradient(
-    135deg,
-    rgba(var(--glow-cyan-rgb), 0.4) 0%,
-    rgba(var(--glow-purple-rgb), 0.4) 50%,
-    rgba(var(--neural-pink-rgb), 0.4) 100%
-  );
-  background-size: 300% 300%;
-  animation: borderRotate 4s linear infinite;
-  filter: blur(20px);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  z-index: -1;
-}
-
-.github-widget:hover .widget-glow {
-  opacity: 0.6;
-}
-
-/* Widget content */
-.widget-content {
+/* Neural Bolt repositioned */
+.neural-bolt {
   position: relative;
-  padding: var(--space-xl);
+  left: auto;
+  transform: none;
+  width: 140px;
+  height: 35px;
+}
+
+.bolt-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.bolt-path {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: boltFlow 2.5s ease-in-out infinite;
+}
+
+.bolt-path-secondary {
+  stroke-dasharray: 150;
+  stroke-dashoffset: 150;
+  animation: boltFlow 2.5s ease-in-out infinite;
+  animation-delay: 0.3s;
+}
+
+.pulse-node {
+  opacity: 0.3;
+  animation: nodePulse 2s ease-in-out infinite;
+}
+
+.pulse-node:nth-child(4) { animation-delay: 0.2s; }
+.pulse-node:nth-child(5) { animation-delay: 0.6s; }
+.pulse-node:nth-child(6) { animation-delay: 1s; }
+.pulse-node:nth-child(7) { animation-delay: 1.4s; }
+
+@keyframes boltFlow {
+  0% {
+    stroke-dashoffset: 200;
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: -200;
+    opacity: 0;
+  }
+}
+
+@keyframes nodePulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+    fill: #00e5ff;
+    filter: drop-shadow(0 0 8px #00e5ff);
+  }
+}
+
+/* Electric sparks */
+.neural-bolt::before,
+.neural-bolt::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #00e5ff;
+  border-radius: 50%;
+  opacity: 0;
+  animation: spark 1.5s ease-out infinite;
+}
+
+.neural-bolt::before {
+  left: 20%;
+  top: 30%;
+  animation-delay: 0.3s;
+}
+
+.neural-bolt::after {
+  right: 20%;
+  bottom: 30%;
+  animation-delay: 0.8s;
+}
+
+@keyframes spark {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 10px #00e5ff, 0 0 20px #b388ff;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+/* Nav Links */
+.nav-links {
+  display: flex;
+  gap: var(--space-lg);
+}
+
+/* Right: GitHub Widget in Nav */
+.nav-github {
   display: flex;
   align-items: center;
-  gap: var(--space-lg);
-  background: var(--glass-fill);
-  border-radius: calc(var(--radius-lg) - 2px);
-  margin: 2px;
+  gap: var(--space-sm);
+  padding: var(--space-xs) var(--space-sm);
+  background: rgba(var(--cosmos-bg-rgb), 0.4);
+  border: 1px solid rgba(var(--glow-cyan-rgb), 0.2);
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  justify-self: end;
 }
 
-/* Avatar with animated rings */
-.widget-avatar {
+.nav-github:hover {
+  background: rgba(var(--glow-cyan-rgb), 0.1);
+  border-color: rgba(var(--glow-cyan-rgb), 0.5);
+  box-shadow: 0 0 20px rgba(var(--glow-cyan-rgb), 0.2);
+}
+
+/* Electric Avatar Container */
+.github-avatar-wrap {
   position: relative;
-  width: 100px;
-  height: 100px;
+  width: 40px;
+  height: 40px;
   flex-shrink: 0;
 }
 
-.avatar-img {
+.github-avatar {
   width: 100%;
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid rgba(var(--glow-cyan-rgb), 0.3);
   position: relative;
   z-index: 2;
 }
 
-.avatar-ring {
+/* Electric Ring SVG around avatar */
+.electric-ring {
   position: absolute;
-  inset: -4px;
-  border: 2px solid var(--glow-cyan);
-  border-radius: 50%;
-  opacity: 0.6;
-  animation: avatarPulse 2s ease-in-out infinite;
+  inset: -6px;
+  width: calc(100% + 12px);
+  height: calc(100% + 12px);
+  z-index: 3;
+  pointer-events: none;
+  overflow: visible;
 }
 
-.avatar-ring.ring-2 {
-  inset: -8px;
-  border-color: var(--glow-purple);
-  animation-delay: 0.5s;
-  opacity: 0.4;
+.electric-ring .arc {
+  transform-origin: center;
 }
 
-@keyframes avatarPulse {
+.electric-ring .arc-1 {
+  animation: electricRotate 3s linear infinite;
+}
+
+.electric-ring .arc-2 {
+  animation: electricRotate 2s linear infinite reverse;
+}
+
+.electric-ring .arc-3 {
+  animation: electricRotate 1.5s linear infinite;
+}
+
+@keyframes electricRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Electric sparks around avatar */
+.electric-ring .spark {
+  animation: sparkPulse 1.2s ease-in-out infinite;
+}
+
+.electric-ring .spark-1 {
+  animation-delay: 0s;
+}
+
+.electric-ring .spark-2 {
+  animation-delay: 0.4s;
+}
+
+.electric-ring .spark-3 {
+  animation-delay: 0.8s;
+}
+
+@keyframes sparkPulse {
   0%, 100% {
-    transform: scale(1);
-    opacity: 0.6;
+    opacity: 0.3;
+    transform: scale(0.8);
   }
   50% {
-    transform: scale(1.05);
-    opacity: 0.3;
+    opacity: 1;
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 6px #00e5ff);
   }
 }
 
-/* Widget info */
-.widget-info {
-  flex: 1;
+/* GitHub Info */
+.github-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
 }
 
-.widget-username {
+.github-name {
   font-family: var(--font-heading);
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 0.25rem;
-  background: linear-gradient(
-    90deg,
-    var(--glow-cyan),
-    var(--glow-blue),
-    var(--glow-purple)
-  );
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: flowGradient 3s ease-in-out infinite;
-}
-
-.widget-bio {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  margin-bottom: var(--space-md);
-  letter-spacing: 0.05em;
-}
-
-/* Stats */
-.widget-stats {
-  display: flex;
-  gap: var(--space-md);
-}
-
-.widget-stats .stat {
-  display: flex;
-  align-items: center;
-  gap: 0.375rem;
-  padding: 0.5rem 0.75rem;
-  background: rgba(var(--cosmos-bg-rgb), 0.6);
-  border: 1px solid rgba(var(--glow-cyan-rgb), 0.15);
-  border-radius: var(--radius-sm);
-  transition: all 0.3s ease;
-}
-
-.widget-stats .stat:hover {
-  border-color: rgba(var(--glow-cyan-rgb), 0.4);
-  background: rgba(var(--glow-cyan-rgb), 0.1);
-  transform: translateY(-2px);
-}
-
-.widget-stats .stat i {
-  font-size: 0.875rem;
-  color: var(--glow-cyan);
-}
-
-.widget-stats .stat-value {
-  font-family: var(--font-mono);
   font-size: 0.875rem;
   font-weight: 600;
   color: var(--text-primary);
 }
 
-.widget-stats .stat-label {
+.github-stats {
   font-family: var(--font-mono);
-  font-size: 0.625rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-/* Widget link */
-.widget-link {
+  font-size: 0.6875rem;
+  color: var(--glow-cyan);
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: var(--space-sm);
-  padding: var(--space-md);
-  background: linear-gradient(
-    90deg,
-    rgba(var(--glow-cyan-rgb), 0.1) 0%,
-    rgba(var(--glow-purple-rgb), 0.1) 100%
-  );
-  border-top: 1px solid rgba(var(--glow-cyan-rgb), 0.15);
-  color: var(--glow-cyan);
-  font-family: var(--font-mono);
-  font-size: 0.875rem;
-  text-decoration: none;
-  transition: all 0.3s ease;
+  gap: 0.25rem;
 }
 
-.widget-link:hover {
-  background: linear-gradient(
-    90deg,
-    rgba(var(--glow-cyan-rgb), 0.2) 0%,
-    rgba(var(--glow-purple-rgb), 0.2) 100%
-  );
-  color: var(--glow-cyan);
+.github-stats i {
+  font-size: 0.625rem;
 }
 
-.widget-link i {
-  transition: transform 0.3s ease;
-}
-
-.widget-link:hover i {
-  transform: translateX(4px);
-}
-
-/* Responsive */
-@media (max-width: 480px) {
-  .widget-content {
-    flex-direction: column;
-    text-align: center;
+/* Responsive Navigation */
+@media (max-width: 1024px) {
+  .nav-container {
+    grid-template-columns: auto 1fr auto;
+    gap: var(--space-md);
   }
 
-  .widget-stats {
-    justify-content: center;
+  .nav-center {
+    flex-direction: row;
+    gap: var(--space-lg);
+  }
+
+  .neural-bolt {
+    width: 100px;
+    height: 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-container {
+    grid-template-columns: 1fr auto;
+    gap: var(--space-sm);
+  }
+
+  .nav-center {
+    display: none; /* Hide center section on mobile */
+  }
+
+  .nav-github {
+    padding: var(--space-xs);
+  }
+
+  .github-info {
+    display: none; /* Hide text on mobile, show only avatar */
+  }
+
+  .github-avatar-wrap {
+    width: 36px;
+    height: 36px;
+  }
+
+  .electric-ring {
+    inset: -4px;
+    width: calc(100% + 8px);
+    height: calc(100% + 8px);
   }
 }
 
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
-  .orb-ring,
-  .widget-border,
-  .widget-glow,
-  .avatar-ring {
+  .electric-ring .arc,
+  .electric-ring .spark,
+  .bolt-path,
+  .bolt-path-secondary,
+  .pulse-node {
     animation: none;
   }
 
-  .widget-username {
+  .orb-ring {
     animation: none;
   }
 

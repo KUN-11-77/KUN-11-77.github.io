@@ -214,15 +214,13 @@ function initScrollAnimations() {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        // Use 'visible' class for github-widget, 'animate-fade-up' for others
-        const className = entry.target.classList.contains('github-widget') ? 'visible' : 'animate-fade-up';
-        entry.target.classList.add(className);
+        entry.target.classList.add('animate-fade-up');
       }
     });
   }, observerOptions);
 
   // Observe elements that should animate on scroll
-  document.querySelectorAll('.project-card, .avatar, .contact-link, #page-indicator, .github-widget').forEach(el => {
+  document.querySelectorAll('.project-card, .avatar, .contact-link, #page-indicator').forEach(el => {
     observer.observe(el);
   });
 }
@@ -911,31 +909,13 @@ function initGSAPAnimations() {
 // GitHub Widget — Fetch and display GitHub stats
 // --------------------------------------------------------------------------
 function initGitHubWidget() {
-  const widget = document.getElementById('github-widget');
-  if (!widget) return;
+  const navGithub = document.getElementById('nav-github');
+  if (!navGithub) return;
 
   const username = 'KUN-11-77';
-  const starsEl = document.getElementById('github-stars');
-  const forksEl = document.getElementById('github-forks');
-  const followersEl = document.getElementById('github-followers');
+  const navStarsEl = document.getElementById('nav-stars');
 
-  // Fetch user data
-  fetch(`https://api.github.com/users/${username}`)
-    .then(res => {
-      if (!res.ok) throw new Error('Failed to fetch user data');
-      return res.json();
-    })
-    .then(data => {
-      if (followersEl) {
-        animateNumber(followersEl, data.followers || 0);
-      }
-    })
-    .catch(err => {
-      console.log('[GitHub Widget] User fetch error:', err.message);
-      if (followersEl) followersEl.textContent = '0';
-    });
-
-  // Fetch repos data for stars and forks
+  // Fetch repos data for stars
   fetch(`https://api.github.com/users/${username}/repos?per_page=100`)
     .then(res => {
       if (!res.ok) throw new Error('Failed to fetch repos');
@@ -943,45 +923,18 @@ function initGitHubWidget() {
     })
     .then(repos => {
       let totalStars = 0;
-      let totalForks = 0;
-
       repos.forEach(repo => {
         totalStars += repo.stargazers_count || 0;
-        totalForks += repo.forks_count || 0;
       });
 
-      if (starsEl) animateNumber(starsEl, totalStars);
-      if (forksEl) animateNumber(forksEl, totalForks);
+      if (navStarsEl) {
+        navStarsEl.textContent = formatNumber(totalStars);
+      }
     })
     .catch(err => {
       console.log('[GitHub Widget] Repos fetch error:', err.message);
-      if (starsEl) starsEl.textContent = '0';
-      if (forksEl) forksEl.textContent = '0';
+      if (navStarsEl) navStarsEl.textContent = '0';
     });
-}
-
-// Animate number counting up
-function animateNumber(element, target) {
-  const duration = 1500;
-  const start = 0;
-  const startTime = performance.now();
-
-  function update(currentTime) {
-    const elapsed = currentTime - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-
-    // Easing function (ease-out)
-    const easeOut = 1 - Math.pow(1 - progress, 3);
-    const current = Math.floor(start + (target - start) * easeOut);
-
-    element.textContent = formatNumber(current);
-
-    if (progress < 1) {
-      requestAnimationFrame(update);
-    }
-  }
-
-  requestAnimationFrame(update);
 }
 
 // Format large numbers (e.g., 1500 -> 1.5k)
@@ -997,4 +950,4 @@ function formatNumber(num) {
 
 // Export for debugging
 window.AppState = AppState;
-window.Neuraverse = { initScrollAnimations, initProgressBar, initHeroAnimations, initNeuralCursor, initLenisSmoothScroll, initGSAPAnimations, initGitHubWidget };
+window.Neuraverse = { initScrollAnimations, initProgressBar, initHeroAnimations, initNeuralCursor, initLenisSmoothScroll, initGSAPAnimations };

@@ -82,47 +82,92 @@
   <!-- Navigation -->
   <nav>
     <div class="nav-container">
+      <!-- Left: Logo -->
       <a href="/" class="logo">Neuraverse</a>
-      <div class="neural-bolt" aria-hidden="true">
-        <svg viewBox="0 0 120 30" class="bolt-svg">
-          <defs>
-            <linearGradient id="boltGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style="stop-color:#00e5ff;stop-opacity:0" />
-              <stop offset="15%" style="stop-color:#00e5ff;stop-opacity:0.8" />
-              <stop offset="35%" style="stop-color:#4fc3f7;stop-opacity:1" />
-              <stop offset="50%" style="stop-color:#b388ff;stop-opacity:1" />
-              <stop offset="65%" style="stop-color:#4fc3f7;stop-opacity:1" />
-              <stop offset="85%" style="stop-color:#00e5ff;stop-opacity:0.8" />
-              <stop offset="100%" style="stop-color:#00e5ff;stop-opacity:0" />
-            </linearGradient>
-            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
-              <feMerge>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
-          </defs>
-          <!-- Main lightning path with jagged edges -->
-          <path class="bolt-path" d="M5,15 L20,12 L35,18 L50,8 L65,20 L80,10 L95,16 L110,12 L115,14"
-                fill="none" stroke="url(#boltGradient)" stroke-width="2.5" filter="url(#glow)" stroke-linecap="round" stroke-linejoin="round"/>
-          <!-- Secondary thinner path -->
-          <path class="bolt-path-secondary" d="M8,18 L22,14 L38,20 L52,11 L68,22 L82,13 L98,19 L112,15"
-                fill="none" stroke="url(#boltGradient)" stroke-width="1" filter="url(#glow)" opacity="0.6"/>
-          <!-- Pulse nodes along the path -->
-          <circle class="pulse-node" cx="20" cy="12" r="2.5" fill="#00e5ff" filter="url(#glow)"/>
-          <circle class="pulse-node" cx="50" cy="8" r="2.5" fill="#4fc3f7" filter="url(#glow)"/>
-          <circle class="pulse-node" cx="80" cy="10" r="2.5" fill="#b388ff" filter="url(#glow)"/>
-          <circle class="pulse-node" cx="110" cy="12" r="2.5" fill="#00e5ff" filter="url(#glow)"/>
-        </svg>
+
+      <!-- Center: Neural Bolt + Nav Links -->
+      <div class="nav-center">
+        <div class="neural-bolt" aria-hidden="true">
+          <svg viewBox="0 0 120 30" class="bolt-svg">
+            <defs>
+              <linearGradient id="boltGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#00e5ff;stop-opacity:0" />
+                <stop offset="15%" style="stop-color:#00e5ff;stop-opacity:0.8" />
+                <stop offset="35%" style="stop-color:#4fc3f7;stop-opacity:1" />
+                <stop offset="50%" style="stop-color:#b388ff;stop-opacity:1" />
+                <stop offset="65%" style="stop-color:#4fc3f7;stop-opacity:1" />
+                <stop offset="85%" style="stop-color:#00e5ff;stop-opacity:0.8" />
+                <stop offset="100%" style="stop-color:#00e5ff;stop-opacity:0" />
+              </linearGradient>
+              <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+                <feMerge>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+            <!-- Main lightning path with jagged edges -->
+            <path class="bolt-path" d="M5,15 L20,12 L35,18 L50,8 L65,20 L80,10 L95,16 L110,12 L115,14"
+                  fill="none" stroke="url(#boltGradient)" stroke-width="2.5" filter="url(#glow)" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Secondary thinner path -->
+            <path class="bolt-path-secondary" d="M8,18 L22,14 L38,20 L52,11 L68,22 L82,13 L98,19 L112,15"
+                  fill="none" stroke="url(#boltGradient)" stroke-width="1" filter="url(#glow)" opacity="0.6"/>
+            <!-- Pulse nodes along the path -->
+            <circle class="pulse-node" cx="20" cy="12" r="2.5" fill="#00e5ff" filter="url(#glow)"/>
+            <circle class="pulse-node" cx="50" cy="8" r="2.5" fill="#4fc3f7" filter="url(#glow)"/>
+            <circle class="pulse-node" cx="80" cy="10" r="2.5" fill="#b388ff" filter="url(#glow)"/>
+            <circle class="pulse-node" cx="110" cy="12" r="2.5" fill="#00e5ff" filter="url(#glow)"/>
+          </svg>
+        </div>
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="notes.html">Notes</a>
+          <a href="#contact">Contact</a>
+        </div>
       </div>
-      <div class="nav-links">
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="notes.html">Notes</a>
-        <a href="#contact">Contact</a>
-      </div>
+
+      <!-- Right: GitHub Widget -->
+      <a href="https://github.com/KUN-11-77" target="_blank" rel="noopener" class="nav-github" id="nav-github">
+        <div class="github-avatar-wrap">
+          <img src="https://github.com/KUN-11-77.png" alt="KUN-11-77" class="github-avatar">
+          <!-- Electric ring around avatar -->
+          <svg class="electric-ring" viewBox="0 0 100 100">
+            <defs>
+              <linearGradient id="electricGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#00e5ff;stop-opacity:0" />
+                <stop offset="25%" style="stop-color:#00e5ff;stop-opacity:1" />
+                <stop offset="50%" style="stop-color:#b388ff;stop-opacity:1" />
+                <stop offset="75%" style="stop-color:#00e5ff;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#00e5ff;stop-opacity:0" />
+              </linearGradient>
+              <filter id="electricGlow">
+                <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                <feMerge>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+            <!-- Electric arcs -->
+            <circle class="arc arc-1" cx="50" cy="50" r="46" fill="none" stroke="url(#electricGradient)" stroke-width="2" filter="url(#electricGlow)" stroke-linecap="round" stroke-dasharray="60 120"/>
+            <circle class="arc arc-2" cx="50" cy="50" r="46" fill="none" stroke="url(#electricGradient)" stroke-width="1.5" filter="url(#electricGlow)" stroke-linecap="round" stroke-dasharray="40 140"/>
+            <circle class="arc arc-3" cx="50" cy="50" r="46" fill="none" stroke="#00e5ff" stroke-width="1" opacity="0.6" stroke-dasharray="20 80"/>
+            <!-- Electric sparks -->
+            <circle class="spark spark-1" cx="50" cy="4" r="2" fill="#00e5ff" filter="url(#electricGlow)"/>
+            <circle class="spark spark-2" cx="96" cy="50" r="1.5" fill="#b388ff" filter="url(#electricGlow)"/>
+            <circle class="spark spark-3" cx="50" cy="96" r="2" fill="#00e5ff" filter="url(#electricGlow)"/>
+          </svg>
+        </div>
+        <div class="github-info">
+          <span class="github-name">KUN-11-77</span>
+          <span class="github-stats">
+            <i class="ph ph-star"></i> <span id="nav-stars">--</span>
+          </span>
+        </div>
+      </a>
     </div>
   </nav>
 
@@ -458,48 +503,6 @@
           <a href="notes.html" class="btn-primary">
             <i class="ph ph-notebook"></i>
             View All Notes
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- GitHub Widget Section -->
-    <section class="section github-section">
-      <div class="section-container">
-        <div class="github-widget animate-on-scroll" id="github-widget">
-          <div class="widget-border"></div>
-          <div class="widget-glow"></div>
-          <div class="widget-content">
-            <div class="widget-avatar">
-              <img src="https://github.com/KUN-11-77.png" alt="KUN-11-77 GitHub avatar" class="avatar-img">
-              <div class="avatar-ring"></div>
-              <div class="avatar-ring ring-2"></div>
-            </div>
-            <div class="widget-info">
-              <h3 class="widget-username">KUN-11-77</h3>
-              <p class="widget-bio">Neuraverse Creator</p>
-              <div class="widget-stats">
-                <div class="stat">
-                  <i class="ph ph-star"></i>
-                  <span class="stat-value" id="github-stars">--</span>
-                  <span class="stat-label">Stars</span>
-                </div>
-                <div class="stat">
-                  <i class="ph ph-git-fork"></i>
-                  <span class="stat-value" id="github-forks">--</span>
-                  <span class="stat-label">Forks</span>
-                </div>
-                <div class="stat">
-                  <i class="ph ph-users"></i>
-                  <span class="stat-value" id="github-followers">--</span>
-                  <span class="stat-label">Followers</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <a href="https://github.com/KUN-11-77" target="_blank" rel="noopener" class="widget-link">
-            <span>View Profile</span>
-            <i class="ph ph-arrow-right"></i>
           </a>
         </div>
       </div>
