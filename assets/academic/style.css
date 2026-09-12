@@ -31,7 +31,10 @@ nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 22px; padd
 nav a { color: var(--muted); }
 nav a[aria-current] { color: var(--link); }
 .bio { padding-top: 29px; }
-.bio > p + p { margin-top: 16px; }
+.bio-copy > p + p { margin-top: 16px; }
+.bio-grid { display: grid; grid-template-columns: minmax(0, 1fr) 184px; gap: 42px; align-items: start; }
+.portrait { position: relative; width: 184px; height: 184px; margin: 4px 0 0; overflow: hidden; border-radius: 50%; border: 1px solid var(--rule); }
+.portrait img { position: absolute; width: 282.35%; max-width: none; height: auto; left: -76.47%; top: -33.82%; }
 .contact-line { margin-top: 21px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; font-size: .9375rem; }
 .contact-line > span:first-child { color: var(--muted); }
 .separator { color: var(--muted); }
@@ -80,6 +83,8 @@ h3 { font-size: 1rem; font-weight: 600; color: var(--heading); line-height: 1.6;
   .identity p { font-size: .875rem; }
   nav { padding-top: 0; gap: 25px; justify-content: flex-start; }
   .bio { padding-top: 24px; }
+  .bio-grid { display: flex; flex-direction: column-reverse; gap: 24px; }
+  .portrait { width: 152px; height: 152px; margin: 0; }
   .contact-line { font-size: .875rem; gap: 3px 9px; }
   .contact-line > span:first-child { flex-basis: 100%; }
   .contact-line .separator { display: none; }
