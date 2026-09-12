@@ -20,9 +20,9 @@ The profile and research description were supplied by the site owner. The Intel 
 
 ## Preview and publication
 
-Serve this directory with any local static server, then open `index.html`. The existing `.github/workflows/deploy.yml` publishes pushes to `main` through GitHub Pages.
+Serve this directory with any local static server, then open `index.html`. The `.github/workflows/deploy.yml` publishes pushes to `main` through GitHub Pages. It stages only the two pages and `assets/academic/` into `_site`, avoiding the legacy resource archive.
 
-The previous site is retained in Git history under `before-academic-redesign-20260912`. Earlier notes and assets are retained in the repository but are not linked from the academic homepage.
+The previous site is retained in Git history under `before-academic-redesign-20260912`. Earlier notes and assets are retained in the repository but are not part of the published academic site.
 
 ## Design references
 
