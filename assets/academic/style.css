@@ -54,13 +54,13 @@ h3 { font-size: 1rem; font-weight: 600; color: var(--heading); line-height: 1.6;
 .research-entry h3 { font-size: 1.0625rem; }
 .honors-notes { margin-top: 33px; padding-top: 21px; border-top: 1px solid var(--rule); }
 .honors-notes > h2 { margin-bottom: 17px; }
-.scholarship-note { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
 .honors-notes h3 { font-size: .9375rem; font-weight: 500; }
-.contest-note { display: flex; align-items: center; gap: 23px; margin-top: 15px; }
-.contest-note p { font-size: .9375rem; color: var(--muted); }
+.honor-row { display: grid; grid-template-columns: 90px minmax(0, 1fr) 176px; gap: 20px; align-items: start; padding: 12px 0; }
+.honor-row + .honor-row { border-top: 1px solid var(--rule); }
+.honor-row .award-date { line-height: 1.85; }
+.honor-copy p { font-size: .875rem; color: var(--muted); margin-top: 4px; }
+.honor-row-contest .contest-mark { margin-top: -3px; }
 .award-date { color: var(--muted); font-size: .8125rem; }
-.award-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
-.contest-details { min-width: 0; flex: 1; }
 .education-timeline { list-style: none; padding: 0; margin: 17px 0 27px; }
 .education-timeline li { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 20px; padding: 12px 0; }
 .timeline-date { font-size: .875rem; color: var(--muted); font-variant-numeric: tabular-nums; }
@@ -83,7 +83,7 @@ h3 { font-size: 1rem; font-weight: 600; color: var(--heading); line-height: 1.6;
 .awards-list > li + li { margin-top: 7px; }
 .awards-list p { font-size: .9375rem; color: var(--muted); margin-top: 2px; }
 .award-with-logo { display: flex; align-items: center; gap: 20px; }
-.contest-mark { display: block; width: 190px; flex-shrink: 0; }
+.contest-mark { display: block; width: 176px; flex-shrink: 0; }
 .contest-mark img { display: block; width: 100%; height: auto; }
 .interests-section > h2 { border: 0; padding: 0; margin-bottom: 9px; }
 .interests-section > p { font-size: .9375rem; }
@@ -110,8 +110,8 @@ h3 { font-size: 1rem; font-weight: 600; color: var(--heading); line-height: 1.6;
   .section { margin-top: 31px; }
   .entry-heading { flex-wrap: wrap; gap: 2px 12px; }
   .award-with-logo { gap: 14px; }
-  .contest-note { gap: 16px; flex-direction: column; align-items: flex-start; }
-  .contest-details { width: 100%; }
+  .honor-row { grid-template-columns: 72px minmax(0, 1fr); gap: 7px 15px; }
+  .honor-row-contest .contest-mark { grid-column: 2; margin-top: 7px; }
   .education-timeline li { grid-template-columns: 1fr; gap: 4px; }
   .contest-mark { width: 176px; max-width: 100%; }
   .site-footer { margin-top: 34px; }
