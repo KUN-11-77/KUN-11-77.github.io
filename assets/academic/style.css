@@ -69,6 +69,9 @@ h3 { font-size: 1rem; font-weight: 600; color: var(--heading); line-height: 1.6;
 .dated-honors { list-style: none; padding: 0; margin: 0 0 22px; }
 .dated-honors li { display: grid; grid-template-columns: 85px minmax(0, 1fr); gap: 17px; margin: 8px 0; }
 .dated-honors time { font-size: .875rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.outside-research { margin-top: 29px; padding-top: 22px; border-top: 1px solid var(--rule); }
+.outside-research h2 { margin-bottom: 14px; }
+.outside-research p { font-size: .9375rem; }
 .research-entry > p + p { margin-top: 11px; }
 .research-points { margin: 9px 0 10px; padding-left: 23px; }
 .research-points li + li { margin-top: 3px; }
