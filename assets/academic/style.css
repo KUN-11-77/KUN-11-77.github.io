@@ -66,8 +66,8 @@ h3 { font-size: 1rem; font-weight: 600; color: var(--heading); line-height: 1.6;
 .awards-list > li + li { margin-top: 7px; }
 .awards-list p { font-size: .9375rem; color: var(--muted); margin-top: 2px; }
 .award-with-logo { display: flex; align-items: center; gap: 20px; }
-.contest-mark { position: relative; display: block; width: 84px; height: 96px; flex-shrink: 0; overflow: hidden; }
-.contest-mark img { position: absolute; width: 148px; max-width: none; height: auto; top: -1px; left: 50%; transform: translateX(-50%); }
+.contest-mark { display: block; width: 190px; flex-shrink: 0; }
+.contest-mark img { display: block; width: 100%; height: auto; }
 .interests-section > h2 { border: 0; padding: 0; margin-bottom: 9px; }
 .interests-section > p { font-size: .9375rem; }
 .site-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; margin-top: 43px; padding: 20px 0 32px; border-top: 1px solid var(--rule); font-size: .75rem; color: var(--muted); }
@@ -93,7 +93,8 @@ h3 { font-size: 1rem; font-weight: 600; color: var(--heading); line-height: 1.6;
   .section { margin-top: 31px; }
   .entry-heading { flex-wrap: wrap; gap: 2px 12px; }
   .award-with-logo { gap: 14px; }
-  .recognition { gap: 15px; align-items: flex-start; }
+  .recognition { gap: 16px; flex-direction: column; align-items: flex-start; }
+  .contest-mark { width: 176px; max-width: 100%; }
   .site-footer { margin-top: 34px; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
