@@ -22,10 +22,16 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
+      - name: Prepare academic homepage
+        run: |
+          mkdir -p _site/assets
+          cp index.html about.html .nojekyll _site/
+          cp -R assets/academic _site/assets/academic
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'  # Deploy entire root directory
+          path: '_site'
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
