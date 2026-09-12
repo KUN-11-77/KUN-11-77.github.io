@@ -6,8 +6,8 @@ Personal academic website for Kunhong Song, Zhejiang University.
 
 ## Pages
 
-- `index.html`: short biography, research overview, current work, contact links, and a brief recognition note.
-- `about.html`: full academic profile.
+- `index.html`: short biography, research overview, current work, contact links, and distinct dated honors.
+- `about.html`: full academic profile, dated education, lab affiliation, and honors.
 - `assets/academic/`: shared styles, a small copyright-year helper, and the supplied portrait and Intel Cup logo.
 
 The website is plain HTML, CSS, and JavaScript. It needs no package installation or build step, and the core pages work without JavaScript or third-party services. Fonts use the reader's system serif and sans-serif families.
@@ -38,3 +38,10 @@ Official institutional naming references:
 - Chu Kochen Honors College: https://ckc.zju.edu.cn/ckcen/
 
 Visual inspiration does not imply an affiliation with the reference universities.
+
+Additional references for concise biography and research-entry presentation:
+
+- https://jonbarron.info/
+- https://rundiwu.github.io/
+- Lab name and principal investigator: https://yiyiliao.github.io/xdlab/ and https://yiyiliao.github.io/
+- High school English name: https://ehangzhou.gov.cn/2020-04/15/c_242809.htm
